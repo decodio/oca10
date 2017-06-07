@@ -141,6 +141,10 @@ class AccountPaymentOrder(models.Model):
             vals['payment_type'] = payment_mode.payment_type
             if payment_mode.bank_account_link == 'fixed':
                 vals['journal_id'] = payment_mode.fixed_journal_id.id
+            if (
+                    not vals.get('date_prefered') and
+                    payment_mode.default_date_prefered):
+                vals['date_prefered'] = payment_mode.default_date_prefered
         return super(AccountPaymentOrder, self).create(vals)
 
     @api.onchange('payment_mode_id')
@@ -157,6 +161,8 @@ class AccountPaymentOrder(models.Model):
                 jrl_ids = self.payment_mode_id.variable_journal_ids.ids
                 res['domain']['journal_id'] = "[('id', 'in', %s)]" % jrl_ids
         self.journal_id = journal_id
+        if self.payment_mode_id.default_date_prefered:
+            self.date_prefered = self.payment_mode_id.default_date_prefered
         return res
 
     @api.multi
@@ -202,6 +208,12 @@ class AccountPaymentOrder(models.Model):
             if not order.journal_id:
                 raise UserError(_(
                     'Missing Bank Journal on payment order %s.') % order.name)
+            if (
+                    order.payment_method_id.bank_account_required and
+                    not order.journal_id.bank_account_id):
+                raise UserError(_(
+                    "Missing bank account on bank journal '%s'.")
+                    % order.journal_id.display_name)
             if not order.payment_line_ids:
                 raise UserError(_(
                     'There are no transactions on payment order %s.')

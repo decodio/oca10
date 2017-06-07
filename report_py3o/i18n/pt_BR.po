@@ -3,14 +3,14 @@
 # * report_py3o
 # 
 # Translators:
-# Cezar José Sant Anna Junior <cezar.santanna@gmail.com>, 2017
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-19 10:15+0000\n"
-"PO-Revision-Date: 2017-05-19 10:15+0000\n"
-"Last-Translator: Cezar José Sant Anna Junior <cezar.santanna@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-05-31 03:52+0000\n"
+"PO-Revision-Date: 2017-05-31 03:52+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: report_py3o
-#: code:addons/report_py3o/models/ir_actions_report_xml.py:52
+#: code:addons/report_py3o/models/ir_actions_report_xml.py:54
 #, python-format
 msgid "(Native)"
 msgstr "(Nativo)"
@@ -30,7 +30,7 @@ msgid "Active"
 msgstr "Ativo"
 
 #. module: report_py3o
-#: code:addons/report_py3o/models/ir_actions_report_xml.py:40
+#: code:addons/report_py3o/models/ir_actions_report_xml.py:42
 #, python-format
 msgid ""
 "Can not use not native format in local fusion. Please specify a Fusion "
@@ -66,7 +66,7 @@ msgid "Fallback"
 msgstr ""
 
 #. module: report_py3o
-#: code:addons/report_py3o/models/ir_actions_report_xml.py:28
+#: code:addons/report_py3o/models/ir_actions_report_xml.py:30
 #, python-format
 msgid "Field 'Output Format' is required for Py3O report"
 msgstr ""
@@ -255,7 +255,7 @@ msgstr ""
 #. module: report_py3o
 #: model:ir.model,name:report_py3o.model_report
 msgid "Report"
-msgstr ""
+msgstr "Relatório"
 
 #. module: report_py3o
 #: model:ir.model,name:report_py3o.model_py3o_report
