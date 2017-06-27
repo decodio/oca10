@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# falexandresilva <falexandresilva@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 02:38+0000\n"
-"PO-Revision-Date: 2017-06-01 02:38+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-06-09 08:00+0000\n"
+"PO-Revision-Date: 2017-06-09 08:00+0000\n"
+"Last-Translator: falexandresilva <falexandresilva@gmail.com>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +27,7 @@ msgstr ""
 #. module: calendar_resource
 #: model:ir.model.fields,field_description:calendar_resource.field_resource_resource_event_ids
 msgid "Calendar Events"
-msgstr ""
+msgstr "Eventos do calendário"
 
 #. module: calendar_resource
 #: model:ir.model.fields,help:calendar_resource.field_resource_resource_allow_double_book
@@ -38,7 +39,7 @@ msgstr ""
 #. module: calendar_resource
 #: model:ir.model,name:calendar_resource.model_calendar_event
 msgid "Event"
-msgstr ""
+msgstr "Evento"
 
 #. module: calendar_resource
 #: model:ir.ui.view,arch_db:calendar_resource.resource_resource_form
@@ -58,12 +59,12 @@ msgstr ""
 #. module: calendar_resource
 #: model:ir.model.fields,field_description:calendar_resource.field_calendar_event_resource_ids
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
 #. module: calendar_resource
 #: model:ir.ui.view,arch_db:calendar_resource.view_calendar_event_form
 msgid "Select Resources"
-msgstr ""
+msgstr "Selecione os recursos"
 
 #. module: calendar_resource
 #: code:addons/calendar_resource/models/calendar_event.py:41
