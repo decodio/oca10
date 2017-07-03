@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-09 02:38+0000\n"
-"PO-Revision-Date: 2017-06-09 02:38+0000\n"
+"POT-Creation-Date: 2017-06-30 02:40+0000\n"
+"PO-Revision-Date: 2017-06-30 02:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. module: account_analytic_no_lines
 #: model:ir.ui.view,arch_db:account_analytic_no_lines.view_account_move_line_filter
 msgid "Analytic Account"
-msgstr ""
+msgstr "Cuenta analítica"
 
 #. module: account_analytic_no_lines
 #: model:res.groups,name:account_analytic_no_lines.hide_analytic_entries
