@@ -9,7 +9,7 @@
 
 {
     'name': 'Account Payment Order',
-    'version': '10.0.1.3.1',
+    'version': '10.0.1.3.2',
     'license': 'AGPL-3',
     'author': "ACSONE SA/NV, "
               "Therp BV, "
@@ -36,6 +36,8 @@
         'views/ir_attachment.xml',
         'views/account_invoice_view.xml',
         'data/payment_seq.xml',
+        'report/print_account_payment_order.xml',
+        'report/account_payment_order.xml',
     ],
     'demo': ['demo/payment_demo.xml'],
     'installable': True,
