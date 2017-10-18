@@ -13,7 +13,6 @@ class TestUblInvoice(TestAccountInvoice):
         buo = self.env['base.ubl']
         invoice = self.test_only_create_invoice()
         for version in ['2.0', '2.1']:
-            # I didn't manage to make it work with new api :-(
             pdf_file = ro.with_context(ubl_version=version).get_pdf(
                 [invoice.id], 'account.report_invoice')
             res = buo.get_xml_files_from_pdf(pdf_file)
