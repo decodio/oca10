@@ -9,7 +9,8 @@ _STATES = [
     ('draft', 'Draft'),
     ('to_approve', 'To be approved'),
     ('approved', 'Approved'),
-    ('rejected', 'Rejected')
+    ('rejected', 'Rejected'),
+    ('done', 'Done')
 ]
 
 
@@ -48,7 +49,7 @@ class PurchaseRequest(models.Model):
     @api.depends('state')
     def _compute_is_editable(self):
         for rec in self:
-            if rec.state in ('to_approve', 'approved', 'rejected'):
+            if rec.state in ('to_approve', 'approved', 'rejected', 'done'):
                 rec.is_editable = False
             else:
                 rec.is_editable = True
@@ -62,6 +63,8 @@ class PurchaseRequest(models.Model):
                 return 'purchase_request.mt_request_approved'
             elif 'state' in init_values and rec.state == 'rejected':
                 return 'purchase_request.mt_request_rejected'
+            elif 'state' in init_values and rec.state == 'done':
+                return 'purchase_request.mt_request_done'
         return super(PurchaseRequest, self)._track_subtype(init_values)
 
     name = fields.Char('Request Reference', size=32, required=True,
@@ -132,35 +135,25 @@ class PurchaseRequest(models.Model):
 
     @api.multi
     def button_draft(self):
-        for rec in self:
-            rec.state = 'draft'
-            rec.line_ids.do_uncancel()
-        return True
+        self.mapped('line_ids').do_uncancel()
+        return self.write({'state': 'draft'})
 
     @api.multi
     def button_to_approve(self):
-        for rec in self:
-            rec.state = 'to_approve'
-        return True
+        return self.write({'state': 'to_approve'})
 
     @api.multi
     def button_approved(self):
-        for rec in self:
-            rec.state = 'approved'
-        return True
+        return self.write({'state': 'approved'})
 
     @api.multi
     def button_rejected(self):
-        for rec in self:
-            rec.state = 'rejected'
-            rec.line_ids.do_cancel()
-        return True
+        self.mapped('line_ids').do_cancel()
+        return self.write({'state': 'rejected'})
 
     @api.multi
     def button_done(self):
-        for rec in self:
-            rec.state = 'done'
-        return True
+        return self.write({'state': 'done'})
 
     @api.multi
     def check_auto_reject(self):
@@ -182,7 +175,8 @@ class PurchaseRequestLine(models.Model):
                  'analytic_account_id', 'date_required', 'specifications')
     def _compute_is_editable(self):
         for rec in self:
-            if rec.request_id.state in ('to_approve', 'approved', 'rejected'):
+            if rec.request_id.state in ('to_approve', 'approved', 'rejected',
+                                        'done'):
                 rec.is_editable = False
             else:
                 rec.is_editable = True
