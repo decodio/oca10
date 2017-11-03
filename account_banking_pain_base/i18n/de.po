@@ -7,13 +7,14 @@
 # Niki Waibel, 2016
 # OCA Transbot <transbot@odoo-community.org>, 2016
 # Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
+# Udo Bremer <info@bremerd.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-payment (10.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-01 01:24+0000\n"
-"PO-Revision-Date: 2017-05-29 20:02+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2017-08-18 00:42+0000\n"
+"PO-Revision-Date: 2017-09-23 06:04+0000\n"
+"Last-Translator: intero_chz <c.zoellner@intero-technologies.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-payment-10-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,39 +25,39 @@ msgstr ""
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_bank_payment_line
 msgid "Bank Payment Lines"
-msgstr "Líneas de pago bancario"
+msgstr "Bankzahlungszeilen"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_order_batch_booking
 msgid "Batch Booking"
-msgstr "Reserva por lotes"
+msgstr "Sammelverarbeitung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Bonus Payment"
-msgstr ""
+msgstr "Bonuszahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
 msgid "Borne by Creditor"
-msgstr "A cargo del acreedor"
+msgstr "Getragen vom Gläubiger"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
 msgid "Borne by Debtor"
-msgstr "A cargo del deudor"
+msgstr "Getragen vom Schuldner"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:105
 #, python-format
 msgid "Cannot compute the '%s' of the Payment Line with reference '%s'."
-msgstr "No se puede procesar el campo '%s' de la línea de pago con referencia '%s'."
+msgstr "Berechnung von '%s' für die Bankzahlungszeile '%s' nicht möglich."
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:110
 #, python-format
 msgid "Cannot compute the '%s'."
-msgstr "No se puede procesar el campo '%s'."
+msgstr "Berechnung von  '%s' nicht möglich."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -77,37 +78,37 @@ msgstr ""
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_order_charge_bearer
 msgid "Charge Bearer"
-msgstr "A cargo del portador"
+msgstr "Entgeltverrechnung (Träger der Gebühren)"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Unternehmen"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_method_convert_to_ascii
 msgid "Convert to ASCII"
-msgstr "Convertir a ASCII"
+msgstr "Konvertierung nach ASCII"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Credit Card Payment"
-msgstr ""
+msgstr "Kreditkartenzahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Debit Card Payment"
-msgstr ""
+msgstr "Debitkartenzahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Deliver Against Payment"
-msgstr ""
+msgstr "Lieferung gegen Zahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Dividend"
-msgstr ""
+msgstr "Dividende"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -117,7 +118,7 @@ msgstr ""
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
 msgid "Following Service Level"
-msgstr "Según el acuerdo de servicio"
+msgstr "Folgt dem Service-Level"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_order_charge_bearer
@@ -129,7 +130,7 @@ msgid ""
 "the creditor. Borne by creditor : all transaction charges are to be borne by"
 " the creditor. Borne by debtor : all transaction charges are to be borne by "
 "the debtor."
-msgstr "Según el acuerdo de servicio: los costes de la transacción se aplicarán siguiendo las reglas acordadas en el nivel de servicio y/o en el esquema (las remesas SEPA Core deben usar esta opción). Compartidos: los costes de la transacción en la parte del acreedor están a cargo del acreedor, y los costes de la transacción del lado del deudor estarán a cargo del deudor. A cargo del acreedor: todos los costes de la transacción estarán a cargo del acreedor. A cargo del deudor: Todos los costes de la transacción estarán a cargo del deudor."
+msgstr "Following service level : transaction charges are to be applied following the rules agreed in the service level and/or scheme (SEPA Core messages must use this). Shared : transaction charges on the debtor side are to be borne by the debtor, transaction charges on the creditor side are to be borne by the creditor. Borne by creditor : all transaction charges are to be borne by the creditor. Borne by debtor : all transaction charges are to be borne by the debtor."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -144,7 +145,7 @@ msgstr ""
 #. module: account_banking_pain_base
 #: selection:account.payment.line,priority:0
 msgid "High"
-msgstr "Alta"
+msgstr "Hoch"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_method_convert_to_ascii
@@ -152,7 +153,7 @@ msgid ""
 "If active, Odoo will convert each accented character to the corresponding "
 "unaccented character, so that only ASCII characters are used in the "
 "generated PAIN file."
-msgstr "Si está marcado, Odoo convertirá cada carácter acentuado en el correspondiente carácter no acentuado, para que sólo se usen caracteres ASCII en el archivo PAIN generado."
+msgstr "Falls aktiv, wird Odoo jedes akzentuierte Zeichen in das korrespondierende nicht akzentuierte Zeichen umwandeln, so dass nur ASCII-Zeichen in der generierten Datei enthalten sind."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_line_category_purpose
@@ -168,21 +169,21 @@ msgid ""
 "If true, the bank statement will display only one debit line for all the "
 "wire transfers of the SEPA XML file ; if false, the bank statement will "
 "display one debit line per wire transfer of the SEPA XML file."
-msgstr "Si está marcado, el extracto bancario mostrará sólo una línea del haber para todos los adeudos directos del archivo SEPA; si no está marcado, entonces el extracto bancario mostrará una línea por cada adeudo directo del archivo SEPA."
+msgstr "Wenn ausgewählt, zeigt der Kontoauszug nur eine Belastungszeile für alle Überweisungen der SEPA-XML-Datei an; wenn nicht ausgewählt, zeigt der Kontoauszug eine Belastungszeile pro Überweisung der SEPA-XML-Datei an."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_config_settings_initiating_party_identifier
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_mode_initiating_party_identifier
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_res_company_initiating_party_identifier
 msgid "Initiating Party Identifier"
-msgstr "Identificador del iniciador de la transacción"
+msgstr "Initiating Party Identifier"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_config_settings_initiating_party_issuer
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_mode_initiating_party_issuer
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_res_company_initiating_party_issuer
 msgid "Initiating Party Issuer"
-msgstr "Emisor de la transacción"
+msgstr "Initiating Party Issuer"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,local_instrument:0
@@ -192,7 +193,7 @@ msgstr ""
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Interest"
-msgstr ""
+msgstr "Zinsen"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -202,12 +203,12 @@ msgstr ""
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Irrevocable Credit Card Payment"
-msgstr ""
+msgstr "Nicht widerrufliche Kreditkartenzahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Irrevocable Debit Card Payment"
-msgstr ""
+msgstr "Nicht widerrufliche Debitkartenzahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -218,7 +219,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_line_local_instrument
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_bank_payment_line_local_instrument
 msgid "Local Instrument"
-msgstr "Instrumento local"
+msgstr "Lastschriftart"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:302
@@ -232,7 +233,7 @@ msgstr "Falta el 'Emisor de la transacción' y/o 'Identificador del iniciador de
 #: code:addons/account_banking_pain_base/models/account_payment_method.py:23
 #, python-format
 msgid "No XSD file path found for payment method '%s'"
-msgstr "No se ha encontrado la ruta del archivo para el método de pago '%s'"
+msgstr "Es wurde kein Dateipfad zur XSD Datei für die Zahlmethode '%s' gefunden"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,priority:0
@@ -242,68 +243,68 @@ msgstr "Normal"
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Other Payment"
-msgstr ""
+msgstr "Andere Zahlung"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_method_pain_version
 msgid "PAIN Version"
-msgstr "Versión PAIN"
+msgstr "PAIN Version"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_account_payment_line
 msgid "Payment Lines"
-msgstr "Líneas de pago"
+msgstr "Zahlungszeilen"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_account_payment_method
 msgid "Payment Methods"
-msgstr "Métodos de pago"
+msgstr "Zahlungsmethoden"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_account_payment_mode
 msgid "Payment Modes"
-msgstr "Modos de pago"
+msgstr "Zahlungsmodi"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_account_payment_order
 msgid "Payment Order"
-msgstr "Orden de pago"
+msgstr "Zahlungsanweisung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Pension Payment"
-msgstr ""
+msgstr "Pensionszahlung"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_line_priority
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_bank_payment_line_priority
 msgid "Priority"
-msgstr "Prioridad"
+msgstr "Priorität"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Receive Against Payment"
-msgstr ""
+msgstr "Empfang gegen Zahlung"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_order_sepa
 msgid "SEPA Payment"
-msgstr "Pago SEPA"
+msgstr "SEPA-Zahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Salary Payment"
-msgstr ""
+msgstr "Gehaltszahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Securities"
-msgstr ""
+msgstr "Sicherheiten"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
 msgid "Shared"
-msgstr "Compartidos"
+msgstr "Aufgeteilt"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -313,18 +314,18 @@ msgstr ""
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Supplier Payment"
-msgstr ""
+msgstr "Lieferantenzahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Tax Payment"
-msgstr ""
+msgstr "Steuerzahlung"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:118
 #, python-format
 msgid "The '%s' is empty or 0. It should have a non-null value."
-msgstr "'%s' está vacío o es 0. Debería tener un valor no nulo."
+msgstr "'%s'  ist leer oder 0. Es sollte einen Wert ungleich Null enthalten."
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:139
@@ -334,13 +335,13 @@ msgid ""
 "Definition. The generated XML file and the full error have been written in "
 "the server logs. Here is the error, which may give you an idea on the cause "
 "of the problem : %s"
-msgstr "El archivo XML generado no se puede validar contra la definición de esquema XML oficial. El archivo XML generado el error completo se ha escrito en los registros del servidor. Aquí está el error, que le puede dar una idea de la causa del problema : %s"
+msgstr "Die generierte XML Datei ist nach offiziellem XML Schema ungültig. Die generierte XML Datei und der Fehler wurden in den Server Logs gespeichert. Folgender Fehler gibt Ihnen gegebenenfalls einen Hinweis auf das eigentliche Problem: %s"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:113
 #, python-format
 msgid "The type of the field '%s' is %s. It should be a string or unicode."
-msgstr "El tipo del campo '%s' es %s. Debería ser una cadena o unicode."
+msgstr "Der Typ des Felds '%s' ist %s. Es sollte ein String oder Unicode-String sein."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_line_priority
@@ -348,7 +349,7 @@ msgstr "El tipo del campo '%s' es %s. Debería ser una cadena o unicode."
 msgid ""
 "This field will be used as 'Instruction Priority' in the generated PAIN "
 "file."
-msgstr "Este campo se usará como 'Prioridad de instrucción' en el archivo PAIN generado."
+msgstr "Dieses Feld wird als' Ausführungspriorität' in der generierten PAIN-Datei verwendet."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_config_settings_initiating_party_identifier
@@ -356,7 +357,7 @@ msgstr "Este campo se usará como 'Prioridad de instrucción' en el archivo PAIN
 msgid ""
 "This will be used as the 'Initiating Party Identifier' in the PAIN files "
 "generated by Odoo."
-msgstr "Esto se usará como el 'Identificador del iniciador de la transacción' en los archivos PAIN generados por Odoo."
+msgstr "Dieses Feld wird als' Initiating Party Identifier' in den von Odoo erzeugten PAIN-Dateien verwendet."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_mode_initiating_party_identifier
@@ -366,7 +367,7 @@ msgid ""
 "- Country code (2, optional)\n"
 "- Company idenfier (N, VAT)\n"
 "- Service suffix (N, issued by bank)"
-msgstr "Se usará este campo como 'Identificador del iniciador de la transacción' en los archivos PAIN generados por Odoo. Si no está definido, entonces se usará el 'Identificador del iniciador de la transacción' definido en la compañía.\nFormato común (13):\n- Código de país (2, opcional)\n- Identificador de la compañía (N, NIF)\n- Sufijo de servicio (N, emitido por el banco)"
+msgstr "This will be used as the 'Initiating Party Identifier' in the PAIN files generated by Odoo. If not defined, Initiating Party Identifier from company will be used.\nCommon format (13): \n- Country code (2, optional)\n- Company idenfier (N, VAT)\n- Service suffix (N, issued by bank)"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_config_settings_initiating_party_issuer
@@ -374,7 +375,7 @@ msgstr "Se usará este campo como 'Identificador del iniciador de la transacció
 msgid ""
 "This will be used as the 'Initiating Party Issuer' in the PAIN files "
 "generated by Odoo."
-msgstr "Este campo se usará como 'Emisor de la transacción' en los archivos PAIN generados por Odoo."
+msgstr "Dieses Feld wird als' Initiating Party Issuer' in den von Odoo generierten PAIN-Dateien verwendet."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_mode_initiating_party_issuer
@@ -384,12 +385,12 @@ msgid ""
 "- Country code (2, optional)\n"
 "- Company idenfier (N, VAT)\n"
 "- Service suffix (N, issued by bank)"
-msgstr "Se usará este campo como 'Identificador del iniciador de la transacción' en los archivos PAIN generados por Odoo. Si no está definido, entonces se usará el 'Identificador del iniciador de la transacción' definido en la compañía.\nFormato común (13):\n- Código de país (2, opcional)\n- Identificador de la compañía (N, NIF)\n- Sufijo de servicio (N, emitido por el banco)"
+msgstr "This will be used as the 'Initiating Party Issuer' in the PAIN files generated by Odoo. If not defined, Initiating Party Issuer from company will be used.\nCommon format (13): \n- Country code (2, optional)\n- Company idenfier (N, VAT)\n- Service suffix (N, issued by bank)"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "Trade"
-msgstr ""
+msgstr "Handel"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
@@ -404,12 +405,12 @@ msgstr ""
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "VAT Payment"
-msgstr ""
+msgstr "USt-Zahlung"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "WithHolding"
-msgstr ""
+msgstr "Abzug"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_account_config_settings
@@ -419,7 +420,7 @@ msgstr "account.config.settings"
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 msgid "ePayment"
-msgstr ""
+msgstr "ePayment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
@@ -429,7 +430,7 @@ msgstr "pain.001.001.02"
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
 msgid "pain.001.001.03 (recommended for credit transfer)"
-msgstr "pain.001.001.03 (recomendado para la transferencia de cŕedito)"
+msgstr "pain.001.001.03 (empfohlen für Überweisungen)"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
@@ -444,12 +445,12 @@ msgstr "pain.001.001.05"
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
 msgid "pain.001.003.03 (credit transfer in Germany)"
-msgstr "pain.001.003.03 (transferencia de crédito en Alemania)"
+msgstr "pain.001.003.03 (Überweisungen in Deutschland)"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
 msgid "pain.008.001.02 (recommended for direct debit)"
-msgstr "pain.008.001.02 (recomendado para el adeudo directo)"
+msgstr "pain.008.001.02 (empfohlen für Lastschriften)"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
@@ -464,4 +465,4 @@ msgstr "pain.008.001.04"
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
 msgid "pain.008.003.02 (direct debit in Germany)"
-msgstr "pain.008.003.02 (adeudo directo en Alemania)"
+msgstr "pain.008.003.02 (Lastschriften in Deutschland)"
