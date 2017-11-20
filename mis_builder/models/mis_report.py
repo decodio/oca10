@@ -4,7 +4,10 @@
 
 from collections import defaultdict
 import datetime
-from itertools import izip
+try:
+    import itertools.izip as zip
+except ImportError:
+    pass  # python 3
 import logging
 import re
 import time
@@ -526,9 +529,9 @@ class MisReport(models.Model):
         return kpi_matrix
 
     @api.multi
-    def _prepare_aep(self, company):
+    def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
-        aep = AEP(company)
+        aep = AEP(companies, currency)
         for kpi in self.kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:
@@ -799,7 +802,7 @@ class MisReport(models.Model):
                 drilldown_args = []
                 name_error = False
                 for expression, replaced_expr in \
-                        izip(expressions, replaced_exprs):
+                        zip(expressions, replaced_exprs):
                     vals.append(mis_safe_eval(replaced_expr, locals_dict))
                     if replaced_expr != expression:
                         drilldown_args.append({
