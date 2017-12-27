@@ -4,9 +4,9 @@
 
 {
     'name': "LDAP mapping for user name and e-mail",
-    'version': "11.0.1.0.0",
+    'version': "10.0.1.0.0",
     'depends': ["auth_ldap"],
-    'author': "Daniel Reis,"
+    'author': "Daniel Reis (https://launchpad.com/~dreis-pt),"
               "Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'description': """\
@@ -19,7 +19,7 @@ AD also supports the "mail" attribute, so it can be mapped into OpenERP.
 """,
     'category': "Tools",
     'data': [
-        'views/res_company_ldap.xml',
+        'views/users_ldap_view.xml',
     ],
     'installable': True,
 }
