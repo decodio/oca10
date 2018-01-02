@@ -5,13 +5,14 @@
 # Translators:
 # Lixon Jean-Yves <jy.lixon@ls-development.net>, 2017
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# guillaume bauer <guillaume.bauer@syentys.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 02:47+0000\n"
-"PO-Revision-Date: 2017-07-12 02:47+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-18 03:48+0000\n"
+"PO-Revision-Date: 2017-12-18 03:48+0000\n"
+"Last-Translator: guillaume bauer <guillaume.bauer@syentys.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,12 +23,12 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model,name:stock_delivery_internal.model_delivery_carrier
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_out_picking_id
 msgid "Carrier Pickup Picking"
-msgstr ""
+msgstr "Prise en charge par le transporteur"
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_cash_out_picking_id
@@ -42,12 +43,12 @@ msgstr ""
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_cash_on_delivery
 msgid "Cash on delivery"
-msgstr ""
+msgstr "Paiement à la livraison"
 
 #. module: stock_delivery_internal
 #: selection:stock.pickup.request,state:0
 msgid "Confirmed"
-msgstr ""
+msgstr "Confirmé"
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_stock_pickup_request_create_uid
@@ -62,7 +63,7 @@ msgstr "Created on"
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_company_id
 msgid "Delivery Company"
-msgstr ""
+msgstr "Compagnie de livraison"
 
 #. module: stock_delivery_internal
 #: model:ir.model.fields,field_description:stock_delivery_internal.field_delivery_carrier_internal_delivery_money_picking_type_id
@@ -107,7 +108,7 @@ msgstr "Last Updated on"
 #. module: stock_delivery_internal
 #: selection:stock.pickup.request,state:0
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #. module: stock_delivery_internal
 #: model:ir.ui.view,arch_db:stock_delivery_internal.stock_pickup_request_view_search
@@ -164,4 +165,4 @@ msgstr "Transfert"
 #. module: stock_delivery_internal
 #: selection:stock.pickup.request,state:0
 msgid "done"
-msgstr ""
+msgstr "Fait"
