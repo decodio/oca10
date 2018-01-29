@@ -3,14 +3,14 @@
 # * product_sequence
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# Bole <bole@dajmi5.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-05 02:44+0000\n"
-"PO-Revision-Date: 2017-05-05 02:44+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2018-01-03 02:14+0000\n"
+"PO-Revision-Date: 2018-01-03 02:14+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2018\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr "-kopija"
 #. module: product_sequence
 #: model:ir.model,name:product_sequence.model_product_product
 msgid "Product"
-msgstr "proizvod"
+msgstr "Proizvod"
 
 #. module: product_sequence
 #: sql_constraint:product.product:0
