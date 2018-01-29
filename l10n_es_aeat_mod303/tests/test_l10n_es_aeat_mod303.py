@@ -250,7 +250,8 @@ class TestL10nEsAeatMod303Base(TestL10nEsAeatModBase):
         '75': 0,
     }
 
-    def test_model_303(self):
+    def setUp(self):
+        super(TestL10nEsAeatMod303Base, self).setUp()
         # Purchase invoices
         self._invoice_purchase_create('2017-01-01')
         self._invoice_purchase_create('2017-01-02')
@@ -280,6 +281,10 @@ class TestL10nEsAeatMod303Base(TestL10nEsAeatModBase):
             'journal_id': self.journal_misc.id,
             'counterpart_account_id': self.accounts['475000'].id
         })
+
+
+class TestL10nEsAeatMod303(TestL10nEsAeatMod303Base):
+    def test_model_303(self):
         _logger.debug('Calculate AEAT 303 1T 2017')
         self.model303.button_calculate()
         # Fill manual fields
@@ -315,3 +320,17 @@ class TestL10nEsAeatMod303Base(TestL10nEsAeatModBase):
         self.assertAlmostEqual(self.model303.casilla_69, result, 2)
         self.assertAlmostEqual(self.model303.resultado_liquidacion, result, 2)
         self.assertEqual(self.model303.result_type, 'I')
+        # Export to BOE
+        export_to_boe = self.env['l10n.es.aeat.report.export_to_boe'].create({
+            'name': 'test_export_to_boe.txt',
+        })
+        export_config_xml_ids = [
+            'l10n_es_aeat_mod303.aeat_mod303_main_export_config',
+            'l10n_es_aeat_mod303.aeat_mod303_2017_main_export_config',
+            'l10n_es_aeat_mod303.aeat_mod303_2018_main_export_config',
+        ]
+        for xml_id in export_config_xml_ids:
+            export_config = self.env.ref(xml_id)
+            self.assertTrue(
+                export_to_boe._export_config(self.model303, export_config)
+            )
