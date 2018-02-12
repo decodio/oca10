@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Adapted by Nicolas Bessi. Copyright Camptocamp SA

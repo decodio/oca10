@@ -1,7 +1,9 @@
-# Copyright 2012-2018 Camptocamp SA
+# -*- coding: utf-8 -*-
+# Copyright 2012-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 from odoo import api, fields, models
+
 from odoo.addons.server_environment import serv_config
 
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-  <record id="inherit_fetchmail" model="ir.ui.view">
+  <record model="ir.ui.view" id="inherit_fetchmail">
     <field name="model">fetchmail.server</field>
     <field name="inherit_id" ref="fetchmail.view_email_server_form"/>
     <field name="arch" type="xml">
@@ -19,5 +18,4 @@
       </field>
     </field>
   </record>
-
 </odoo>
