@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-02 00:27+0000\n"
-"PO-Revision-Date: 2017-05-02 00:27+0000\n"
+"POT-Creation-Date: 2018-02-15 02:01+0000\n"
+"PO-Revision-Date: 2018-02-15 02:01+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -32,44 +32,44 @@ msgstr ""
 #. module: barcodes_generator_product
 #: model:ir.model.fields,field_description:barcodes_generator_product.field_product_template_barcode_base
 msgid "Barcode Base"
-msgstr ""
+msgstr "Osnova barkodova"
 
 #. module: barcodes_generator_product
 #: model:ir.model.fields,field_description:barcodes_generator_product.field_product_template_barcode_rule_id
 msgid "Barcode Rule"
-msgstr ""
+msgstr "Barkod pravilo"
 
 #. module: barcodes_generator_product
 #: model:ir.ui.view,arch_db:barcodes_generator_product.view_product_product_form
 #: model:ir.ui.view,arch_db:barcodes_generator_product.view_product_template_form
 msgid "Generate Barcode (Using Barcode Rule)"
-msgstr ""
+msgstr "Generiraj barkod (koristeći pravilo)"
 
 #. module: barcodes_generator_product
 #: model:ir.ui.view,arch_db:barcodes_generator_product.view_product_product_form
 #: model:ir.ui.view,arch_db:barcodes_generator_product.view_product_template_form
 msgid "Generate Base (Using Sequence)"
-msgstr ""
+msgstr "Generiraj osnovno ( koristi br.krug)"
 
 #. module: barcodes_generator_product
 #: model:ir.model.fields,field_description:barcodes_generator_product.field_product_template_generate_type
 msgid "Generate Type"
-msgstr ""
+msgstr "Tip generatora"
 
 #. module: barcodes_generator_product
 #: model:ir.model,name:barcodes_generator_product.model_product_product
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: barcodes_generator_product
 #: model:ir.model,name:barcodes_generator_product.model_product_template
 msgid "Product Template"
-msgstr ""
+msgstr "Predložak proizvoda"
 
 #. module: barcodes_generator_product
 #: model:product.template,name:barcodes_generator_product.product_template_mono_variant
 msgid "Template with Generated Barcode (Mono Variant)"
-msgstr ""
+msgstr "Predložak sa generiranim barkodom (mono varijanta)"
 
 #. module: barcodes_generator_product
 #: model:product.product,name:barcodes_generator_product.product_product_variant_1
@@ -78,9 +78,9 @@ msgstr ""
 #: model:product.template,name:barcodes_generator_product.product_product_variant_2_product_template
 #: model:product.template,name:barcodes_generator_product.product_template_multi_variant
 msgid "Template with Generated Barcode (Multi Variant)"
-msgstr ""
+msgstr "Predložak sa generiranim barkodom (multi varijanta)"
 
 #. module: barcodes_generator_product
 #: model:ir.model,name:barcodes_generator_product.model_barcode_rule
 msgid "barcode.rule"
-msgstr ""
+msgstr "barcode.rule"

@@ -11,6 +11,7 @@ from odoo.exceptions import Warning as UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 import odoo.addons.decimal_precision as dp
 from odoo.tools import float_is_zero
+from odoo.tools.misc import formatLang
 
 
 class StockPickingCarriageCondition(models.Model):
@@ -79,7 +80,7 @@ class StockPickingPackagePreparation(models.Model):
     _order = 'date desc'
 
     @api.multi
-    @api.depends('transportation_reason_id')
+    @api.depends('transportation_reason_id.to_be_invoiced')
     def _compute_to_be_invoiced(self):
         for ddt in self:
             ddt.to_be_invoiced = ddt.transportation_reason_id and \
@@ -118,9 +119,10 @@ class StockPickingPackagePreparation(models.Model):
              "Transportation of this DDT")
     show_price = fields.Boolean(string='Show prices on report')
     weight_manual = fields.Float(
-        string="Force Weight",
+        string="Force Net Weight",
         help="Fill this field with the value you want to be used as weight. "
              "Leave empty to let the system to compute it")
+    gross_weight = fields.Float(string="Gross Weight")
     check_if_picking_done = fields.Boolean(
         compute='_compute_check_if_picking_done',
         )
@@ -330,13 +332,9 @@ class StockPickingPackagePreparation(models.Model):
         return invoice_vals
 
     @api.multi
-    def action_invoice_create(self, grouped=False, final=False):
+    def action_invoice_create(self):
         """
-        Create the invoice associated to the SO.
-        :param grouped: if True, invoices are grouped by SO id.
-                        If False, invoices are grouped by
-                        (partner_invoice_id, currency)
-        :param final: if True, refunds will be generated if necessary
+        Create the invoice associated to the DDT.
         :returns: list of created invoices
         """
         inv_obj = self.env['account.invoice']
@@ -530,57 +528,69 @@ class StockPickingPackagePreparationLine(models.Model):
         ddt line.
 
         :param qty: float quantity to invoice
+        :param invoice_id: possible existing invoice
         """
         self.ensure_one()
-        account = (
-            self.product_id.property_account_income_id or
-            self.product_id.categ_id.property_account_income_categ_id)
-        if not account:
-            if invoice_id:
-                invoice = self.env['account.invoice'].browse(invoice_id)
-                account = invoice.journal_id.default_credit_account_id
-        if not account:
-            raise UserError(
-                _(
-                    'Please define income account for this product: "%s" '
-                    '(id:%d) - or for its category: "%s".'
-                ) % (
-                    self.product_id.name, self.product_id.id,
-                    self.product_id.categ_id.name
+        res = {}
+        if (
+            self.sale_line_id.product_id.property_account_income_id or
+            self.sale_line_id.product_id.categ_id.
+            property_account_income_categ_id
+        ):
+            # Without property_account_income_id or
+            # property_account_income_categ_id
+            # _prepare_invoice_line would fail
+            res = self.sale_line_id._prepare_invoice_line(qty)
+        else:
+            account = (
+                self.product_id.property_account_income_id or
+                self.product_id.categ_id.property_account_income_categ_id)
+            if not account:
+                if invoice_id:
+                    invoice = self.env['account.invoice'].browse(invoice_id)
+                    account = invoice.journal_id.default_credit_account_id
+            if not account:
+                raise UserError(
+                    _(
+                        'Please define income account for this product: "%s" '
+                        '(id:%d) - or for its category: "%s".'
+                    ) % (
+                        self.product_id.name, self.product_id.id,
+                        self.product_id.categ_id.name
+                    )
                 )
-            )
+            fpos = None
+            if self.sale_line_id:
+                fpos = (
+                    self.sale_line_id.order_id.fiscal_position_id or
+                    self.sale_line_id.order_id.partner_id.
+                    property_account_position_id
+                )
+            if fpos:
+                account = fpos.map_account(account)
+            res['account_id'] = account.id
 
-        fpos = None
-        if self.sale_line_id:
-            fpos = (
-                self.sale_line_id.order_id.fiscal_position_id or
-                self.sale_line_id.order_id.partner_id.
-                property_account_position_id
-            )
-        if fpos:
-            account = fpos.map_account(account)
+            if self.sale_line_id.order_id.project_id:
+                res[
+                    'account_analytic_id'
+                ] = self.sale_line_id.order_id.project_id.id
+            if self.sale_line_id.analytic_tag_ids:
+                res['analytic_tag_ids'] = [
+                    (6, 0, self.sale_line_id.analytic_tag_ids.ids)
+                ]
 
-        res = {
+        res.update({
             'ddt_line_id': self.id,
             'name': self.name,
             'sequence': self.sequence,
             'origin': self.package_preparation_id.name or '',
-            'account_id': account.id,
             'price_unit': self.price_unit,
             'quantity': qty,
             'discount': self.discount,
             'uom_id': self.product_uom_id.id,
             'product_id': self.product_id.id or False,
             'invoice_line_tax_ids': [(6, 0, self.tax_ids.ids)],
-            'account_analytic_id': (
-                self.sale_line_id and
-                self.sale_line_id.order_id.project_id.id or False
-            ),
-            'analytic_tag_ids': [(
-                6, 0, self.sale_line_id and
-                self.sale_line_id.analytic_tag_ids.ids or []
-            )],
-        }
+        })
         return res
 
     @api.multi
@@ -601,4 +611,22 @@ class StockPickingPackagePreparationLine(models.Model):
                         {'sale_line_ids': [
                             (6, 0, [line.sale_line_id.id])
                         ]})
-                self.env['account.invoice.line'].create(vals)
+                self.env['account.invoice.line'].with_context(
+                    skip_update_line_ids=True).create(vals)
+
+    def quantity_by_lot(self):
+        res = {}
+        for quant in self.move_id.quant_ids:
+            if quant.lot_id:
+                if quant.location_id.id == self.move_id.location_dest_id.id:
+                    if quant.lot_id not in res:
+                        res[quant.lot_id] = quant.qty
+                    else:
+                        res[quant.lot_id] += quant.qty
+        for lot in res:
+            if lot.product_id.tracking == 'lot':
+                res[lot] = formatLang(self.env, res[lot])
+            else:
+                # If not tracking by lots, quantity is not relevant
+                res[lot] = False
+        return res

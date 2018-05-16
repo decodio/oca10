@@ -170,7 +170,7 @@ class OpenItemsReportCompute(models.TransientModel):
         # Compute display flag
         self._compute_has_second_currency()
         # Refresh cache because all data are computed with SQL requests
-        self.refresh()
+        self.invalidate_cache()
 
     def _inject_account_values(self):
         """Inject report values for report_open_items_qweb_account."""
@@ -257,6 +257,7 @@ FROM
 
     def _inject_partner_values(self):
         """ Inject report values for report_open_items_qweb_partner. """
+        # pylint: disable=sql-injection
         query_inject_partner = """
 WITH
     accounts_partners AS
