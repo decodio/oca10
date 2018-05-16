@@ -5,13 +5,14 @@
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Stefano <stefano.sforzi@agilebg.com>, 2017
+# Alessandro Camilli <alessandrocamilli@openforce.it>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-15 23:09+0000\n"
-"PO-Revision-Date: 2017-12-15 23:09+0000\n"
-"Last-Translator: Stefano <stefano.sforzi@agilebg.com>, 2017\n"
+"POT-Creation-Date: 2018-03-23 23:15+0000\n"
+"PO-Revision-Date: 2018-03-23 23:15+0000\n"
+"Last-Translator: Alessandro Camilli <alessandrocamilli@openforce.it>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,12 +48,12 @@ msgstr "Registrazione contabile"
 #. module: account_cutoff_prepaid
 #: model:ir.actions.act_window,help:account_cutoff_prepaid.account_cutoff_prepaid_expense_action
 msgid "Click to start preparing a new prepaid expense."
-msgstr "Click per iniziare un nuovo calcolo costi prepagati"
+msgstr "Click per iniziare un nuovo calcolo risconti passivi"
 
 #. module: account_cutoff_prepaid
 #: model:ir.actions.act_window,help:account_cutoff_prepaid.account_cutoff_prepaid_revenue_action
 msgid "Click to start preparing a new prepaid revenue."
-msgstr "Click per iniziare un nuovo calcolo ricavi prepagati"
+msgstr "Click per iniziare un nuovo calcolo risconti attivi"
 
 #. module: account_cutoff_prepaid
 #: model:ir.model,name:account_cutoff_prepaid.model_res_company
@@ -120,13 +121,13 @@ msgstr "Giorni Prepagati"
 #: model:ir.actions.act_window,name:account_cutoff_prepaid.account_cutoff_prepaid_expense_action
 #: model:ir.ui.menu,name:account_cutoff_prepaid.account_cutoff_prepaid_expense_menu
 msgid "Prepaid Expense"
-msgstr "Costi prepagati"
+msgstr "Risconti Passivi"
 
 #. module: account_cutoff_prepaid
 #: model:ir.actions.act_window,name:account_cutoff_prepaid.account_cutoff_prepaid_revenue_action
 #: model:ir.ui.menu,name:account_cutoff_prepaid.account_cutoff_prepaid_revenue_menu
 msgid "Prepaid Revenue"
-msgstr "Ricavi Prepagati"
+msgstr "Risconti Attivi"
 
 #. module: account_cutoff_prepaid
 #: model:ir.ui.view,arch_db:account_cutoff_prepaid.account_cutoff_form

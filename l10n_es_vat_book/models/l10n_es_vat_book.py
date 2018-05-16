@@ -171,9 +171,9 @@ class L10nEsVatBook(models.Model):
             Returns:
                 dictionary: Vals from the new record.
         """
-        invoice = min(move.line_ids.mapped('invoice_id'))
         ref = move.ref
         ext_ref = ''
+        invoice = move.line_ids.mapped('invoice_id')[:1]
         if invoice:
             ref = invoice.number
             ext_ref = invoice.reference
@@ -194,8 +194,16 @@ class L10nEsVatBook(models.Model):
             lambda l: any(t == tax for t in l.tax_ids))
         base_amount_untaxed = sum(x.credit - x.debit for x in base_move_lines)
 
+        parent_tax = self.env['account.tax'].search([
+            ('children_tax_ids.id', '=', tax.id)], limit=1)
+        taxes = self.env['account.tax']
+        if parent_tax:
+            taxes = tax.children_tax_ids
+            tax = parent_tax
+        else:
+            taxes += tax
         fee_move_lines = move.line_ids.filtered(
-            lambda l: l.tax_line_id == tax)
+            lambda l: l.tax_line_id in taxes)
         fee_amount_untaxed = 0.0
         if fee_move_lines:
             fee_amount_untaxed = sum(

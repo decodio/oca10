@@ -101,10 +101,10 @@ class Mod349(models.Model):
             if move_line.invoice_id.type in ('in_refund', 'out_refund'):
                 # Check for refunds if the origin invoice period is different
                 # from the declaration
-                origin_invoice = move_line.invoice_id.origin_invoice_ids[:1]
-                if move_line.invoice_id.origin_invoice_ids:
-                    if (origin_invoice.date <= self.date_start or
-                            origin_invoice.date >= self.date_end):
+                origin_invoice = move_line.invoice_id.refund_invoice_id
+                if origin_invoice:
+                    if (origin_invoice.date < self.date_start or
+                            origin_invoice.date > self.date_end):
                         self._create_349_refund_detail(move_line)
                         continue
             self._create_349_record_detail(move_line)
@@ -169,27 +169,28 @@ class Mod349(models.Model):
         taxes = self._get_taxes()
         data = {}
         # This is for avoiding to find same lines several times
+        visited_details = self.env['l10n.es.aeat.mod349.partner_record_detail']
         visited_move_lines = self.env['account.move.line']
         for refund_detail in self.partner_refund_detail_ids:
             move_line = refund_detail.refund_line_id
             partner = move_line.partner_id
             op_key = move_line.l10n_es_aeat_349_operation_key
-            origin_invoice = move_line.invoice_id.mapped(
-                'origin_invoice_ids'
-            )[:1]
+            origin_invoice = move_line.invoice_id.refund_invoice_id
             if not origin_invoice:
                 # TODO: Instead continuing, generate an empty record and a msg
                 continue
             # Fetch the latest presentation made for this move
             original_detail = detail_obj.search([
                 ('move_line_id.invoice_id', '=', origin_invoice.id),
-                ('partner_record_id.operation_key', '=', op_key)
+                ('partner_record_id.operation_key', '=', op_key),
+                ('id', 'not in', visited_details.ids)
             ], limit=1, order='report_id desc')
             if original_detail:
                 # There's a previous 349 declaration report
                 origin_amount = original_detail.amount_untaxed
                 period_type = original_detail.report_id.period_type
                 year = original_detail.report_id.year
+                visited_details |= original_detail
             else:
                 # There's no previous 349 declaration report in Odoo
                 original_amls = move_line_obj.search([

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-02 00:27+0000\n"
-"PO-Revision-Date: 2017-05-02 00:27+0000\n"
+"POT-Creation-Date: 2018-02-15 02:01+0000\n"
+"PO-Revision-Date: 2018-02-15 02:01+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -32,34 +32,34 @@ msgstr ""
 #. module: barcodes_generator_partner
 #: model:ir.model.fields,field_description:barcodes_generator_partner.field_res_users_barcode_base
 msgid "Barcode Base"
-msgstr ""
+msgstr "Osnova barkodova"
 
 #. module: barcodes_generator_partner
 #: model:ir.model.fields,field_description:barcodes_generator_partner.field_res_users_barcode_rule_id
 msgid "Barcode Rule"
-msgstr ""
+msgstr "Barkod pravilo"
 
 #. module: barcodes_generator_partner
 #: model:ir.ui.view,arch_db:barcodes_generator_partner.view_res_partner_form
 msgid "Generate Barcode (Using Barcode Rule)"
-msgstr ""
+msgstr "Generiraj barkod (koristeći pravilo)"
 
 #. module: barcodes_generator_partner
 #: model:ir.ui.view,arch_db:barcodes_generator_partner.view_res_partner_form
 msgid "Generate Base (Using Sequence)"
-msgstr ""
+msgstr "Generiraj osnovno ( koristi br.krug)"
 
 #. module: barcodes_generator_partner
 #: model:ir.model.fields,field_description:barcodes_generator_partner.field_res_users_generate_type
 msgid "Generate Type"
-msgstr ""
+msgstr "Tip generatora"
 
 #. module: barcodes_generator_partner
 #: model:ir.model,name:barcodes_generator_partner.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: barcodes_generator_partner
 #: model:ir.model,name:barcodes_generator_partner.model_barcode_rule
 msgid "barcode.rule"
-msgstr ""
+msgstr "barcode.rule"

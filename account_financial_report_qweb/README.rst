@@ -10,6 +10,7 @@ This module adds a set of financial reports. They are accessible under
 Accounting / Reporting / OCA Reports.
 
 - General ledger
+- Journal Ledger
 - Trial Balance
 - Open Items
 - Aged Partner Balance
@@ -52,6 +53,7 @@ Contributors
 * Julien Coux <julien.coux@camptocamp.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Alexis de Lattre <alexis@via.ecp.fr>
+* Benjamin Willig <benjamin.willig@acsone.eu>
 
 Much of the work in this module was done at a sprint in Sorrento, Italy in
 April 2016.

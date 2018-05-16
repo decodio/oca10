@@ -6,9 +6,10 @@ import inspect
 import json
 from collections import OrderedDict
 
-from odoo import models, tools
+from odoo import models, tools, exceptions, _
 
-from ..utils import data_merge
+from .. import utils
+from .. import marshallers
 
 
 IGNORED_FORM_FIELDS = [
@@ -36,6 +37,7 @@ class CMSFormMixin(models.AbstractModel):
     form_template = 'cms_form.base_form'
     form_fields_template = 'cms_form.base_form_fields'
     form_buttons_template = 'cms_form.base_form_buttons'
+    form_display_mode = 'horizontal'  # or 'vertical'
     form_action = ''
     form_method = 'POST'
     _form_mode = ''
@@ -75,6 +77,28 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_whitelist = ()
     # exclude these fields
     _form_fields_blacklist = ()
+    # group form fields together
+    _form_fieldsets = [
+        # {
+        #     'id': 'main',
+        #     'title': 'My group of fields',
+        #     'description': 'Bla bla bla',
+        #     'fields': ['name', 'age', 'foo'],
+        #     'css_extra_klass': 'best_fieldset',
+        # },
+        # {
+        #     'id': 'extras',
+        #     'title': 'My group of fields 2',
+        #     'description': 'Bla bla bla',
+        #     'fields': ['some', 'other', 'field'],
+        #     'css_extra_klass': '',
+        # },
+    ]
+    # control fieldset display
+    # options:
+    # * `tabs` -> rendered as tabs
+    # * `vertical` -> one after each other, vertically
+    _form_fieldsets_display = 'vertical'
     # extract values mode
     # This param can be used to alter value format
     # when extracting values from request.
@@ -109,10 +133,65 @@ class CMSFormMixin(models.AbstractModel):
         form.request = request.httprequest  # werkzeug request, the "real" one
         form.main_object = main_object
         # override `_form_` parameters
-        for k, v in kw.iteritems():
-            if not inspect.ismethod(getattr(form, '_form_' + k)):
+        for k, v in kw.items():
+            attr = getattr(form, '_form_' + k, '__no__attr__')
+            if attr != '__no__attr__' and not inspect.ismethod(attr):
                 setattr(form, '_form_' + k, v)
         return form
+
+    def form_check_permission(self, raise_exception=True):
+        """Check permission on current model and main object if any."""
+        res = True
+        msg = ''
+        if self.main_object:
+            if hasattr(self.main_object, 'cms_can_edit'):
+                res = self.main_object.cms_can_edit()
+            else:
+                # not `website.published.mixin` model
+                # TODO: probably is better to move such methods
+                # defined in `cms_info` to `base` model instead.
+                # You might want to use a form on an a non-website model.
+                # This should be considered if we move away from `website`
+                # as a base and rely only on `portal` features.
+                res = self._can_edit(raise_exception=False)
+            msg = _(
+                'You cannot edit this record. Model: %s, ID: %s.'
+            ) % (self.main_object._name, self.main_object.id)
+        else:
+            if self._form_model:
+                if hasattr(self.form_model, 'cms_can_create'):
+                    res = self.form_model.cms_can_create()
+                else:
+                    # not `website.published.mixin` model
+                    res = self._can_create(raise_exception=False)
+                msg = _(
+                    'You are not allowed to create any record '
+                    'for the model `%s`.'
+                ) % self._form_model
+        if raise_exception and not res:
+            raise exceptions.AccessError(msg)
+        return res
+
+    def _can_create(self, raise_exception=True):
+        """Check that current user can create instances of given model."""
+        if self._form_model:
+            return self.form_model.check_access_rights(
+                'create', raise_exception=raise_exception)
+        return True
+
+    def _can_edit(self, raise_exception=True):
+        """Check that current user can edit main object if any."""
+        if not self.main_object:
+            return True
+        try:
+            self.main_object.check_access_rights('write')
+            self.main_object.check_access_rule('write')
+            can = True
+        except exceptions.AccessError:
+            if raise_exception:
+                raise
+            can = False
+        return can
 
     @property
     def form_title(self):
@@ -184,7 +263,10 @@ class CMSFormMixin(models.AbstractModel):
         # remove unwanted fields
         self._form_remove_uwanted(_all_fields)
         # remove non-stored fields to exclude computed
-        _all_fields = {k: v for k, v in _all_fields.iteritems() if v['store']}
+        # NOTE: make sure to use `v.get` because sometimes (like for res.users)
+        # you can get auto-generated fields here (like `in_group_XX`)
+        # whereas some core fields attributes are missing.
+        _all_fields = {k: v for k, v in _all_fields.items() if v.get('store')}
         # update fields order
         if self._form_fields_order:
             _sorted_all_fields = OrderedDict()
@@ -214,6 +296,16 @@ class CMSFormMixin(models.AbstractModel):
         for fname in self.__form_fields_ignore:
             _all_fields.pop(fname, None)
 
+    def form_fieldsets(self):
+        return self._form_fieldsets
+
+    @property
+    def form_fieldsets_wrapper_klass(self):
+        klass = []
+        if self._form_fieldsets:
+            klass = ['has_fieldsets', self._form_fieldsets_display]
+        return ' '.join(klass)
+
     def form_update_fields_attributes(self, _fields):
         """Manipulate fields attributes."""
         for fname, field in _fields.iteritems():
@@ -235,10 +327,10 @@ class CMSFormMixin(models.AbstractModel):
                 widget_model = model_key
         return self.form_widgets.get(fname, widget_model)
 
-    def form_get_widget(self, fname, field):
+    def form_get_widget(self, fname, field, **kw):
         """Retrieve and initialize widget."""
         return self.env[self.form_get_widget_model(fname, field)].widget_init(
-            self, fname, field,
+            self, fname, field, **kw
         )
 
     @property
@@ -260,15 +352,12 @@ class CMSFormMixin(models.AbstractModel):
             # and this will make the form machinery miss all the fields
             _values = self.request.args
         # normal fields
-        values = {
-            k: v for k, v in _values.iteritems()
-            if k not in ('csrf_token', )
-        }
+        res = marshallers.marshal_request_values(_values)
         # file fields
-        values.update(
-            {k: v for k, v in self.request.files.iteritems()}
+        res.update(
+            {k: v for k, v in self.request.files.items()}
         )
-        return values
+        return res
 
     def form_load_defaults(self, main_object=None, request_values=None):
         """Load default values.
@@ -378,6 +467,8 @@ class CMSFormMixin(models.AbstractModel):
         """
         values = self.form_render_values.copy()
         values.update(kw)
+        values['field_wrapper_template'] = \
+            'cms_form.form_{}_field_wrapper'.format(self.form_display_mode)
         return self.env.ref(self.form_template).render(values)
 
     def form_process(self, **kw):
@@ -435,14 +526,37 @@ class CMSFormMixin(models.AbstractModel):
 
         By default you can provide extra klasses via `_form_extra_css_klass`.
         """
-        return self._form_extra_css_klass
+        klass = ''
+        if self.form_display_mode == 'horizontal':
+            klass = 'form-horizontal '
+        elif self.form_display_mode == 'vertical':
+            # actually not a real BS3 css klass but helps styling
+            klass = 'form-vertical '
+        return klass + self._form_extra_css_klass
 
-    def form_json_info(self):
+    def form_make_field_wrapper_klass(self, fname, field, **kw):
+        """Return specific CSS klass for the field wrapper."""
+        klass = [
+            'form-group',
+            'form-field',
+            'field-{type}',
+            'field-{fname}',
+        ]
+        if field['required']:
+            klass.append('field-required')
+        if kw.get('errors', {}).get(fname):
+            klass.append('has-error')
+        return ' '.join(klass).format(fname=fname, **field)
+
+    def _form_json_info(self):
         info = {}
         info.update({
             'master_slave': self._form_master_slave_info()
         })
-        return json.dumps(info)
+        return info
+
+    def form_json_info(self):
+        return json.dumps(self._form_json_info())
 
     def _form_master_slave_info(self):
         """Return info about master/slave fields JSON compatible.
@@ -473,4 +587,4 @@ class CMSFormMixin(models.AbstractModel):
         so if you don't want to override info completely
         you can use this method to merge them properly.
         """
-        return data_merge(info, tomerge)
+        return utils.data_merge(info, tomerge)

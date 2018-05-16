@@ -3,11 +3,26 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import mock
+from odoo.tools import mute_logger
 
-from .common import fake_request, FormTestCase
+from .common import FormTestCase
+from .utils import fake_request
+from .fake_models import FakePartnerForm, FakeFieldsForm
 
 
 class TestCMSForm(FormTestCase):
+
+    TEST_MODELS_KLASSES = [FakePartnerForm, FakeFieldsForm]
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestCMSForm, cls).setUpClass()
+        cls._setup_models()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._teardown_models()
+        super(TestCMSForm, cls).tearDownClass()
 
     def test_validate(self):
         form = self.get_form('cms.form.test_fields')
@@ -64,8 +79,13 @@ class TestCMSForm(FormTestCase):
         form = self.get_form(
             'cms.form.res.partner',
             req=request)
-        values = form.form_process_POST({})
-        self.assertTrue('_integrity' in values['errors'])
+        with mute_logger('odoo.sql_db'):
+            values = form.form_process_POST({})
+        self.assertTrue(
+            # custom modules can provide different errors for constraints
+            '_integrity' in values['errors'] or
+            '_validation' in values['errors']
+        )
 
     def test_purge_non_model_fields(self):
         data = {
@@ -77,7 +97,7 @@ class TestCMSForm(FormTestCase):
             'cms.form.res.partner',
             req=request)
         to_patch = \
-            'openerp.addons.cms_form.models.cms_form.CMSForm._form_create'
+            'odoo.addons.cms_form.models.cms_form.CMSForm._form_create'
         with mock.patch(to_patch) as patched:
             form.form_create_or_update()
             patched.assert_called_with({'name': 'Johnny Glamour'})
@@ -89,7 +109,7 @@ class TestCMSForm(FormTestCase):
             main_object=main_object,
             req=request)
         to_patch = \
-            'openerp.addons.cms_form.models.cms_form.CMSForm._form_write'
+            'odoo.addons.cms_form.models.cms_form.CMSForm._form_write'
         with mock.patch(to_patch) as patched:
             form.form_create_or_update()
             patched.assert_called_with({'name': 'Johnny Glamour'})

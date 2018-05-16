@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-24 07:53+0000\n"
-"PO-Revision-Date: 2017-11-24 07:53+0000\n"
+"POT-Creation-Date: 2018-03-03 03:48+0000\n"
+"PO-Revision-Date: 2018-03-03 03:48+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:purchase_minimum_amount.field_res_partner_minimum_po_amount
 #: model:ir.model.fields,field_description:purchase_minimum_amount.field_res_users_minimum_po_amount
 msgid "Minimum Purchase Amount"
-msgstr ""
+msgstr "Minimalni iznos nabave"
 
 #. module: purchase_minimum_amount
 #: model:ir.model,name:purchase_minimum_amount.model_res_partner
@@ -32,7 +32,7 @@ msgstr "Partner"
 #. module: purchase_minimum_amount
 #: model:ir.model.fields,field_description:purchase_minimum_amount.field_purchase_order_minimum_po_amount
 msgid "Purchase Minimum Amount"
-msgstr ""
+msgstr "Nabava minimalni iznos"
 
 #. module: purchase_minimum_amount
 #: model:ir.model,name:purchase_minimum_amount.model_purchase_order

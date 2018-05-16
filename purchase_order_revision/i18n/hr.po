@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-24 07:53+0000\n"
-"PO-Revision-Date: 2017-11-24 07:53+0000\n"
+"POT-Creation-Date: 2018-03-03 03:48+0000\n"
+"PO-Revision-Date: 2018-03-03 03:48+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. module: purchase_order_revision
 #: model:ir.model.fields,field_description:purchase_order_revision.field_purchase_order_active
 msgid "Active"
-msgstr ""
+msgstr "Aktivan"
 
 #. module: purchase_order_revision
 #: model:ir.model.fields,field_description:purchase_order_revision.field_purchase_order_current_revision_id

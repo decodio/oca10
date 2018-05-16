@@ -9,7 +9,7 @@
 
 {
     "name": "Modelo 349 AEAT",
-    "version": "10.0.2.1.1",
+    "version": "10.0.2.2.0",
     "author": "Pexego, "
               "Top Consultant, "
               "Tecnativa, "
@@ -21,7 +21,6 @@
     "depends": [
         "l10n_es_aeat",
         "l10n_es",
-        'account_invoice_refund_link',
     ],
     'data': [
         "data/aeat_349_map_data.xml",

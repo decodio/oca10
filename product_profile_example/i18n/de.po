@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2018
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-27 03:49+0000\n"
-"PO-Revision-Date: 2018-01-27 03:49+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
+"POT-Creation-Date: 2018-01-29 08:49+0000\n"
+"PO-Revision-Date: 2018-01-29 08:49+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,8 +58,10 @@ msgstr "Routen"
 #: model:ir.model.fields,help:product_profile_example.field_product_profile_sale_ok
 msgid "Specify if the product can be selected in a sales order line."
 msgstr ""
+"Geben Sie an, ob das Produkt in einer Verkaufsauftragsposition ausgewählt "
+"werden darf."
 
 #. module: product_profile_example
 #: model:ir.model,name:product_profile_example.model_product_profile
 msgid "product.profile"
-msgstr ""
+msgstr "product.profile"

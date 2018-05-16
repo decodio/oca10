@@ -29,10 +29,10 @@ class AccountPartialReconcile(models.Model):
             if invoice:
                 break
         # Limit value of reconciliation
-        if invoice and invoice.amount_net_pay:
+        if invoice and invoice.withholding_tax and invoice.amount_net_pay:
             # We must consider amount in foreign currency, if present
             # Note that this is always executed, for every reconciliation.
-            # Thus, we must not chnage amount when not in withholding tax case
+            # Thus, we must not change amount when not in withholding tax case
             amount = vals.get('amount_currency') or vals.get('amount')
             if amount > invoice.amount_net_pay:
                 vals.update({'amount': invoice.amount_net_pay})
@@ -41,13 +41,19 @@ class AccountPartialReconcile(models.Model):
         reconcile = super(AccountPartialReconcile, self).create(vals)
         # Avoid re-generate wt moves if the move line is an wt move.
         # It's possible if the user unreconciles a wt move under invoice
-        domain = [('credit_debit_line_id', 'in',
-                   (vals.get('debit_move_id'), vals.get('credit_move_id')))]
-        wt_existing_moves = self.env['withholding.tax.move'].search(domain)
+        ld = self.env['account.move.line'].browse(vals.get('debit_move_id'))
+        lc = self.env['account.move.line'].browse(vals.get('credit_move_id'))
+
+        if lc.withholding_tax_generated_by_move_id \
+                or ld.withholding_tax_generated_by_move_id:
+            is_wt_move = True
+        else:
+            is_wt_move = False
         # Wt moves creation
         if invoice.withholding_tax_line_ids \
                 and not self._context.get('no_generate_wt_move')\
-                and not wt_existing_moves:
+                and not is_wt_move:
+                # and not wt_existing_moves\
             reconcile.generate_wt_moves()
 
         return reconcile
@@ -91,7 +97,7 @@ class AccountPartialReconcile(models.Model):
             payment_lines = wt_st.withholding_tax_id.payment_term.compute(
                 amount_wt,
                 rec_line_statement.date or False)
-            if payment_lines:
+            if payment_lines and payment_lines[0]:
                 p_date_maturity = payment_lines[0][0][0]
             wt_move_vals = {
                 'statement_id': wt_st.id,
@@ -242,6 +248,34 @@ class AccountMoveLine(models.Model):
         'withholding.tax', string='Withholding Tax')
     withholding_tax_base = fields.Float(string='Withholding Tax Base')
     withholding_tax_amount = fields.Float(string='Withholding Tax Amount')
+    withholding_tax_generated_by_move_id = fields.Many2one(
+        'account.move', string='Withholding Tax generated from', readonly=True)
+
+    @api.multi
+    def remove_move_reconcile(self):
+        # When unreconcile a payment with a wt move linked, it will be
+        # unreconciled also the wt account move
+        for account_move_line in self:
+            rec_move_ids = self.env['account.partial.reconcile']
+            domain = [('withholding_tax_generated_by_move_id', '=',
+                       account_move_line.move_id.id)]
+            wt_mls = self.env['account.move.line'].search(domain)
+            # Avoid wt move not in due state
+            domain = [('wt_account_move_id', 'in',
+                       wt_mls.mapped('move_id').ids)]
+            wt_moves = self.env['withholding.tax.move'].search(domain)
+            wt_moves.check_unlink()
+
+            for wt_ml in wt_mls:
+                rec_move_ids += wt_ml.matched_debit_ids
+                rec_move_ids += wt_ml.matched_credit_ids
+            rec_move_ids.unlink()
+            # Delete wt move
+            for wt_move in wt_mls.mapped('move_id'):
+                wt_move.button_cancel()
+                wt_move.unlink()
+
+        return super(AccountMoveLine, self).remove_move_reconcile()
 
 
 class AccountFiscalPosition(models.Model):

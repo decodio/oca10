@@ -28,19 +28,19 @@ class TestAccountAnalyticNoLines(SavepointCase):
 
         # Instance: accounts
         cls.account_440000 = cls.account_account.create({
-            'name': u'Entreprises liées',
+            'name': 'Related companies',
             'code': '440000_demo',
             'user_type_id':
                 cls.env.ref('account.data_account_type_payable').id,
             'reconcile': True})
         cls.account_550001 = cls.account_account.create({
-            'name': 'Banque',
+            'name': 'Bank',
             'code': '550001_demo',
             'user_type_id':
                 cls.env.ref('account.data_account_type_liquidity').id,
             'reconcile': False})
         cls.account_600000 = cls.account_account.create({
-            'name': u'Achats de matières premières',
+            'name': 'Purchasing raw materials',
             'code': '600000_demo',
             'user_type_id':
                 cls.env.ref('account.data_account_type_expenses').id,
@@ -104,7 +104,7 @@ class TestAccountAnalyticNoLines(SavepointCase):
 
     def test_create_analytic_lines(self):
         """
-        Test the expected result when the method ´create_analytic_lines` is
+        Test the expected result when the method 'create_analytic_lines' is
         called on an invoice.
         The expected result is that no analytic line has been created
         for this invoice.
@@ -114,14 +114,13 @@ class TestAccountAnalyticNoLines(SavepointCase):
         for line in move_lines:
             line.create_analytic_lines()
 
-        analytic_lines =\
-            self.account_analytic_line.search([
-                ('move_id', 'in', move_lines.ids)]).ids
+        analytic_lines = self.account_analytic_line.search([
+            ('move_id', 'in', move_lines.ids)]).ids
         self.assertFalse(analytic_lines)
 
     def test_finalize_invoice_move_lines_1(self):
         """
-        Test the expected result when the method ´finalize_invoice_move_lines`
+        Test the expected result when the method 'finalize_invoice_move_lines'
         is called on an invoice.
         The expected result is that no analytic line has been created
         for this invoice.
@@ -135,7 +134,7 @@ class TestAccountAnalyticNoLines(SavepointCase):
 
     def test_finalize_invoice_move_lines_2(self):
         """
-        Test the expected result when the method ´finalize_invoice_move_lines`
+        Test the expected result when the method 'finalize_invoice_move_lines'
         is called on an invoice with only one line with quantity == 0.
         The expected result is that no analytic line has been created
         for this invoice.

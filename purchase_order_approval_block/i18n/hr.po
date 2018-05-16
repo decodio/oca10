@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-24 07:53+0000\n"
-"PO-Revision-Date: 2017-11-24 07:53+0000\n"
+"POT-Creation-Date: 2018-03-03 03:48+0000\n"
+"PO-Revision-Date: 2018-03-03 03:48+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 #. module: purchase_order_approval_block
 #: model:ir.model.fields,field_description:purchase_order_approval_block.field_purchase_approval_block_reason_active
 msgid "Active"
-msgstr ""
+msgstr "Aktivan"
 
 #. module: purchase_order_approval_block
 #: model:ir.model.fields,field_description:purchase_order_approval_block.field_purchase_order_approval_block_id
@@ -90,7 +90,7 @@ msgstr "Zadnje ažuriranje na"
 #. module: purchase_order_approval_block
 #: model:ir.model.fields,field_description:purchase_order_approval_block.field_purchase_approval_block_reason_name
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: purchase_order_approval_block
 #: code:addons/purchase_order_approval_block/models/purchase_order.py:46
