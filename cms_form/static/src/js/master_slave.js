@@ -8,11 +8,10 @@ odoo.define('cms_form.master_slave', function (require) {
     // TODO: this does not work ATM :(
     // var pyeval = require('web.pyeval');
     var animation = require("web_editor.snippets.animation");
-    var $ = require("$");
 
-    return animation.registry.CMSFormMasterSlave = animation.Class.extend({
+    animation.registry.CMSFormMasterSlave = animation.Class.extend({
       selector: ".cms_form_wrapper form",
-      start: function (editable_mode) {
+      start: function () {
         this.data = this.$el.data('form');
         this.setup_handlers();
         this.load_master_slave();
@@ -35,11 +34,23 @@ odoo.define('cms_form.master_slave', function (require) {
             var handler = self.handlers[action];
             if (handler) {
               $master_input.on('change', function(){
-                handler($(this), mapping) }
-              ).filter(':selected,:checked,[type=text]').trigger('change'); // trigger change only for specific inputs
+                var $input = $(this),
+                    val = $input.val();
+                if ($input.is(':checkbox')) {
+                  // value == 'on' => true/false
+                  val = $input.is(':checked');
+                }
+                $.each(mapping, function(slave_fname, values){
+                  if (_.contains(values, val)) {
+                    handler(slave_fname)
+                  }
+                });
+              }).filter(
+                'select,[type=checkbox],[type=radio]:checked,[type=text]'
+              ).trigger('change'); // trigger change to apply maste/slave rules at load
             }
-          })
-        })
+          });
+        });
       },
       // TODO: merge these functions as they are pretty much equals
       handle_hide: function($input, mapping){
