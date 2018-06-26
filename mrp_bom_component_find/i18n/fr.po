@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mrp_bom_component_find
+# 	* mrp_bom_component_find
 #
 msgid ""
 msgstr ""
@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2018-04-23 07:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -23,6 +24,8 @@ msgstr "Annuler"
 #. module: mrp_bom_component_find
 #: model:ir.model.fields,field_description:mrp_bom_component_find.field_mrp_bom_component_find_line_component_id
 #: model:ir.model.fields,field_description:mrp_bom_component_find.field_mrp_bom_component_find_wizard_product_id
+#: model:ir.ui.view,arch_db:mrp_bom_component_find.product_product_form_view_use_case_button
+#: model:ir.ui.view,arch_db:mrp_bom_component_find.product_template_form_view_use_case_button
 msgid "Component"
 msgstr "Composant"
 
@@ -30,8 +33,6 @@ msgstr "Composant"
 #: model:ir.actions.act_window,name:mrp_bom_component_find.mrp_bom_component_find_wizard_action
 #: model:ir.ui.menu,name:mrp_bom_component_find.mrp_bom_component_find_menu
 #: model:ir.ui.view,arch_db:mrp_bom_component_find.mrp_bom_component_find_wizard_form
-#: model:ir.ui.view,arch_db:mrp_bom_component_find.product_product_form_view_use_case_button
-#: model:ir.ui.view,arch_db:mrp_bom_component_find.product_template_form_view_use_case_button
 msgid "Component find"
 msgstr "Recherche composant"
 
@@ -127,4 +128,3 @@ msgstr "mrp.bom.component.find.wizard"
 #: model:ir.ui.view,arch_db:mrp_bom_component_find.mrp_bom_component_find_wizard_form
 msgid "or"
 msgstr "ou"
-

@@ -5,7 +5,7 @@
 {
     'name': 'Module Auto Update',
     'summary': 'Automatically update Odoo modules',
-    'version': '10.0.2.0.2',
+    'version': '10.0.2.0.3',
     'category': 'Extra Tools',
     'website': 'https://github.com/OCA/server-tools',
     'author': 'LasLabs, '
@@ -23,4 +23,6 @@
     'data': [
         'data/cron_data_deprecated.xml',
     ],
+    'development_status': 'Production/Stable',
+    'maintainers': ['sbidoul'],
 }

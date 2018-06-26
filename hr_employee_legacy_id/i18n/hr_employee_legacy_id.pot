@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 09:30+0000\n"
-"PO-Revision-Date: 2015-07-27 09:30+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,7 +19,12 @@ msgid "Employee"
 msgstr ""
 
 #. module: hr_employee_legacy_id
-#: field:hr.employee,legacy_no:0
+#: model:ir.model.fields,field_description:hr_employee_legacy_id.field_hr_employee_legacy_no
 msgid "Legacy ID"
+msgstr ""
+
+#. module: hr_employee_legacy_id
+#: model:ir.ui.view,arch_db:hr_employee_legacy_id.view_employee_form
+msgid "Legacy No"
 msgstr ""
 

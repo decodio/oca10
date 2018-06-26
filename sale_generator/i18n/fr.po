@@ -10,43 +10,50 @@ msgstr ""
 "PO-Revision-Date: 2015-09-07 01:44+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
 #. module: sale_generator
-#: field:sale.generator,company_id:0
+#: code:addons/sale_generator/models/sale_generator.py:63
+#, python-format
+msgid "Can't generate sale order without customer "
+msgstr ""
+
+#. module: sale_generator
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_company_id
 msgid "Company"
 msgstr "Société"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
 msgid "Confirm All Sale Generated"
 msgstr "Confirmer toute les commandes"
 
 #. module: sale_generator
-#: view:res.partner:sale_generator.view_partner_form
+#: model:ir.ui.view,arch_db:sale_generator.view_partner_form
 msgid "Confirm and create a new customer"
 msgstr "Valider et créer un nouveau client"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
 msgid "Create Customer"
 msgstr "Créé un client"
 
 #. module: sale_generator
-#: field:sale.generator,create_uid:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: sale_generator
-#: field:sale.generator,create_date:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_create_date
 msgid "Created on"
 msgstr "créé le"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
 msgid "Customer"
 msgstr "Client"
 
@@ -56,9 +63,14 @@ msgid "Customers"
 msgstr "Clients"
 
 #. module: sale_generator
-#: field:sale.generator,date:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_date_order
 msgid "Date"
 msgstr "Date"
+
+#. module: sale_generator
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: sale_generator
 #: selection:sale.generator,state:0
@@ -77,49 +89,50 @@ msgstr "Génération de commande"
 
 #. module: sale_generator
 #: model:ir.actions.act_window,name:sale_generator.action_sale_generator
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_name
+#: model:ir.model.fields,field_description:sale_generator.field_sale_order_generator_id
 #: model:ir.ui.menu,name:sale_generator.choix_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
-#: field:sale.generator,name:0
-#: field:sale.order,generator_id:0
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
 msgid "Generator"
 msgstr "Générateur"
 
 #. module: sale_generator
-#: field:sale.generator,id:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_id
 msgid "ID"
 msgstr "ID"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
-msgid "In order to add customer you have two possibility:"
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
+#, fuzzy
+msgid "In order to add customer you have two possibilities:"
 msgstr "Pour ajouter un client vous avez deux posibilités :"
 
 #. module: sale_generator
-#: field:sale.order,is_template:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_order_is_template
 msgid "Is template"
 msgstr "Est un modèle"
 
 #. module: sale_generator
-#: field:sale.generator,write_uid:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator___last_update
+#, fuzzy
+msgid "Last Modified on"
+msgstr "Dernière mise à jour"
+
+#. module: sale_generator
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
 
 #. module: sale_generator
-#: field:sale.generator,write_date:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour"
 
 #. module: sale_generator
 #: model:ir.model,name:sale_generator.model_res_partner
-#: view:sale.generator:sale_generator.sale_generator_xml_tree
-#: field:sale.generator,partner_ids:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_partner_ids
 msgid "Partner"
 msgstr "Partenaire"
-
-#. module: sale_generator
-#: view:sale.order:sale_generator.view_sale_order_form
-msgid "Quotation"
-msgstr "Devis"
 
 #. module: sale_generator
 #: model:ir.actions.act_window,name:sale_generator.act_sale_generator_2_sale_order
@@ -127,13 +140,13 @@ msgid "Sale Order"
 msgstr "Commande"
 
 #. module: sale_generator
-#: field:sale.generator,tmpl_sale_id:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_tmpl_sale_id
 msgid "Sale Template"
 msgstr "Modèle de commande"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
-#: field:sale.generator,sale_ids:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_sale_ids
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
 msgid "Sales"
 msgstr "Ventes"
 
@@ -143,33 +156,60 @@ msgid "Sales Order"
 msgstr "Bon de commande"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
 msgid "Start Generating Sale"
 msgstr "Commencer la génération de commande"
 
 #. module: sale_generator
-#: field:sale.generator,state:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_state
 msgid "State"
 msgstr "Etat"
 
 #. module: sale_generator
-#: view:sale.order:sale_generator.view_sale_order_form
-msgid "Template"
-msgstr "Modèle"
+#: model:ir.model.fields,help:sale_generator.field_sale_generator_company_id
+msgid "The company is automatically set from your user preferences."
+msgstr ""
 
 #. module: sale_generator
-#: field:sale.generator,warehouse_id:0
+#: model:ir.model.fields,field_description:sale_generator.field_sale_generator_warehouse_id
 msgid "Warehouse"
 msgstr "Entrepot"
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
-msgid "adding an existing customer by searching in your database\n"
-"                                for that you have to click on add item at the end of the list."
-msgstr "ajouter un client existant en cherchant dans votre base\n"
-"                                pour cela cliqué sur 'ajouté un élément' en bas de la liste des clients."
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
+#, fuzzy
+msgid ""
+"adding an existing customer by searching in your\n"
+"                            database\n"
+"                            for that you have to click on add item at the "
+"end\n"
+"                            of the list."
+msgstr ""
+"ajouter un client existant en cherchant dans votre base\n"
+"                                pour cela cliqué sur 'ajouté un élément' en "
+"bas de la liste des clients."
 
 #. module: sale_generator
-#: view:sale.generator:sale_generator.view_sale_generator_form
-msgid "creating massively customer by launching the following wizard"
+#: model:ir.ui.view,arch_db:sale_generator.view_partner_form
+msgid "close & refresh generator"
+msgstr ""
+
+#. module: sale_generator
+#: model:ir.ui.view,arch_db:sale_generator.view_sale_generator_form
+#, fuzzy
+msgid ""
+"creating massively customer by launching the\n"
+"                            following wizard:"
 msgstr "créer en masse des clients en lançant assistant de création rapide"
+
+#. module: sale_generator
+#: model:ir.model,name:sale_generator.model_sale_generator
+#, fuzzy
+msgid "sale.generator"
+msgstr "Générateur"
+
+#~ msgid "Quotation"
+#~ msgstr "Devis"
+
+#~ msgid "Template"
+#~ msgstr "Modèle"

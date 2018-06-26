@@ -19,7 +19,7 @@ msgstr ""
 
 #. module: website_form_builder
 #. openerp-web
-#: code:addons/website_form_builder/static/src/js/snippets.js:317
+#: code:addons/website_form_builder/static/src/js/snippets.js:347
 #, python-format
 msgid "%s help block"
 msgstr "Bloque de ayuda para %s"
@@ -46,7 +46,7 @@ msgstr "<i class=\"fa fa-plus\"/> Añadir campo del modelo"
 
 #. module: website_form_builder
 #. openerp-web
-#: code:addons/website_form_builder/static/src/js/widgets.js:106
+#: code:addons/website_form_builder/static/src/js/widgets.js:104
 #, python-format
 msgid "Add Model Fields"
 msgstr "Añadir campo del modelo"
@@ -67,7 +67,7 @@ msgstr "Escoja la acción de este formulario"
 
 #. module: website_form_builder
 #. openerp-web
-#: code:addons/website_form_builder/static/src/js/snippets.js:310
+#: code:addons/website_form_builder/static/src/js/snippets.js:340
 #, python-format
 msgid "Custom %s field"
 msgstr "Campo %s personalizado"
@@ -94,7 +94,7 @@ msgstr "Subida de archivos"
 
 #. module: website_form_builder
 #. openerp-web
-#: code:addons/website_form_builder/static/src/js/widgets.js:75
+#: code:addons/website_form_builder/static/src/js/widgets.js:73
 #, python-format
 msgid "Form Settings"
 msgstr "Configuración del formulario"
@@ -111,13 +111,15 @@ msgstr "Selección múltiple"
 
 #. module: website_form_builder
 #. openerp-web
-#: code:addons/website_form_builder/static/src/js/snippets.js:313
+#: code:addons/website_form_builder/static/src/js/snippets.js:343
 #, python-format
 msgid "Option %d"
 msgstr "Opción %d"
 
 #. module: website_form_builder
-#: model:ir.ui.view,arch_db:website_form_builder.s_website_form
+#. openerp-web
+#: code:addons/website_form_builder/static/src/xml/snippets.xml:220
+#, python-format
 msgid "Send"
 msgstr "Enviar"
 
@@ -133,7 +135,7 @@ msgstr "Establecer valor por defecto"
 
 #. module: website_form_builder
 #. openerp-web
-#: code:addons/website_form_builder/static/src/js/widgets.js:35
+#: code:addons/website_form_builder/static/src/js/widgets.js:33
 #, python-format
 msgid "Set field's default value"
 msgstr "Establecer el valor por defecto para el campo"

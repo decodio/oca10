@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_contact_nutrition_goal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_contact_nutrition_goal
+#: selection:res.partner,weight_goal:0
+msgid "Gain weight"
+msgstr ""
+
+#. module: partner_contact_nutrition_goal
+#: model:ir.model.fields,field_description:partner_contact_nutrition_goal.field_res_partner_alias_weight_goal
+#: model:ir.model.fields,field_description:partner_contact_nutrition_goal.field_res_partner_weight_goal
+#: model:ir.model.fields,field_description:partner_contact_nutrition_goal.field_res_users_weight_goal
+msgid "Goal"
+msgstr ""
+
+#. module: partner_contact_nutrition_goal
+#: selection:res.partner,weight_goal:0
+msgid "Lose weight"
+msgstr ""
+
+#. module: partner_contact_nutrition_goal
+#: selection:res.partner,weight_goal:0
+msgid "Maintain weight"
+msgstr ""
+
+#. module: partner_contact_nutrition_goal
+#: model:ir.model,name:partner_contact_nutrition_goal.model_res_partner
+msgid "Partner"
+msgstr ""
+
