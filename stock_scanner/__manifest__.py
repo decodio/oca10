@@ -5,7 +5,7 @@
 {
     'name': 'Stock Scanner',
     'summary': 'Allows managing barcode readers with simple scenarios',
-    'version': '10.0.1.0.4',
+    'version': '10.0.1.1.0',
     'category': 'Generic Modules/Inventory Control',
     'website': 'https://odoo-community.org/',
     'author': 'SYLEAM,'
@@ -25,6 +25,7 @@
         'data/ir_cron.xml',
         'data/scenarios/Login/Login.scenario',
         'data/scenarios/Logout/Logout.scenario',
+        'data/scenarios/Stock/Stock.scenario',
         'wizard/stock_scanner_config_wizard_view.xml',
         'views/menu.xml',
         'views/scanner_scenario.xml',
