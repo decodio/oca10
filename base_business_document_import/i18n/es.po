@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * base_business_document_import
-# 
+#
 # Translators:
 # enjolras <yo@miguelrevilla.com>, 2018
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2018-03-12 01:43+0000\n"
 "Last-Translator: enjolras <yo@miguelrevilla.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_business_document_import
@@ -41,10 +41,9 @@ msgstr ""
 #, python-format
 msgid ""
 "<p>Odoo couldn't find any unit of measure corresponding to the following "
-"information extracted from the business document:</p><ul><li>UNECE code: "
-"%s</li><li>Name of the unit of measure: %s</li></ul><p>So the unit of "
-"measure 'Unit(s)' has been used. <em>You may have to change it "
-"manually.</em></p>"
+"information extracted from the business document:</p><ul><li>UNECE code: %s</"
+"li><li>Name of the unit of measure: %s</li></ul><p>So the unit of measure "
+"'Unit(s)' has been used. <em>You may have to change it manually.</em></p>"
 msgstr ""
 
 #. module: base_business_document_import
@@ -73,7 +72,7 @@ msgid ""
 msgstr ""
 
 #. module: base_business_document_import
-#: code:addons/base_business_document_import/models/business_document_import.py:264
+#: code:addons/base_business_document_import/models/business_document_import.py:265
 #, python-format
 msgid "IBAN <b>%s</b> is not valid, so it has been ignored."
 msgstr ""
@@ -98,14 +97,15 @@ msgstr ""
 #: code:addons/base_business_document_import/models/business_document_import.py:168
 #, python-format
 msgid ""
-"Odoo couldn't find any %s corresponding to the following information extracted from the business document:\n"
-"Country code: %s\n"
-"State code: %s\n"
+"Odoo couldn't find any %s corresponding to the following information "
+"extracted from the business document:\n"
+"Name: %s\n"
 "VAT number: %s\n"
+"Reference: %s\n"
 "E-mail: %s\n"
 "Website: %s\n"
-"Reference: %s\n"
-"Name: %s\n"
+"State code: %s\n"
+"Country code: %s\n"
 msgstr ""
 
 #. module: base_business_document_import
@@ -136,7 +136,8 @@ msgstr ""
 #: code:addons/base_business_document_import/models/business_document_import.py:337
 #, python-format
 msgid ""
-"Odoo couldn't find any product corresponding to the following information extracted from the business document: Barcode: %s\n"
+"Odoo couldn't find any product corresponding to the following information "
+"extracted from the business document: Barcode: %s\n"
 "Product code: %s\n"
 "Supplier: %s\n"
 msgstr ""
@@ -145,7 +146,9 @@ msgstr ""
 #: code:addons/base_business_document_import/models/business_document_import.py:539
 #, python-format
 msgid ""
-"Odoo couldn't find any tax with 'Tax Application' = '%s' and 'Tax Included in Price' = '%s' which correspond to the following information extracted from the business document:\n"
+"Odoo couldn't find any tax with 'Tax Application' = '%s' and 'Tax Included "
+"in Price' = '%s' which correspond to the following information extracted "
+"from the business document:\n"
 "UNECE Tax Type code: %s\n"
 "UNECE Tax Category code: %s\n"
 "Tax amount: %s %s"
@@ -163,12 +166,12 @@ msgstr ""
 #: code:addons/base_business_document_import/models/business_document_import.py:151
 #, python-format
 msgid ""
-"The %s has been identified by the domain name '%s' so please check carefully"
-" that the %s is correct."
+"The %s has been identified by the domain name '%s' so please check carefully "
+"that the %s is correct."
 msgstr ""
 
 #. module: base_business_document_import
-#: code:addons/base_business_document_import/models/business_document_import.py:117
+#: code:addons/base_business_document_import/models/business_document_import.py:112
 #, python-format
 msgid ""
 "The analysis of the business document returned '%s' as %s VAT number. But "
@@ -177,7 +180,7 @@ msgstr ""
 
 #. module: base_business_document_import
 #: code:addons/base_business_document_import/models/business_document_import.py:89
-#: code:addons/base_business_document_import/models/business_document_import.py:227
+#: code:addons/base_business_document_import/models/business_document_import.py:228
 #, python-format
 msgid ""
 "The analysis of the business document returned '%s' as country code. But "
@@ -238,8 +241,8 @@ msgstr ""
 #: code:addons/base_business_document_import/models/business_document_import.py:291
 #, python-format
 msgid ""
-"The bank account <b>IBAN %s</b> has been automatically added on the supplier"
-" <b>%s</b>"
+"The bank account <b>IBAN %s</b> has been automatically added on the supplier "
+"<b>%s</b>"
 msgstr ""
 
 #. module: base_business_document_import

@@ -267,7 +267,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             source: vectorSource,
             title: cfg.name,
             active_on_startup: cfg.active_on_startup,
-            // opacity: 0.8, //TODO cenfiguarble opacity to be applied on
             style: styleInfo.style,
         });
         lv.on('change:visible', function(e){
@@ -278,6 +277,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             }
         });
         this.vectorSources.push(vectorSource);
+        if (cfg.layer_opacity){
+            lv.setOpacity(cfg.layer_opacity);
+        }
         return lv;
     },
 
@@ -436,7 +438,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 ];
                 return {
                      style : function(feature, resolution) {
-                          var label_text = feature.values_.attributes.label.;
+                          var label_text = feature.values_.attributes.label;
                           if(label_text === false){
                             label_text = '';
                           }

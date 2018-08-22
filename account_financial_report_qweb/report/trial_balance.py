@@ -17,6 +17,7 @@ class TrialBalanceReport(models.TransientModel):
     """
 
     _name = 'report_trial_balance_qweb'
+    _inherit = 'report_qweb_abstract'
 
     # Filters fields, used for data computation
     date_from = fields.Date()
@@ -28,6 +29,7 @@ class TrialBalanceReport(models.TransientModel):
     company_id = fields.Many2one(comodel_name='res.company')
     filter_account_ids = fields.Many2many(comodel_name='account.account')
     filter_partner_ids = fields.Many2many(comodel_name='res.partner')
+    filter_journal_ids = fields.Many2many(comodel_name='account.journal')
     show_partner_details = fields.Boolean()
 
     # General Ledger Report Data fields,
@@ -46,6 +48,7 @@ class TrialBalanceReport(models.TransientModel):
 class TrialBalanceReportAccount(models.TransientModel):
 
     _name = 'report_trial_balance_qweb_account'
+    _inherit = 'report_qweb_abstract'
     _order = 'code ASC'
 
     report_id = fields.Many2one(
@@ -86,6 +89,7 @@ class TrialBalanceReportAccount(models.TransientModel):
 class TrialBalanceReportPartner(models.TransientModel):
 
     _name = 'report_trial_balance_qweb_partner'
+    _inherit = 'report_qweb_abstract'
 
     report_account_id = fields.Many2one(
         comodel_name='report_trial_balance_qweb_account',
@@ -170,6 +174,7 @@ class TrialBalanceReportCompute(models.TransientModel):
             'company_id': self.company_id.id,
             'filter_account_ids': [(6, 0, account_ids.ids)],
             'filter_partner_ids': [(6, 0, self.filter_partner_ids.ids)],
+            'filter_journal_ids': [(6, 0, self.filter_journal_ids.ids)],
             'fy_start_date': self.fy_start_date,
         }
 

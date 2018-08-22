@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 FactorLibre - Ismael Calvo <ismael.calvo@factorlibre.com>
 # Copyright 2017 Tecnativa - Pedro M. Baeza
+# Copyright 2018 PESOL - Angel Moya <angel.moya@pesol.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
 import base64
@@ -38,10 +39,11 @@ def _deep_sort(obj):
     return _sorted
 
 
-class TestL10nEsAeatSii(common.SavepointCase):
+class TestL10nEsAeatSiiBase(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestL10nEsAeatSii, cls).setUpClass()
+        super(TestL10nEsAeatSiiBase, cls).setUpClass()
+        cls.maxDiff = None
         cls.partner = cls.env['res.partner'].create({
             'name': 'Test partner',
             'vat': 'ESF35999705'
@@ -77,7 +79,7 @@ class TestL10nEsAeatSii(common.SavepointCase):
         cls.env.user.company_id.sii_description_method = 'manual'
         cls.invoice = cls.env['account.invoice'].create({
             'partner_id': cls.partner.id,
-            'date_invoice': fields.Date.today(),
+            'date_invoice': '2018-02-01',
             'type': 'out_invoice',
             'account_id': cls.partner.property_account_payable_id.id,
             'invoice_line_ids': [
@@ -100,6 +102,12 @@ class TestL10nEsAeatSii(common.SavepointCase):
                 'l10n_es.account_chart_template_pymes').id,
             'vat': 'ESU2687761C',
         })
+
+
+class TestL10nEsAeatSii(TestL10nEsAeatSiiBase):
+    @classmethod
+    def setUpClass(cls):
+        super(TestL10nEsAeatSii, cls).setUpClass()
         cls.invoice.action_invoice_open()
         cls.invoice.number = 'INV001'
         cls.invoice.origin_invoice_ids = cls.invoice.copy()
@@ -124,13 +132,13 @@ class TestL10nEsAeatSii(common.SavepointCase):
         self.assertTrue(self.invoice.invoice_jobs_ids)
 
     def _get_invoices_test(self, invoice_type, special_regime):
-        str_today = self.invoice._change_date_format(fields.Date.today())
         expedida_recibida = 'FacturaExpedida'
         if self.invoice.type in ['in_invoice', 'in_refund']:
             expedida_recibida = 'FacturaRecibida'
+        sign = -1.0 if invoice_type == 'R4' else 1.0
         res = {
             'IDFactura': {
-                'FechaExpedicionFacturaEmisor': str_today,
+                'FechaExpedicionFacturaEmisor': '01-02-2018',
             },
             expedida_recibida: {
                 'TipoFactura': invoice_type,
@@ -140,12 +148,11 @@ class TestL10nEsAeatSii(common.SavepointCase):
                 },
                 'DescripcionOperacion': u'/',
                 'ClaveRegimenEspecialOTrascendencia': special_regime,
-                'ImporteTotal': 110,
+                'ImporteTotal': sign * 110,
             },
-            'PeriodoImpositivo': {
-                'Periodo': '%02d' % fields.Date.from_string(
-                    fields.Date.today()).month,
-                'Ejercicio': fields.Date.from_string(fields.Date.today()).year,
+            'PeriodoLiquidacion': {
+                'Periodo': '02',
+                'Ejercicio': 2018,
             }
         }
         if self.invoice.type in ['out_invoice', 'out_refund']:
@@ -155,7 +162,7 @@ class TestL10nEsAeatSii(common.SavepointCase):
             })
             res[expedida_recibida].update({
                 'TipoDesglose': {},
-                'ImporteTotal': 110.0,
+                'ImporteTotal': sign * 110.0,
             })
         else:
             res['IDFactura'].update({
@@ -169,23 +176,17 @@ class TestL10nEsAeatSii(common.SavepointCase):
                     'DesgloseIVA': {
                         'DetalleIVA': [
                             {
-                                'BaseImponible': 100.0,
-                                'CuotaSoportada': 10.0,
+                                'BaseImponible': sign * 100.0,
+                                'CuotaSoportada': sign * 10.0,
                                 'TipoImpositivo': '10.0',
                             },
                         ],
                     },
                 },
-                "CuotaDeducible": 10,
+                "CuotaDeducible": sign * 10,
             })
         if invoice_type == 'R4':
-            res[expedida_recibida].update({
-                'TipoRectificativa': 'S',
-                'ImporteRectificacion': {
-                    'BaseRectificada': 100.0,
-                    'CuotaRectificada': 10.0,
-                }
-            })
+            res[expedida_recibida]['TipoRectificativa'] = 'I'
         return res
 
     def test_get_invoice_data(self):
@@ -202,7 +203,7 @@ class TestL10nEsAeatSii(common.SavepointCase):
                 _deep_sort(test_out_inv.get(key)),
             )
         self.invoice.type = 'out_refund'
-        self.invoice.sii_refund_type = 'S'
+        self.invoice.sii_refund_type = 'I'
         invoices = self.invoice._get_sii_invoice_dict()
         test_out_refund = self._get_invoices_test('R4', '01')
         for key in invoices.keys():
@@ -220,7 +221,7 @@ class TestL10nEsAeatSii(common.SavepointCase):
                 _deep_sort(test_in_invoice.get(key)),
             )
         self.invoice.type = 'in_refund'
-        self.invoice.sii_refund_type = 'S'
+        self.invoice.sii_refund_type = 'I'
         self.invoice.reference = 'sup0001'
         self.invoice.compute_taxes()
         self.invoice.origin_invoice_ids.type = 'in_invoice'

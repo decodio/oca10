@@ -385,7 +385,7 @@ msgid "Centralized"
 msgstr ""
 
 #. module: account_financial_report_qweb
-#: code:addons/account_financial_report_qweb/report/general_ledger.py:1217
+#: code:addons/account_financial_report_qweb/report/general_ledger.py:1234
 #, python-format
 msgid "Centralized Entries"
 msgstr ""
@@ -760,6 +760,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_display_name
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_move_line_display_name
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_partner_display_name
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_qweb_abstract_display_name
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_account_display_name
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_display_name
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_partner_display_name
@@ -888,6 +889,17 @@ msgstr ""
 #. module: account_financial_report_qweb
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_general_ledger_report_wizard_cost_center_ids
 msgid "Filter cost centers"
+msgstr ""
+
+#. module: account_financial_report_qweb
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_general_ledger_qweb_filter_journal_ids
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_filter_journal_ids
+msgid "Filter journal ids"
+msgstr ""
+
+#. module: account_financial_report_qweb
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_general_ledger_report_wizard_journal_ids
+msgid "Filter journals"
 msgstr ""
 
 #. module: account_financial_report_qweb
@@ -1080,6 +1092,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_id
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_move_line_id
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_partner_id
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_qweb_abstract_id
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_account_id
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_id
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_partner_id
@@ -1185,6 +1198,7 @@ msgstr ""
 
 #. module: account_financial_report_qweb
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_journal_qweb_journal_ids
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_trial_balance_report_wizard_journal_ids
 msgid "Journal ids"
 msgstr ""
 
@@ -1228,6 +1242,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_account___last_update
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_move_line___last_update
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_open_items_qweb_partner___last_update
+#: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_qweb_abstract___last_update
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb___last_update
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_account___last_update
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_trial_balance_qweb_partner___last_update
@@ -1379,10 +1394,10 @@ msgid "No group"
 msgstr ""
 
 #. module: account_financial_report_qweb
-#: code:addons/account_financial_report_qweb/report/general_ledger.py:680
-#: code:addons/account_financial_report_qweb/report/general_ledger.py:977
-#: code:addons/account_financial_report_qweb/report/open_items.py:302
-#: code:addons/account_financial_report_qweb/report/open_items.py:551
+#: code:addons/account_financial_report_qweb/report/general_ledger.py:685
+#: code:addons/account_financial_report_qweb/report/general_ledger.py:982
+#: code:addons/account_financial_report_qweb/report/open_items.py:306
+#: code:addons/account_financial_report_qweb/report/open_items.py:555
 #, python-format
 msgid "No partner allocated"
 msgstr ""
@@ -2050,6 +2065,11 @@ msgstr ""
 #. module: account_financial_report_qweb
 #: model:ir.model,name:account_financial_report_qweb.model_report_open_items_qweb_partner
 msgid "report_open_items_qweb_partner"
+msgstr ""
+
+#. module: account_financial_report_qweb
+#: model:ir.model,name:account_financial_report_qweb.model_report_qweb_abstract
+msgid "report_qweb_abstract"
 msgstr ""
 
 #. module: account_financial_report_qweb

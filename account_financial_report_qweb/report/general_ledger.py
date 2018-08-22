@@ -22,6 +22,7 @@ class GeneralLedgerReport(models.TransientModel):
     """
 
     _name = 'report_general_ledger_qweb'
+    _inherit = 'report_qweb_abstract'
 
     # Filters fields, used for data computation
     date_from = fields.Date()
@@ -33,6 +34,7 @@ class GeneralLedgerReport(models.TransientModel):
     company_id = fields.Many2one(comodel_name='res.company')
     filter_account_ids = fields.Many2many(comodel_name='account.account')
     filter_partner_ids = fields.Many2many(comodel_name='res.partner')
+    filter_journal_ids = fields.Many2many(comodel_name='account.journal')
     filter_cost_center_ids = fields.Many2many(
         comodel_name='account.analytic.account'
     )
@@ -71,6 +73,7 @@ class GeneralLedgerReport(models.TransientModel):
 class GeneralLedgerReportAccount(models.TransientModel):
 
     _name = 'report_general_ledger_qweb_account'
+    _inherit = 'report_qweb_abstract'
     _order = 'code ASC'
 
     report_id = fields.Many2one(
@@ -115,6 +118,7 @@ class GeneralLedgerReportAccount(models.TransientModel):
 class GeneralLedgerReportPartner(models.TransientModel):
 
     _name = 'report_general_ledger_qweb_partner'
+    _inherit = 'report_qweb_abstract'
 
     report_account_id = fields.Many2one(
         comodel_name='report_general_ledger_qweb_account',
@@ -163,6 +167,7 @@ ORDER BY
 class GeneralLedgerReportMoveLine(models.TransientModel):
 
     _name = 'report_general_ledger_qweb_move_line'
+    _inherit = 'report_qweb_abstract'
 
     report_account_id = fields.Many2one(
         comodel_name='report_general_ledger_qweb_account',
@@ -1103,6 +1108,11 @@ AND
 AND
     rp.partner_id IS NULL
         """
+        if self.filter_journal_ids:
+            query_inject_move_line += """
+AND
+    j.id IN %s
+            """
         if is_account_line:
             query_inject_move_line += """
 ORDER BY
@@ -1137,6 +1147,10 @@ ORDER BY
             self.date_from,
             self.date_to,
         )
+        if self.filter_journal_ids:
+            query_inject_move_line_params += (tuple(
+                self.filter_journal_ids.ids,
+            ),)
         self.env.cr.execute(
             query_inject_move_line,
             query_inject_move_line_params
@@ -1160,7 +1174,8 @@ WITH
                 SUM(ml.debit) AS debit,
                 SUM(ml.credit) AS credit,
                 SUM(ml.balance) AS balance,
-                ml.currency_id AS currency_id
+                ml.currency_id AS currency_id,
+                ml.journal_id as journal_id
             FROM
                 report_general_ledger_qweb_account ra
             INNER JOIN
@@ -1193,7 +1208,7 @@ WITH
             """
         query_inject_move_line_centralized += """
             GROUP BY
-                ra.id, ml.account_id, a.code, 2, ml.currency_id
+                ra.id, ml.account_id, a.code, 2, ml.currency_id, ml.journal_id
         )
 INSERT INTO
     report_general_ledger_qweb_move_line
@@ -1203,6 +1218,7 @@ INSERT INTO
     create_date,
     date,
     account,
+    journal,
     label,
     debit,
     credit,
@@ -1214,6 +1230,7 @@ SELECT
     NOW() AS create_date,
     ml.date,
     a.code AS account,
+    j.code as journal,
     '""" + _('Centralized Entries') + """' AS label,
     ml.debit AS debit,
     ml.credit AS credit,
@@ -1227,12 +1244,21 @@ INNER JOIN
     move_lines ml ON ra.account_id = ml.account_id
 INNER JOIN
     account_account a ON ml.account_id = a.id
+INNER JOIN
+    account_journal j ON ml.journal_id = j.id
 LEFT JOIN
     res_currency c ON ml.currency_id = c.id
 WHERE
     ra.report_id = %s
 AND
     (a.centralized IS NOT NULL AND a.centralized = TRUE)
+    """
+        if self.filter_journal_ids:
+            query_inject_move_line_centralized += """
+AND
+    j.id in %s
+            """
+        query_inject_move_line_centralized += """
 ORDER BY
     a.code, ml.date
         """
@@ -1249,6 +1275,10 @@ ORDER BY
             self.env.uid,
             self.id,
         )
+        if self.filter_journal_ids:
+            query_inject_move_line_centralized_params += (tuple(
+                self.filter_journal_ids.ids,
+            ),)
         self.env.cr.execute(
             query_inject_move_line_centralized,
             query_inject_move_line_centralized_params
@@ -1288,8 +1318,13 @@ ORDER BY
         sub_subquery_sum_amounts += """
         WHERE
             a.company_id = %(company_id)s
-        AND a.id IN %(unaffected_earnings_account_ids)s
+        AND
+            a.id IN %(unaffected_earnings_account_ids)s
         """
+        if self.filter_journal_ids:
+            sub_subquery_sum_amounts += """
+        AND
+            ml.journal_id in %(filter_journal_ids)s        """
         return sub_subquery_sum_amounts
 
     def _get_unaffected_earnings_account_sub_subquery_sum_final(self):
@@ -1325,10 +1360,16 @@ ORDER BY
                             AND aa.id IN %(cost_center_ids)s
                     """
         sub_subquery_sum_amounts += """
-                WHERE
-                    a.company_id = %(company_id)s
-                AND a.id IN %(unaffected_earnings_account_ids)s
-                """
+        WHERE
+            a.company_id = %(company_id)s
+        AND
+            a.id IN %(unaffected_earnings_account_ids)s
+        """
+        if self.filter_journal_ids:
+            sub_subquery_sum_amounts += """
+        AND
+            ml.journal_id in %(filter_journal_ids)s
+        """
         return sub_subquery_sum_amounts
 
     def _inject_unaffected_earnings_account_values(self):
@@ -1405,6 +1446,10 @@ ORDER BY
         query_inject_account_params['report_id'] = self.id
         query_inject_account_params['user_id'] = self.env.uid
 
+        if self.filter_journal_ids:
+            query_inject_account_params['filter_journal_ids'] = (tuple(
+                self.filter_journal_ids.ids,
+            ),)
         # Fetch the profit and loss accounts
         query_unaffected_earnings_account_ids = """
             SELECT a.id

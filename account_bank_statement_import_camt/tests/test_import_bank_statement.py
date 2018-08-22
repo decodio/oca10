@@ -47,6 +47,12 @@ class TestParser(TransactionCase):
             DATA_DIR + 'test-camt053-txdtls',
             DATA_DIR + 'golden-camt053-txdtls.pydata')
 
+    def test_parse_no_ntry(self):
+        self._do_parse_test(
+            DATA_DIR + 'test-camt053-no-ntry',
+            DATA_DIR + 'golden-camt053-no-ntry.pydata',
+        )
+
 
 class TestImport(TransactionCase):
     """Run test to import camt import."""
@@ -56,6 +62,24 @@ class TestImport(TransactionCase):
             'amount': -754.25,
             'date': '2014-01-05',
             'ref': '435005714488-ABNO33052620',
+        },
+        {
+            'remote_account': 'NL46ABNA0499998748',
+            'transferred_amount': -564.05,
+            'value_date': '2014-01-05',
+            'ref': 'TESTBANK/NL/20141229/01206408',
+        },
+        {
+            'remote_account': 'NL46ABNA0499998748',
+            'transferred_amount': -100.0,
+            'value_date': '2014-01-05',
+            'ref': 'TESTBANK/NL/20141229/01206407',
+        },
+        {
+            'remote_account': 'NL69ABNA0522123643',
+            'transferred_amount': 1405.31,
+            'value_date': '2014-01-05',
+            'ref': '115',
         },
     ]
 

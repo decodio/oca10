@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * contract
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2017
@@ -11,20 +11,22 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-29 00:41+0000\n"
-"PO-Revision-Date: 2018-03-29 00:41+0000\n"
-"Last-Translator: lfreeke <lfreeke@therp.nl>, 2018\n"
+"PO-Revision-Date: 2018-07-28 16:09+0000\n"
+"Last-Translator: lfreeke <lfreeke@therp.nl>\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #. module: contract
 #: model:mail.template,body_html:contract.email_contract_template
 msgid ""
 "\n"
-"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"<div style=\"font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-"
+"serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hello ${object.partner_id.name or ''},</p>\n"
 "    <p>A new contract has been created: </p>\n"
 "\n"
@@ -37,7 +39,8 @@ msgid ""
 "\n"
 "       % if object.user_id:\n"
 "       % if object.user_id.email:\n"
-"       &nbsp;&nbsp;Your Contact: <a href=\"mailto:${object.user_id.email or ''}?subject=Contract%20${object.name}\">${object.user_id.name}</a>\n"
+"       &nbsp;&nbsp;Your Contact: <a href=\"mailto:${object.user_id.email or "
+"''}?subject=Contract%20${object.name}\">${object.user_id.name}</a>\n"
 "       % else:\n"
 "       &nbsp;&nbsp;Your Contact: ${object.user_id.name}\n"
 "       % endif\n"
@@ -49,22 +52,31 @@ msgid ""
 "    <p>Thank you for choosing ${object.company_id.name or 'us'}!</p>\n"
 "    <br/>\n"
 "    <br/>\n"
-"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: #8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; background-repeat: repeat no-repeat;\">\n"
-"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: #DDD;\">\n"
-"            <strong style=\"text-transform:uppercase;\">${object.company_id.name}</strong></h3>\n"
+"    <div style=\"width: 375px; margin: 0px; padding: 0px; background-color: "
+"#8E0000; border-top-left-radius: 5px 5px; border-top-right-radius: 5px 5px; "
+"background-repeat: repeat no-repeat;\">\n"
+"        <h3 style=\"margin: 0px; padding: 2px 14px; font-size: 12px; color: "
+"#DDD;\">\n"
+"            <strong style=\"text-transform:uppercase;\">${object.company_id."
+"name}</strong></h3>\n"
 "    </div>\n"
-"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: 16px; background-color: #F2F2F2;\">\n"
+"    <div style=\"width: 347px; margin: 0px; padding: 5px 14px; line-height: "
+"16px; background-color: #F2F2F2;\">\n"
 "        <span style=\"color: #222; margin-bottom: 5px; display: block; \">\n"
-"            ${object.company_id.partner_id.sudo().with_context(show_address=True, html_format=True).name_get()[0][1] | safe}\n"
+"            ${object.company_id.partner_id.sudo()."
+"with_context(show_address=True, html_format=True).name_get()[0][1] | safe}\n"
 "        </span>\n"
 "        % if object.company_id.phone:\n"
-"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n"
+"            <div style=\"margin-top: 0px; margin-right: 0px; margin-bottom: "
+"0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: "
+"0px; padding-left: 0px; \">\n"
 "                Phone: ${object.company_id.phone}\n"
 "            </div>\n"
 "        % endif\n"
 "        % if object.company_id.website:\n"
 "            <div>\n"
-"                Web: <a href=\"${object.company_id.website}\">${object.company_id.website}</a>\n"
+"                Web: <a href=\"${object.company_id.website}\">${object."
+"company_id.website}</a>\n"
 "            </div>\n"
 "        %endif\n"
 "        <p></p>\n"
@@ -93,32 +105,32 @@ msgstr "<strong>#START#</strong>: Startdatum van de facturatie periode"
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Contract: </strong>"
-msgstr ""
+msgstr "<strong>Contract:</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Date Start: </strong>"
-msgstr ""
+msgstr "<strong>Startdatum:</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Description</strong>"
-msgstr ""
+msgstr "<strong>Omschrijving</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Partner:</strong>"
-msgstr ""
+msgstr "<strong>Partner:</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Price</strong>"
-msgstr ""
+msgstr "<strong>Prijs</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Quantity</strong>"
-msgstr ""
+msgstr "<strong>Hoeveelheid</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
@@ -128,17 +140,17 @@ msgstr ""
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Responsible: </strong>"
-msgstr ""
+msgstr "<strong>Verantwoordelijke</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Totaal</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "<strong>Unit Price</strong>"
-msgstr ""
+msgstr "<strong>Prijs per eenheid</strong>"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.account_analytic_account_recurring_form_form
@@ -156,7 +168,7 @@ msgstr "Kostenplaats"
 #: model:ir.model.fields,field_description:contract.field_account_analytic_contract_line_analytic_tag_ids
 #: model:ir.model.fields,field_description:contract.field_account_analytic_invoice_line_analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Labels kostenplaats"
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_contract_line_automatic_price
@@ -167,7 +179,7 @@ msgstr ""
 #. module: contract
 #: model:ir.actions.act_window,help:contract.account_analytic_contract_action
 msgid "Click to create a new contract template."
-msgstr ""
+msgstr "Klik om een nieuw contractsjabloon aan te maken"
 
 #. module: contract
 #: model:ir.actions.act_window,help:contract.action_account_analytic_overdue_all
@@ -177,13 +189,13 @@ msgstr "Klik voor het aanmaken van een nieuw contract"
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_contract_company_id
 msgid "Company"
-msgstr ""
+msgstr "Bedrijf"
 
 #. module: contract
 #: code:addons/contract/models/account_analytic_account.py:324
 #, python-format
 msgid "Compose Email"
-msgstr ""
+msgstr "Email opstellen"
 
 #. module: contract
 #: model:ir.actions.report.xml,name:contract.report_contract
@@ -202,13 +214,13 @@ msgstr ""
 #. module: contract
 #: model:ir.model,name:contract.model_account_analytic_contract_line
 msgid "Contract Lines"
-msgstr ""
+msgstr "Contractregels"
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_account_contract_template_id
 #: model:ir.ui.view,arch_db:contract.account_analytic_contract_view_form
 msgid "Contract Template"
-msgstr "Contract sjabloon"
+msgstr "Contractsjabloon"
 
 #. module: contract
 #: model:ir.actions.act_window,name:contract.account_analytic_contract_action
@@ -216,7 +228,7 @@ msgstr "Contract sjabloon"
 #: model:ir.ui.view,arch_db:contract.account_analytic_contract_view_search
 #: model:ir.ui.view,arch_db:contract.account_analytic_contract_view_tree
 msgid "Contract Templates"
-msgstr ""
+msgstr "Contract sjabloon"
 
 #. module: contract
 #: model:ir.actions.act_window,name:contract.action_account_analytic_overdue_all
@@ -287,7 +299,7 @@ msgid "Discount (%)"
 msgstr "Korting (%)"
 
 #. module: contract
-#: code:addons/contract/models/account_analytic_invoice_line.py:126
+#: code:addons/contract/models/account_analytic_contract_line.py:127
 #, python-format
 msgid "Discount should be less or equal to 100"
 msgstr "De korting moet kleiner of gelijk aan 100 zijn"
@@ -423,7 +435,7 @@ msgstr "Volgende factuur"
 #. module: contract
 #: model:ir.model,name:contract.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Relatie"
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_contract_partner_id
@@ -500,18 +512,18 @@ msgstr "Herhaal elke (dag/week/maand/jaar)"
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_account_user_id
 msgid "Responsible"
-msgstr ""
+msgstr "Verantwoordelijke"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.account_analytic_account_recurring_form_form
 msgid "Send by Email"
-msgstr ""
+msgstr "Verzenden via e-mail"
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_contract_line_sequence
 #: model:ir.model.fields,field_description:contract.field_account_analytic_invoice_line_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Reeks"
 
 #. module: contract
 #: model:ir.model.fields,help:contract.field_account_analytic_contract_line_sequence
@@ -522,7 +534,7 @@ msgstr ""
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.view_partner_form
 msgid "Show the contracts for this partner"
-msgstr ""
+msgstr "Toon de contract(en) voor deze relatie"
 
 #. module: contract
 #: model:ir.model.fields,field_description:contract.field_account_analytic_contract_line_specific_price
@@ -534,8 +546,7 @@ msgstr ""
 #: model:ir.model.fields,help:contract.field_account_analytic_account_recurring_rule_type
 #: model:ir.model.fields,help:contract.field_account_analytic_contract_recurring_rule_type
 msgid "Specify Interval for automatic invoice generation."
-msgstr ""
-"Specificeer het interval voor het aanmaken van de herhalende facturen."
+msgstr "Specificeer het interval voor het aanmaken van de herhalende facturen."
 
 #. module: contract
 #: model:ir.model.fields,help:contract.field_account_analytic_account_recurring_invoicing_type
@@ -565,7 +576,7 @@ msgstr "Maateenheid"
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.report_contract_document
 msgid "VAT:"
-msgstr ""
+msgstr "BTW:"
 
 #. module: contract
 #: model:ir.ui.view,arch_db:contract.view_account_analytic_account_contract_search
