@@ -20,7 +20,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:484
+#: code:addons/mis_builder/models/mis_report_instance.py:487
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kopie)"
@@ -124,8 +124,9 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
-"<b>p, i, e</b>: respectivelyl variation over the period, initial balance, "
+"<b>p, i, e</b>: respectively variation over the period, initial balance, "
 "ending balance"
 msgstr ""
 "<b>p, i, e</b>: respectievelijk de variatie over; de periode, beginbalans, "
@@ -318,8 +319,8 @@ msgid "Column %s cannot be compared to itself."
 msgstr "Kolom %skan niet met zichzelf worden vergeleken."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:590
-#: code:addons/mis_builder/models/mis_report_instance.py:611
+#: code:addons/mis_builder/models/mis_report_instance.py:593
+#: code:addons/mis_builder/models/mis_report_instance.py:614
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Kolom %s met Actuele waardes moet van/tot data hebben."
@@ -504,9 +505,19 @@ msgid "Display Name"
 msgstr "Weergavenaam"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display columns description"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_auto_expand_accounts
 msgid "Display details by account"
 msgstr "Laat details per rekening zien"
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display the date range details in the column headers."
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_divider_inherit
@@ -542,7 +553,7 @@ msgstr "Voorbeelden:"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -555,15 +566,6 @@ msgstr "Exporteer"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_name
 msgid "Expression"
 msgstr "Uitdrukking"
-
-#. module: mis_builder
-#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid ""
-"Expression can also involve other KPI and query results by name (eg kpi1 + "
-"kpi2)."
-msgstr ""
-"Uitdrukking kan ook andere KPI- en queryresultaten met naam omvatten (bijv. "
-"Kpi1 + kpi2)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_ids
@@ -580,6 +582,16 @@ msgstr "Uitdrukkingen"
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions can be any valid python expressions."
 msgstr "Uitdrukkingen kunnen alle geldige python uitdrukkingen zijn."
+
+#. module: mis_builder
+#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
+msgid ""
+"Expressions can involve other KPI, sub KPI and query results by name (eg "
+"kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
+msgstr ""
+"Uitdrukking kan ook andere KPI- en queryresultaten met naam omvatten (bijv. "
+"Kpi1 + kpi2)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_normalize_factor
@@ -1064,7 +1076,7 @@ msgstr "Voorbeeld"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1073,7 +1085,7 @@ msgid "Print"
 msgstr "Print"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:683
+#: code:addons/mis_builder/models/mis_report.py:689
 #, python-format
 msgid ""
 "Probably not your fault... but I'm really curious to know how you managed to "
@@ -1096,7 +1108,7 @@ msgstr "Query bedrijf id's"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
 #, python-format
 msgid "Refresh"
 msgstr "Verversen"
@@ -1174,7 +1186,7 @@ msgstr "Reeks"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Settings"
 msgstr "Instellingen"
@@ -1413,7 +1425,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr "add.mis.report.instance.dashboard.wizard"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:679
+#: code:addons/mis_builder/models/mis_report_instance.py:684
 #, python-format
 msgid "from %s to %s"
 msgstr "van %s tot %s"

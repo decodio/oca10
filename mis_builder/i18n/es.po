@@ -9,18 +9,19 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-11 15:04+0000\n"
-"PO-Revision-Date: 2018-03-11 15:04+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2018\n"
+"PO-Revision-Date: 2018-10-11 00:02+0000\n"
+"Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:484
+#: code:addons/mis_builder/models/mis_report_instance.py:487
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (copia)"
@@ -36,11 +37,12 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
 "<b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive balance, "
 "negative balance."
-msgstr "<b>bal, crd, deb</b>: saldo (balance), haber (credit), debe (debit)."
+msgstr ""
+"<b>bal, crd, deb, pbal, nbal</b>: saldo (balance), haber (credit), debe "
+"(debit), balance positivo, balance negativo."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -121,12 +123,13 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
-"<b>p, i, e</b>: respectivelyl variation over the period, initial balance, "
+"<b>p, i, e</b>: respectively variation over the period, initial balance, "
 "ending balance"
 msgstr ""
 "<b>p, i, e</b>: variación sobre el periodo, sobre el saldo inicial o sobre "
-"el saldo final respectivamente."
+"el saldo final respectivamente"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -135,6 +138,9 @@ msgid ""
 "whose\n"
 "                                          ending balance is positive."
 msgstr ""
+"<b>pbale[55%]</b>: suma de todos los saldos finales de las cuentas que "
+"comienzan por 55\n"
+"                                 cuyo balance final es positivo."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -215,12 +221,12 @@ msgstr "Agregación"
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Entries"
-msgstr "Todos los apuntes"
+msgstr "Todos los asientos"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Posted Entries"
-msgstr "Todos los apuntes validados"
+msgstr "Todos los asientos asentados"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_amount
@@ -317,8 +323,8 @@ msgid "Column %s cannot be compared to itself."
 msgstr "La columna %s no puede ser comparada consigo misma."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:590
-#: code:addons/mis_builder/models/mis_report_instance.py:611
+#: code:addons/mis_builder/models/mis_report_instance.py:593
+#: code:addons/mis_builder/models/mis_report_instance.py:614
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "La columna %s con fuente de datos reales debe tener fecha desde/hasta."
@@ -483,9 +489,8 @@ msgstr "Diferencia"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_no_auto_expand_accounts
-#, fuzzy
 msgid "Disable account details expansion"
-msgstr "Detalles de cuenta de la suma"
+msgstr "Deshabilitar la expansión de detalles de la cuenta"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard_display_name
@@ -503,9 +508,20 @@ msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display columns description"
+msgstr "Mostrar descripción de columnas"
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_auto_expand_accounts
 msgid "Display details by account"
 msgstr "Mostrar detalles por cuenta"
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display the date range details in the column headers."
+msgstr ""
+"Mostrar los detalles del rango de fecha en la cabecera de las columnas."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_divider_inherit
@@ -541,7 +557,7 @@ msgstr "Ejemplos:"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -554,15 +570,6 @@ msgstr "Exportar"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_name
 msgid "Expression"
 msgstr "Expresión"
-
-#. module: mis_builder
-#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid ""
-"Expression can also involve other KPI and query results by name (eg kpi1 + "
-"kpi2)."
-msgstr ""
-"La expresión puede también incluir otros KPI y resultados de búsqueda por "
-"nombre (por ejemplo, kpi1 + kpi2)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_ids
@@ -579,6 +586,15 @@ msgstr "Expresiones"
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions can be any valid python expressions."
 msgstr "Las expresiones pueden ser cualquier expresión válida de Python."
+
+#. module: mis_builder
+#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid ""
+"Expressions can involve other KPI, sub KPI and query results by name (eg "
+"kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
+msgstr ""
+"La expresión puede también incluir otros KPI y resultados de búsqueda por "
+"nombre (por ejemplo, kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_normalize_factor
@@ -668,13 +684,12 @@ msgstr "Ayuda (para las expresiones del KPI)"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_always
 msgid "Hide always"
-msgstr ""
+msgstr "Ocultar siempre"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_always_inherit
-#, fuzzy
 msgid "Hide always inherit"
-msgstr "Ocultar vacíos heredado"
+msgstr "Ocultar siempre heredado"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_empty
@@ -814,7 +829,7 @@ msgstr "Última actualización en"
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "Layout"
-msgstr ""
+msgstr "Diseño"
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
@@ -1062,7 +1077,7 @@ msgstr "Previsualizar"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1071,14 +1086,14 @@ msgid "Print"
 msgstr "Imprimir"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:683
+#: code:addons/mis_builder/models/mis_report.py:689
 #, python-format
 msgid ""
 "Probably not your fault... but I'm really curious to know how you managed to "
 "raise this error so I can handle one more corner case!"
 msgstr ""
 "Probablemente no es su culpa... ¡pero realmente hay curiosidad por saber "
-"cómo ha conseguido este error para poder manejar un caso extremo más¡"
+"cómo ha conseguido este error para poder manejar un caso extremo más!"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query_ids
@@ -1093,7 +1108,7 @@ msgstr "Consultas de las compañías"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
 #, python-format
 msgid "Refresh"
 msgstr "Actualizar"
@@ -1171,7 +1186,7 @@ msgstr "Secuencia"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Settings"
 msgstr "Configuración"
@@ -1204,7 +1219,7 @@ msgstr "Estilo"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_style_expression
 msgid "Style expression"
-msgstr "Expresión de estio"
+msgstr "Expresión de estilo"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_auto_expand_accounts_style_id
@@ -1324,7 +1339,6 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
 "The following special elements are recognized in the expressions to compute "
 "accounting data: \n"
@@ -1333,7 +1347,8 @@ msgid ""
 msgstr ""
 "Los siguientes elementos especiales se pueden reconocer en las expresiones "
 "para calcular datos contables:\n"
-"<code>{bal|crd|deb}{pieu}[selector de cuenta][dominio de apuntes]</code>"
+"<code>{bal|crd|deb|pbal|nbal}{pieu}[selector de cuenta][dominio de apuntes]</"
+"code>."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:161
@@ -1383,12 +1398,12 @@ msgstr "Semana"
 #. module: mis_builder
 #: sql_constraint:mis.report.instance.period:0
 msgid "Wrong duration, it must be positive!"
-msgstr "Duración incorrecta. Debe ser positiva"
+msgstr "Duración incorrecta. ¡Debe ser positiva!"
 
 #. module: mis_builder
 #: sql_constraint:mis.report.instance.period:0
 msgid "Wrong normalize factor, it must be positive!"
-msgstr "Factor de normalización incorrecto. Debe ser positivo"
+msgstr "Factor de normalización incorrecto. ¡Debe ser positivo!"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:178
@@ -1401,7 +1416,7 @@ msgstr "Año"
 #: code:addons/mis_builder/models/mis_report_instance.py:63
 #, python-format
 msgid "You cannot sum period %s with itself."
-msgstr "No puede sumarizar el periodo %s consigo mismo."
+msgstr "No puede sumar el periodo %s consigo mismo."
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
@@ -1409,7 +1424,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr "add.mis.report.instance.dashboard.wizard"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:679
+#: code:addons/mis_builder/models/mis_report_instance.py:684
 #, python-format
 msgid "from %s to %s"
 msgstr "desde %s hasta %s"

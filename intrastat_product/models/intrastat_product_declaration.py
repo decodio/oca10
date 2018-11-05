@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2011-2017 Akretion (http://www.akretion.com)
-# © 2009-2017 Noviat (http://www.noviat.com)
+# © 2009-2018 Noviat (http://www.noviat.com)
 # @author Alexis de Lattre <alexis.delattre@akretion.com>
 # @author Luc de Meyer <info@noviat.com>
 
@@ -521,8 +521,7 @@ class IntrastatProductDeclaration(models.Model):
                 if inv_line.hs_code_id:
                     hs_code = inv_line.hs_code_id
                 elif inv_line.product_id and self._is_product(inv_line):
-                    hs_code = inv_line.product_id.product_tmpl_id.\
-                        get_hs_code_recursively()
+                    hs_code = inv_line.product_id.get_hs_code_recursively()
                     if not hs_code:
                         note = "\n" + _(
                             "Missing H.S. code on product %s. "
@@ -678,6 +677,51 @@ class IntrastatProductDeclaration(models.Model):
         hashcode = '-'.join([unicode(f) for f in hc_fields.itervalues()])
         return hashcode
 
+    @api.model
+    def _prepare_grouped_fields(self, computation_line, fields_to_sum):
+        vals = {
+            'src_dest_country_id': computation_line.src_dest_country_id.id,
+            'intrastat_unit_id': computation_line.intrastat_unit_id.id,
+            'hs_code_id': computation_line.hs_code_id.id,
+            'transaction_id': computation_line.transaction_id.id,
+            'transport_id': computation_line.transport_id.id,
+            'region_id': computation_line.region_id.id,
+            'parent_id': computation_line.parent_id.id,
+            'product_origin_country_id':
+            computation_line.product_origin_country_id.id,
+            'amount_company_currency': 0.0,
+            }
+        for field in fields_to_sum:
+            vals[field] = 0.0
+        return vals
+
+    def _fields_to_sum(self):
+        fields_to_sum = [
+            'weight',
+            'suppl_unit_qty',
+            ]
+        return fields_to_sum
+
+    @api.model
+    def _prepare_declaration_line(self, computation_lines):
+        fields_to_sum = self._fields_to_sum()
+        vals = self._prepare_grouped_fields(
+            computation_lines[0], fields_to_sum)
+        for computation_line in computation_lines:
+            for field in fields_to_sum:
+                vals[field] += computation_line[field]
+            vals['amount_company_currency'] += (
+                computation_line['amount_company_currency'] +
+                computation_line['amount_accessory_cost_company_currency'])
+        # round, otherwise odoo with truncate (6.7 -> 6... instead of 7 !)
+        for field in fields_to_sum:
+            vals[field] = int(round(vals[field]))
+        if not vals['weight']:
+            vals['weight'] = 1
+        vals['amount_company_currency'] = int(round(
+            vals['amount_company_currency']))
+        return vals
+
     @api.multi
     def generate_declaration(self):
         """ generate declaration lines """
@@ -696,7 +740,7 @@ class IntrastatProductDeclaration(models.Model):
                 dl_group[hashcode] = [cl]
         ipdl = self.declaration_line_ids
         for cl_lines in dl_group.values():
-            vals = ipdl._prepare_declaration_line(cl_lines)
+            vals = self._prepare_declaration_line(cl_lines)
             declaration_line = ipdl.create(vals)
             for cl in cl_lines:
                 cl.write({'declaration_line_id': declaration_line.id})
@@ -717,6 +761,47 @@ class IntrastatProductDeclaration(models.Model):
         else:
             raise UserError(
                 _("No XML File has been generated."))
+
+    @api.multi
+    def create_xls(self):
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_type': 'xlsx',
+            'report_name': 'intrastat.product.declaration.xlsx',
+            'context': dict(self._context, xlsx_export=True),
+        }
+
+    @api.model
+    def _xls_computation_line_fields(self):
+        """
+        Update list in custom module to add/drop columns or change order
+        """
+        return [
+            'product', 'product_origin_country',
+            'hs_code', 'src_dest_country',
+            'amount_company_currency', 'accessory_cost',
+            'transaction', 'weight', 'suppl_unit_qty', 'suppl_unit',
+            'transport', 'invoice',
+        ]
+
+    @api.model
+    def _xls_declaration_line_fields(self):
+        """
+        Update list in custom module to add/drop columns or change order
+        """
+        return [
+            'hs_code', 'src_dest_country', 'amount_company_currency',
+            'transaction', 'weight', 'suppl_unit_qty', 'suppl_unit',
+            'transport',
+        ]
+
+    @api.model
+    def _xls_template(self):
+        """
+        Placeholder for excel report template updates
+
+        """
+        return {}
 
     @api.multi
     def done(self):
@@ -891,6 +976,11 @@ class IntrastatProductDeclarationLine(models.Model):
 
     @api.model
     def _prepare_grouped_fields(self, computation_line, fields_to_sum):
+        """
+        This method is DEPRECATED.
+        You should use the _prepare_grouped_fields method on the
+        IntrastatProductDeclaration class.
+        """
         vals = {
             'src_dest_country_id': computation_line.src_dest_country_id.id,
             'intrastat_unit_id': computation_line.intrastat_unit_id.id,
@@ -908,6 +998,11 @@ class IntrastatProductDeclarationLine(models.Model):
         return vals
 
     def _fields_to_sum(self):
+        """
+        This method is DEPRECATED.
+        You should use the _fields_to_sum method on the
+        IntrastatProductDeclaration class.
+        """
         fields_to_sum = [
             'weight',
             'suppl_unit_qty',
@@ -916,6 +1011,11 @@ class IntrastatProductDeclarationLine(models.Model):
 
     @api.model
     def _prepare_declaration_line(self, computation_lines):
+        """
+        This method is DEPRECATED.
+        You should use the _fields_to_sum method on the
+        IntrastatProductDeclaration class.
+        """
         fields_to_sum = self._fields_to_sum()
         vals = self._prepare_grouped_fields(
             computation_lines[0], fields_to_sum)

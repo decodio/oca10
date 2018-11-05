@@ -11,7 +11,7 @@
 
 {
     'name': 'DDT',
-    'version': '10.0.1.5.1',
+    'version': '10.0.1.7.0',
     'category': 'Localization/Italy',
     'summary': 'Documento di Trasporto',
     'author': 'Davide Corio, Odoo Community Association (OCA),'
@@ -26,6 +26,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'data/ddt_data.xml',
         'views/stock_picking_package_preparation.xml',
         'views/stock_picking.xml',
@@ -38,6 +39,7 @@
         'wizard/ddt_create_invoice.xml',
         'wizard/ddt_invoicing.xml',
         'views/report_ddt.xml',
+        'data/mail_template_data.xml',
     ],
     'installable': True,
 }

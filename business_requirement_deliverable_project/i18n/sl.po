@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * business_requirement_deliverable_project
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,11 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2017-11-23 01:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: business_requirement_deliverable_project
 #: model:ir.model.fields,field_description:business_requirement_deliverable_project.field_business_requirement_all_project_generated
@@ -27,8 +28,8 @@ msgstr ""
 #: code:addons/business_requirement_deliverable_project/models/project.py:43
 #, python-format
 msgid ""
-"All business requirements of the project should be "
-"stakeholder_approval/canceled/done"
+"All business requirements of the project should be stakeholder_approval/"
+"canceled/done"
 msgstr ""
 
 #. module: business_requirement_deliverable_project
@@ -150,8 +151,8 @@ msgstr ""
 #. module: business_requirement_deliverable_project
 #: model:ir.model.fields,help:business_requirement_deliverable_project.field_br_generate_projects_analytic_account_id
 msgid ""
-"Link this project to an analytic account if you need financial management on"
-" projects. It enables you to connect projects with budgets, planning, cost "
+"Link this project to an analytic account if you need financial management on "
+"projects. It enables you to connect projects with budgets, planning, cost "
 "and revenue analysis, timesheets on projects, etc."
 msgstr ""
 

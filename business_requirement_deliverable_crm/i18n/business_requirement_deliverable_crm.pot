@@ -1,0 +1,131 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* business_requirement_deliverable_crm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.crm_case_form_view_oppor
+msgid "Business Req."
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.actions.act_window,name:business_requirement_deliverable_crm.act_view_lead_br_all
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.crm_case_form_view_oppor
+msgid "Business Requirement"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.view_crm_make_sale
+msgid "Cancel"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_id
+msgid "ID"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model,name:business_requirement_deliverable_crm.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_crm_lead_project_id
+msgid "Project"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: code:addons/business_requirement_deliverable_crm/wizard/crm_make_sale.py:73
+#: code:addons/business_requirement_deliverable_crm/wizard/crm_make_sale.py:84
+#, python-format
+msgid "Quotation"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.crm_case_form_view_oppor
+msgid "Quotation (Bus. Req.)"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.actions.act_window,name:business_requirement_deliverable_crm.action_crm_make_sale
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.view_crm_make_sale
+msgid "Quotation from Business Requirements"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: code:addons/business_requirement_deliverable_crm/wizard/crm_make_sale.py:95
+#, python-format
+msgid "There is no available business requirement to\n"
+"                    make sale order!"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_crm_lead_resource_cost_total
+msgid "Total Revenue from BR"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model.fields,field_description:business_requirement_deliverable_crm.field_br_crm_lead_update_quotation
+msgid "Update existing quotation"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.view_crm_make_sale
+msgid "_Create"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.model,name:business_requirement_deliverable_crm.model_br_crm_lead
+msgid "br.crm.lead"
+msgstr ""
+
+#. module: business_requirement_deliverable_crm
+#: model:ir.ui.view,arch_db:business_requirement_deliverable_crm.view_crm_make_sale
+msgid "or"
+msgstr ""
+

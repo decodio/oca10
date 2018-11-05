@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
-# © 2015-2017 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2015-2018 Akretion France
+# @author: Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
 class AccountInvoiceImportConfig(models.Model):
     _name = 'account.invoice.import.config'
     _description = 'Configuration for the import of Supplier Invoices'
+    _order = 'sequence'
 
     name = fields.Char(string='Name', required=True)
-    partner_ids = fields.One2many(
-        'res.partner', 'invoice_import_id',
-        string='Partners')
+    partner_id = fields.Many2one(
+        'res.partner', string='Partner', ondelete='cascade',
+        domain=[('supplier', '=', True), ('parent_id', '=', False)])
     active = fields.Boolean(default=True)
+    sequence = fields.Integer()
     invoice_line_method = fields.Selection([
         ('1line_no_product', 'Single Line, No Product'),
         ('1line_static_product', 'Single Line, Static Product'),
@@ -42,7 +45,7 @@ class AccountInvoiceImportConfig(models.Model):
         help="Force supplier invoice line description")
     tax_ids = fields.Many2many(
         'account.tax', string='Taxes',
-        domain=[('type_tax_use', 'in', ('all', 'purchase'))])
+        domain=[('type_tax_use', '=', 'purchase')])
     static_product_id = fields.Many2one(
         'product.product', string='Static Product')
 
@@ -67,3 +70,31 @@ class AccountInvoiceImportConfig(models.Model):
                     "Method for Invoice Line set to 'Single Line, No Product' "
                     "or 'Multi Line, No Product'.")
                     % config.partner_id.name)
+
+    @api.onchange('invoice_line_method', 'account_id')
+    def invoice_line_method_change(self):
+        if (
+                self.invoice_line_method == '1line_no_product' and
+                self.account_id):
+            self.tax_ids = [(6, 0, self.account_id.tax_ids.ids)]
+        elif self.invoice_line_method != '1line_no_product':
+            self.tax_ids = [(6, 0, [])]
+
+    def convert_to_import_config(self):
+        self.ensure_one()
+        vals = {
+            'invoice_line_method': self.invoice_line_method,
+            'account_analytic': self.account_analytic_id or False,
+            }
+        if self.invoice_line_method == '1line_no_product':
+            vals['account'] = self.account_id
+            vals['taxes'] = self.tax_ids
+            vals['label'] = self.label or False
+        elif self.invoice_line_method == '1line_static_product':
+            vals['product'] = self.static_product_id
+            vals['label'] = self.label or False
+        elif self.invoice_line_method == 'nline_no_product':
+            vals['account'] = self.account_id
+        elif self.invoice_line_method == 'nline_static_product':
+            vals['product'] = self.static_product_id
+        return vals
