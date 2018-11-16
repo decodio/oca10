@@ -3,12 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openupgradelib.openupgrade import logged_query, migrate
+from odoo import api, SUPERUSER_ID
 import json
 
 
 @migrate()
-def migrate(env, version):
-    cr = env.cr
+def migrate(cr, version):
+    env = api.Environment(cr, SUPERUSER_ID, {})
     convert_text_to_serialized(
         cr, env['bve.view']._table, env['bve.view']._fields['data'].name)
     pass
