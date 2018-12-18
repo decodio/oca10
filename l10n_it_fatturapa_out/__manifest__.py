@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 # Copyright 2014 Davide Corio
 # Copyright 2015-2016 Lorenzo Battistini - Agile Business Group
+# Copyright 2018 Sergio Zanchetta (Associazione PNLUG - Gruppo Odoo)
+# Copyright 2018 Sergio Corato
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
-    'name': 'Italian Localization - Fattura Elettronica - Emission',
-    'version': '10.0.1.2.2',
+    'name': 'Italian Localization - Fattura elettronica - Emissione',
+    'version': '10.0.1.2.5',
     'category': 'Localization/Italy',
-    'summary': 'Electronic invoices emission',
+    'summary': 'Emissione fatture elettroniche',
     'author': 'Davide Corio, Agile Business Group, Innoviu,'
               'Odoo Community Association (OCA)',
-    'website': 'http://www.agilebg.com',
+    'website': 'https://github.com/OCA/l10n-italy/tree/10.0/'
+               'l10n_it_fatturapa_out',
     'license': 'LGPL-3',
     "depends": [
         'l10n_it_fatturapa',

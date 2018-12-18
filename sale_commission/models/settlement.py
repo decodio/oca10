@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, exceptions, fields, models, _
+from odoo.exceptions import UserError
 
 
 class Settlement(models.Model):
@@ -123,6 +124,10 @@ class Settlement(models.Model):
             invoice_journal = (journal if
                                (settlement.total + extra_total) >= 0 else
                                False)
+            if not invoice_journal:
+                raise UserError(
+                    _('Journal %s is not applicable for quantity %s')
+                    % (journal.display_name, settlement.total + extra_total))
             invoice_vals = self._prepare_invoice_header(
                 settlement, invoice_journal, date=date)
             invoice = invoice_obj.create(invoice_vals)
@@ -140,16 +145,22 @@ class SettlementLine(models.Model):
     _name = "sale.commission.settlement.line"
 
     settlement = fields.Many2one(
-        "sale.commission.settlement", readonly=True, ondelete="cascade",
-        required=True)
+        "sale.commission.settlement",
+        readonly=True,
+        ondelete="cascade",
+        required=True,
+    )
     agent_line = fields.Many2many(
         comodel_name='account.invoice.line.agent',
-        relation='settlement_agent_line_rel', column1='settlement_id',
-        column2='agent_line_id', required=True)
+        relation='settlement_agent_line_rel',
+        column1='settlement_id',
+        column2='agent_line_id',
+        required=True,
+    )
     date = fields.Date(related="agent_line.invoice_date", store=True)
     invoice_line = fields.Many2one(
         comodel_name='account.invoice.line', store=True,
-        related='agent_line.invoice_line')
+        related='agent_line.object_id')
     invoice = fields.Many2one(
         comodel_name='account.invoice', store=True, string="Invoice",
         related='invoice_line.invoice_id')

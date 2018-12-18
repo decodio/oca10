@@ -162,6 +162,7 @@ msgstr "Creado en"
 
 #. module: purchase_request
 #: model:ir.model.fields,field_description:purchase_request.field_purchase_request_date_start
+#: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line_date_start
 msgid "Creation date"
 msgstr "Fecha de creación"
 
@@ -358,12 +359,8 @@ msgstr "Solicitud de compra para ser aprobada"
 #: model:ir.ui.menu,name:purchase_request.menu_purchase_request
 #: model:ir.ui.menu,name:purchase_request.menu_purchase_request_act
 #: model:ir.ui.menu,name:purchase_request.menu_purchase_request_pro_mgt
-msgid "Purchase Requests"
-msgstr "Solicitudes de compra"
-
-#. module: purchase_request
 #: model:ir.ui.menu,name:purchase_request.parent_menu_purchase_request
-msgid "Purchase requests"
+msgid "Purchase Requests"
 msgstr "Solicitudes de compra"
 
 #. module: purchase_request
@@ -385,7 +382,6 @@ msgstr "Rechazado"
 
 #. module: purchase_request
 #: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line_date_required
-#: model:ir.model.fields,field_description:purchase_request.field_purchase_request_line_date_start
 msgid "Request Date"
 msgstr "Fecha de solicitud"
 
@@ -521,3 +517,6 @@ msgstr "Mensajes no leídos"
 msgid ""
 "You can't request an approval for a purchase request which is empty. (%s)"
 msgstr ""
+
+#~ msgid "Purchase requests"
+#~ msgstr "Solicitudes de compra"
