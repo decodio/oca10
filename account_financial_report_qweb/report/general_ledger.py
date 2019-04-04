@@ -186,6 +186,7 @@ class GeneralLedgerReportMoveLine(models.TransientModel):
 
     # Data fields, used to keep link with real object
     move_line_id = fields.Many2one('account.move.line')
+    matched_ml_id = fields.Many2one("account.full.reconcile")
 
     # Data fields, used for report display
     date = fields.Date()
@@ -197,7 +198,6 @@ class GeneralLedgerReportMoveLine(models.TransientModel):
     label = fields.Char()
     cost_center = fields.Char()
     tags = fields.Char()
-    matching_number = fields.Char()
     debit = fields.Float(digits=(16, 2))
     credit = fields.Float(digits=(16, 2))
     cumul_balance = fields.Float(digits=(16, 2))
@@ -1067,6 +1067,7 @@ INSERT INTO
     create_uid,
     create_date,
     move_line_id,
+    matched_ml_id,
     date,
     entry,
     journal,
@@ -1075,7 +1076,6 @@ INSERT INTO
     partner,
     label,
     cost_center,
-    matching_number,
     debit,
     credit,
     cumul_balance,
@@ -1096,6 +1096,7 @@ SELECT
     %s AS create_uid,
     NOW() AS create_date,
     ml.id AS move_line_id,
+    fr.id AS matched_ml_id,
     ml.date,
     m.name AS entry,
     j.code AS journal,
@@ -1139,7 +1140,6 @@ SELECT
         query_inject_move_line += """
     CONCAT_WS(' - ', NULLIF(ml.ref, ''), NULLIF(ml.name, '')) AS label,
     aa.name AS cost_center,
-    fr.name AS matching_number,
     ml.debit,
     ml.credit,
         """
@@ -1621,7 +1621,7 @@ WITH move_lines_on_tags AS
         if self.filter_cost_center_ids:
             query_select_previous_fy_unaffected_earnings += """
                 INNER JOIN account_analytic_account aa
-                ON aml.analytic_account_id = aa.id
+                ON ml.analytic_account_id = aa.id
                 AND aa.id IN %(cost_center_ids)s
             """
             query_select_previous_fy_unaffected_earnings_params[
@@ -1677,7 +1677,7 @@ WITH move_lines_on_tags AS
         if self.filter_cost_center_ids:
             query_select_period_unaffected_earnings += """
                 INNER JOIN account_analytic_account aa
-                ON aml.analytic_account_id = aa.id
+                ON ml.analytic_account_id = aa.id
                 AND aa.id IN %(cost_center_ids)s
             """
             query_select_period_unaffected_earnings_params[

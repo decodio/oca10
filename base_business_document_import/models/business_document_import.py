@@ -306,8 +306,16 @@ class BusinessDocumentImport(models.AbstractModel):
             chatter_msg.append(_(
                 "The bank account <b>IBAN %s</b> has been automatically "
                 "added on the supplier <b>%s</b>") % (
-                iban, partner.name))
+                iban, partner.display_name))
             return partner_bank
+        else:
+            chatter_msg.append(_(
+                "The analysis of the business document returned "
+                "<b>IBAN %s</b> as bank account, but there is no such "
+                "bank account in Odoo linked to partner <b>%s</b> and "
+                "the option to automatically create bank "
+                "accounts upon import is disabled.")
+                % (iban, partner.display_name))
 
     @api.model
     def _match_product(self, product_dict, chatter_msg, seller=False):
@@ -831,7 +839,7 @@ class BusinessDocumentImport(models.AbstractModel):
         """
         if not journal_dict:
             journal_dict = {}
-        ajo = self.env['account.account']
+        ajo = self.env['account.journal']
         if speed_dict is None:
             speed_dict = self._prepare_journal_speed_dict()
         self._strip_cleanup_dict(journal_dict)

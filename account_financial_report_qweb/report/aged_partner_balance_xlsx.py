@@ -15,8 +15,9 @@ class AgedPartnerBalanceXslx(abstract_report_xlsx.AbstractReportXslx):
         super(AgedPartnerBalanceXslx, self).__init__(
             name, table, rml, parser, header, store)
 
-    def _get_report_name(self):
-        return _('Aged Partner Balance')
+    def _get_report_name(self, report):
+        report_name = _('Aged Partner Balance')
+        return self._get_report_complete_name(report, report_name)
 
     def _get_report_columns(self, report):
         if not report.show_move_line_details:

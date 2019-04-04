@@ -18,12 +18,14 @@
         <t t-set="show_cost_center" t-value="o.show_cost_center"/>
         <t t-set="foreign_currency" t-value="o.foreign_currency"/>
         <!-- Defines global variables used by internal layout -->
-        <t t-set="title">General Ledger</t>
+        <t t-set="title" style="text-align: center;">General Ledger - <t t-raw="o.company_id.name"/> - <t t-raw="o.company_id.currency_id.name"/></t>
         <t t-set="res_company" t-value="o.company_id"/>
         <div class="page">
+            <div class="row">
+                <h4 class="mt0" t-esc="title or 'Odoo Report'" style="text-align: center;"/>
+            </div>
             <!-- Display filters -->
             <t t-call="account_financial_report_qweb.report_general_ledger_filters"/>
-
             <t t-foreach="o.account_ids" t-as="account">
                 <div class="page_break">
                     <!-- Display account header -->
@@ -334,8 +336,8 @@
                             <a t-att-data-active-id="line.move_line_id.move_id.id"
                                t-att-data-res-model="res_model"
                                class="o_account_financial_reports_web_action underline-on-hover"
-                               style="color: black; cursor: pointer;">
-                                <t t-raw="line.entry"/></a>
+                               t-att-style="style">
+                                <t t-att-style="style" t-raw="line.entry"/></a>
                         </span>
                     </div>
                     <!--## journal-->
@@ -401,12 +403,12 @@
                     </t>
                     <!--## matching_number-->
                     <div class="act_as_cell">
-                        <t t-set="res_model" t-value="'account_full_reconcile'"/>
-                        <span t-if="line.matching_number">
-                            <a t-att-data-active-id="line.move_line_id.full_reconcile_id.id"
+                        <t t-set="res_model" t-value="'account.full.reconcile'"/>
+                        <span t-if="line.matched_ml_id">
+                            <a t-att-data-active-id="line.matched_ml_id.id"
                                t-att-data-res-model="res_model"
-                               class="o_account_financial_reports_web_action underline-on-hover"
-                               style="color: black; cursor: pointer;"><t t-raw="line.matching_number"/></a>
+                               class="o_account_financial_reports_web_action underline-on-hover">
+                                <t  t-att-style="style" t-raw="line.matched_ml_id.name"/></a>
                         </span>
                     </div>
                     <!--## debit-->

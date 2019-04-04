@@ -1,0 +1,201 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* privacy
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2019-03-28 17:14+0000\n"
+"Last-Translator: dw3gn3r <denise.wegner@initos.com>\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.5.1\n"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_active
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: privacy
+#: model:ir.actions.act_window,name:privacy.activity_action
+#: model:ir.ui.menu,name:privacy.menu_privacy_activity
+msgid "Activities"
+msgstr "Tätigkeiten"
+
+#. module: privacy
+#: model:ir.ui.view,arch_db:privacy.activity_search
+msgid "Archived"
+msgstr "Archiviert"
+
+#. module: privacy
+#: model:ir.model.fields,help:privacy.field_privacy_activity_subject_find
+msgid "Are affected subjects present in this database?"
+msgstr "Sind betroffene Personen in der Datenbank enthalten?"
+
+#. module: privacy
+#: model:ir.actions.act_window,help:privacy.activity_action
+msgid "Click to add a data processing activity."
+msgstr "Klicken Sie hier, um eine Verarbeitungstätigkeit hinzuzufügen."
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_controller_id
+#: model:ir.ui.view,arch_db:privacy.activity_search
+msgid "Controller"
+msgstr "Verantwortlicher"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: privacy
+#: model:ir.module.category,name:privacy.module_category_data_protection
+msgid "Data Protection"
+msgstr "Datenschutz"
+
+#. module: privacy
+#: model:res.groups,name:privacy.group_data_protection_manager
+msgid "Data Protection Manager"
+msgstr "Datenschutzbeauftragter"
+
+#. module: privacy
+#: model:res.groups,name:privacy.group_data_protection_user
+msgid "Data Protection User"
+msgstr ""
+
+#. module: privacy
+#: model:ir.model,name:privacy.model_privacy_activity
+msgid "Data processing activities"
+msgstr "Verarbeitungstätigkeiten"
+
+#. module: privacy
+#: model:ir.actions.act_window,help:privacy.activity_action
+msgid "Data processing activities define why, how and what you do\n"
+"                with subjects' personal data."
+msgstr ""
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_subject_find
+msgid "Define subjects"
+msgstr ""
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_description
+#: model:ir.ui.view,arch_db:privacy.activity_form
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: privacy
+#: model:ir.ui.view,arch_db:privacy.activity_form
+msgid "Details"
+msgstr "Details"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: privacy
+#: model:ir.ui.view,arch_db:privacy.activity_search
+msgid "Group By"
+msgstr "Gruppieren nach"
+
+#. module: privacy
+#: model:ir.model.fields,help:privacy.field_privacy_activity_description
+msgid "How is personal data used here? Why? Etc."
+msgstr "Wie werden hier personenbezogene Daten verwendet? Warum? Etc."
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_id
+msgid "ID"
+msgstr ""
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity___last_update
+msgid "Last Modified on"
+msgstr "Letzte Änderung am"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: privacy
+#: model:ir.ui.menu,name:privacy.menu_data_protection_master_data
+msgid "Master Data"
+msgstr ""
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_name
+msgid "Name"
+msgstr "Bezeichnung"
+
+#. module: privacy
+#: model:ir.actions.act_window,name:privacy.action_data_protection_partner_form
+#: model:ir.ui.menu,name:privacy.menu_data_protection_partner
+msgid "Partners"
+msgstr ""
+
+#. module: privacy
+#: model:ir.ui.menu,name:privacy.parent_menu_data_protection
+msgid "Privacy"
+msgstr ""
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_processor_ids
+msgid "Processors"
+msgstr "Auftragsverarbeiter"
+
+#. module: privacy
+#: model:ir.ui.menu,name:privacy.menu_data_protection_report
+msgid "Reports"
+msgstr "Berichte"
+
+#. module: privacy
+#: model:ir.model.fields,help:privacy.field_privacy_activity_subject_domain
+msgid "Selection filter to find specific subjects included."
+msgstr "Auswahlfilter, um bestimmte betroffene Personen auszuwählen."
+
+#. module: privacy
+#: model:ir.ui.menu,name:privacy.menu_data_protection_setting
+msgid "Settings"
+msgstr "Einstellungen"
+
+#. module: privacy
+#: model:ir.model.fields,field_description:privacy.field_privacy_activity_subject_domain
+msgid "Subjects filter"
+msgstr ""
+
+#. module: privacy
+#: model:ir.ui.menu,name:privacy.menu_data_protection_transaction
+msgid "Transactions"
+msgstr ""
+
+#. module: privacy
+#: model:ir.model.fields,help:privacy.field_privacy_activity_controller_id
+msgid "Whoever determines the purposes and means of the processing of personal data."
+msgstr ""
+"Die Stelle, welche über die Zwecke und Mittel der Verarbeitung von "
+"personenbezogenen Daten entscheidet."
+
+#. module: privacy
+#: model:ir.model.fields,help:privacy.field_privacy_activity_processor_ids
+msgid "Whoever processes personal data on behalf of the controller."
+msgstr ""
+"Die Stelle, die personenbezogene Daten im Auftrag des Verantwortlichen "
+"verarbeitet."

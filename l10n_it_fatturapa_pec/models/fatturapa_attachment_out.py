@@ -2,7 +2,7 @@
 # Author(s): Andrea Colangelo (andreacolangelo@openforce.it)
 # Copyright 2018 Openforce Srls Unipersonale (www.openforce.it)
 # Copyright 2018 Sergio Corato (https://efatto.it)
-# Copyright 2018 Lorenzo Battistini <https://github.com/eLBati>
+# Copyright 2018-2019 Lorenzo Battistini <https://github.com/eLBati>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 import logging
@@ -26,12 +26,13 @@ class FatturaPAAttachmentOut(models.Model):
     state = fields.Selection([('ready', 'Ready to Send'),
                               ('sent', 'Sent'),
                               ('sender_error', 'Sender Error'),
-                              ('recipient_error', 'Recipient Error'),
+                              ('recipient_error', 'Not delivered'),
                               ('rejected', 'Rejected (PA)'),
                               ('validated', 'Delivered'),
+                              ('accepted', 'Accepted'),
                               ],
                              string='State',
-                             default='ready',)
+                             default='ready', track_visibility='onchange')
 
     last_sdi_response = fields.Text(
         string='Last Response from Exchange System', default='No response yet',
@@ -44,7 +45,9 @@ class FatturaPAAttachmentOut(models.Model):
     def reset_to_ready(self):
         for att in self:
             if att.state != 'sender_error':
-                raise UserError(_("You can only reset 'sender error' files."))
+                raise UserError(
+                    _("You can only reset files in 'Sender Error' state.")
+                )
             att.state = 'ready'
 
     @api.model
@@ -62,8 +65,12 @@ class FatturaPAAttachmentOut(models.Model):
         self._check_fetchmail()
         states = self.mapped('state')
         if set(states) != set(['ready']):
-            raise UserError(_("You can only send 'Ready to Send' files."))
+            raise UserError(
+                _("You can only send files in 'Ready to Send' state.")
+            )
         for att in self:
+            if not att.datas or not att.datas_fname:
+                raise UserError(_("File content and file name are mandatory"))
             mail_message = self.env['mail.message'].create({
                 'model': self._name,
                 'res_id': att.id,
@@ -154,7 +161,7 @@ class FatturaPAAttachmentOut(models.Model):
                     error_list = root.find('ListaErrori')
                     error_str = ''
                     for error in error_list:
-                        error_str += "\n[%s] %s %s" % (
+                        error_str += u"\n[%s] %s %s" % (
                             error.find('Codice').text if error.find(
                                 'Codice') is not None else '',
                             error.find('Descrizione').text if error.find(
@@ -164,18 +171,18 @@ class FatturaPAAttachmentOut(models.Model):
                         )
                     fatturapa_attachment_out.write({
                         'state': 'sender_error',
-                        'last_sdi_response': 'SdI ID: {}; '
-                        'Message ID: {}; Receipt date: {}; '
-                        'Error: {}'.format(
+                        'last_sdi_response': u'SdI ID: {}; '
+                        u'Message ID: {}; Receipt date: {}; '
+                        u'Error: {}'.format(
                             id_sdi, message_id, receipt_dt, error_str)
                     })
                 elif message_type == 'MC':  # 3A. Mancata consegna
                     missed_delivery_note = root.find('Descrizione').text
                     fatturapa_attachment_out.write({
                         'state': 'recipient_error',
-                        'last_sdi_response': 'SdI ID: {}; '
-                        'Message ID: {}; Receipt date: {}; '
-                        'Missed delivery note: {}'.format(
+                        'last_sdi_response': u'SdI ID: {}; '
+                        u'Message ID: {}; Receipt date: {}; '
+                        u'Missed delivery note: {}'.format(
                             id_sdi, message_id, receipt_dt,
                             missed_delivery_note)
                     })
@@ -201,8 +208,8 @@ class FatturaPAAttachmentOut(models.Model):
                                 state = 'rejected'
                             fatturapa_attachment_out.write({
                                 'state': state,
-                                'last_sdi_response': 'SdI ID: {}; '
-                                'Message ID: {}; Response: {}; '.format(
+                                'last_sdi_response': u'SdI ID: {}; '
+                                u'Message ID: {}; Response: {}; '.format(
                                     id_sdi, message_id, esito.text)
                             })
                 elif message_type == 'DT':  # 5. Decorrenza Termini per PA
@@ -210,9 +217,9 @@ class FatturaPAAttachmentOut(models.Model):
                     if description is not None:
                         fatturapa_attachment_out.write({
                             'state': 'validated',
-                            'last_sdi_response': 'SdI ID: {}; '
-                            'Message ID: {}; Receipt date: {}; '
-                            'Description: {}'.format(
+                            'last_sdi_response': u'SdI ID: {}; '
+                            u'Message ID: {}; Receipt date: {}; '
+                            u'Description: {}'.format(
                                 id_sdi, message_id, receipt_dt,
                                 description.text)
                         })
@@ -221,10 +228,11 @@ class FatturaPAAttachmentOut(models.Model):
                     description = root.find('Descrizione')
                     if description is not None:
                         fatturapa_attachment_out.write({
-                            'state': 'validated',
+                            'state': 'accepted',
                             'last_sdi_response': (
-                                'SdI ID: {}; Message ID: {}; Receipt date: {};'
-                                ' Description: {}'
+                                u'SdI ID: {}; Message ID: {}; '
+                                u'Receipt date: {};'
+                                u' Description: {}'
                             ).format(
                                 id_sdi, message_id, receipt_dt,
                                 description.text)
@@ -238,6 +246,6 @@ class FatturaPAAttachmentOut(models.Model):
         for att in self:
             if att.state != 'ready':
                 raise UserError(_(
-                    "You can only delete 'ready to send' files."
+                    "You can only delete files in 'Ready to Send' state."
                 ))
         return super(FatturaPAAttachmentOut, self).unlink()

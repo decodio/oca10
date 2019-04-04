@@ -54,7 +54,9 @@
                           context="{'computation_lines': 1}"/>
                 </header>
                 <group name="computation_lines">
-                  <field name="computation_line_ids" nolabel="1"/>
+                  <field name="computation_line_ids"
+                         context="{'type': type, 'reporting_level': reporting_level}"
+                         nolabel="1"/>
                 </group>
               </page>
               <page string="Declaration Lines">
@@ -63,7 +65,9 @@
                           context="{'declaration_lines': 1}"/>
                 </header>
                 <group name="declaration_lines">
-                  <field name="declaration_line_ids" nolabel="1"/>
+                  <field name="declaration_line_ids"
+                         context="{'type': type, 'reporting_level': reporting_level}"
+                         nolabel="1"/>
                 </group>
               </page>
               <page string="Notes">
@@ -152,6 +156,7 @@
             </div>
             <field name="suppl_unit_qty"/>
             <field name="intrastat_unit_id"/>
+            <field name="type" invisible="1"/>
             <field name="reporting_level" invisible="1"/>
             <field name="transport_id"
               attrs="{'required': [('reporting_level', '=', 'extended')], 'invisible': [('reporting_level', '!=', 'extended')]}"/>
@@ -189,6 +194,7 @@
           <field name="region_id" invisible="1"/>
           <field name="product_origin_country_id" invisible="1" string="Product C/O"/>
           <field name="invoice_id"/>
+          <field name="type" invisible="1"/>
           <field name="reporting_level" invisible="1"/>
         </tree>
       </field>
@@ -216,6 +222,7 @@
             </div>
             <field name="suppl_unit_qty"/>
             <field name="intrastat_unit_id"/>
+            <field name="type" invisible="1"/>
             <field name="reporting_level" invisible="1"/>
             <field name="transport_id"
               attrs="{'required': [('reporting_level', '=', 'extended')], 'invisible': [('reporting_level', '!=', 'extended')]}"/>
@@ -244,6 +251,7 @@
           <field name="weight"/>
           <field name="suppl_unit_qty"/>
           <field name="intrastat_unit_id"/>
+          <field name="type" invisible="1"/>
           <field name="reporting_level" invisible="1"/>
           <field name="transport_id"
             attrs="{'required': [('reporting_level', '=', 'extended')], 'invisible': [('reporting_level', '!=', 'extended')]}"/>

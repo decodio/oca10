@@ -170,10 +170,6 @@ class ProductConfigurator(models.AbstractModel):
                 product.product_tmpl_id, product, product.attribute_value_ids)
             self.product_tmpl_id = product.product_tmpl_id.id
             self._set_product_attributes()
-        elif self.product_tmpl_id:
-            self._set_product_tmpl_attributes()
-        else:
-            self._empty_attributes()
 
     @api.onchange('create_product_variant')
     def _onchange_create_product_variant(self):
@@ -222,6 +218,26 @@ class ProductConfigurator(models.AbstractModel):
         if not description:
             return name
         return ("%s\n%s" if extended else "%s (%s)") % (name, description)
+
+    @api.model
+    def create(self, vals):
+        """Fill `product_tmpl_id` in case `product_id` is supplied but not the
+        other one.
+        """
+        if vals.get('product_id'):
+            product = self.env['product.product'].browse(vals['product_id'])
+            if not vals.get('product_tmpl_id'):
+                vals['product_tmpl_id'] = product.product_tmpl_id.id
+            if not vals.get('product_attribute_ids'):
+                vals['product_attribute_ids'] = []
+                gen_dict = {
+                    'owner_model': self._name,
+                    'product_tmpl_id': product.product_tmpl_id.id,
+                }
+                for att_val in product._get_product_attributes_values_dict():
+                    att_val.update(gen_dict)
+                    vals['product_attribute_ids'].append((0, 0, att_val))
+        return super(ProductConfigurator, self).create(vals)
 
     @api.multi
     def unlink(self):

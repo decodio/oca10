@@ -13,11 +13,14 @@
 
     <template id="report_open_items_base">
         <!-- Defines global variables used by internal layout -->
-        <t t-set="title">Open Items</t>
+        <t t-set="title" >Open Items - <t t-raw="o.company_id.name"/> - <t t-raw="o.company_id.currency_id.name"/></t>
         <t t-set="company_name" t-value="o.company_id.name"/>
         <t t-set="res_company" t-value="o.company_id"/>
         <t t-set="foreign_currency" t-value="o.foreign_currency"/>
         <div class="page">
+            <div class="row">
+                <h4 class="mt0" t-esc="title or 'Odoo Report'" style="text-align: center;"/>
+            </div>
             <!-- Display filters -->
             <t t-call="account_financial_report_qweb.report_open_items_qweb_filters"/>
 
@@ -88,7 +91,7 @@
             <div class="act_as_thead">
                 <div class="act_as_row labels">
                     <!--## date-->
-                    <div class="act_as_cell first_column" style="width: 4.51%;">
+                    <div class="act_as_cell first_column" style="width: 5.74%;">
                         Date</div>
                     <!--## move-->
                     <div class="act_as_cell" style="width: 9.76%;">Entry</div>
@@ -97,13 +100,13 @@
                     <!--## account code-->
                     <div class="act_as_cell" style="width: 5.38%;">Account</div>
                     <!--## partner-->
-                    <div class="act_as_cell" style="width: 15.07%;">Partner
+                    <div class="act_as_cell" style="width: 14.57%;">Partner
                     </div>
                     <!--## ref - label-->
                     <div class="act_as_cell" style="width: 25.5%;">Ref -
                         Label</div>
                     <!--## date_due-->
-                    <div class="act_as_cell" style="width: 6.47%;">Due
+                    <div class="act_as_cell" style="width: 5.74%;">Due
                         date</div>
                     <!--## amount_total_due-->
                     <div class="act_as_cell" style="width: 6.57%;">Original
@@ -134,8 +137,8 @@
                             <a t-att-data-active-id="line.move_line_id.move_id.id"
                                t-att-data-res-model="res_model"
                                class="o_account_financial_reports_web_action"
-                               style="color: black;">
-                                <t t-raw="line.entry"/>
+                               t-att-style="style">
+                                <t t-att-style="style" t-raw="line.entry"/>
                             </a>
                         </span>
                     </div>

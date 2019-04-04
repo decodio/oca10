@@ -13,12 +13,23 @@ from odoo.tools.translate import _
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
+    @api.multi
+    def _set_rc_flag(self, invoice):
+        self.ensure_one()
+        if invoice.type == 'in_invoice':
+            fposition = invoice.fiscal_position_id
+            self.rc = bool(fposition.rc_type_id)
+
     @api.onchange('invoice_line_tax_ids')
     def onchange_invoice_line_tax_id(self):
-        fposition = self.invoice_id.fiscal_position_id
-        self.rc = True if fposition.rc_type_id else False
+        self._set_rc_flag(self.invoice_id)
 
     rc = fields.Boolean("RC")
+
+    def _set_additional_fields(self, invoice):
+        res = super(AccountInvoiceLine, self)._set_additional_fields(invoice)
+        self._set_rc_flag(invoice)
+        return res
 
 
 class AccountInvoice(models.Model):
@@ -34,6 +45,20 @@ class AccountInvoice(models.Model):
     rc_self_purchase_invoice_id = fields.Many2one(
         comodel_name='account.invoice',
         string='RC Self Purchase Invoice', copy=False, readonly=True)
+
+    @api.onchange('fiscal_position_id')
+    def onchange_rc_fiscal_position_id(self):
+        for line in self.invoice_line_ids:
+            line._set_rc_flag(self)
+
+    @api.onchange('partner_id', 'company_id')
+    def _onchange_partner_id(self):
+        res = super(AccountInvoice, self)._onchange_partner_id()
+        # In some cases (like creating the invoice from PO),
+        # fiscal position's onchange is triggered
+        # before than being changed by this method.
+        self.onchange_rc_fiscal_position_id()
+        return res
 
     def rc_inv_line_vals(self, line):
         return {
@@ -61,7 +86,8 @@ class AccountInvoice(models.Model):
             'origin': self.number,
             'rc_purchase_invoice_id': self.id,
             'name': rc_type.self_invoice_text,
-            'fiscal_position_id': None
+            'fiscal_position_id': False,
+            'payment_term_id': False,
             }
 
     def get_inv_line_to_reconcile(self):
@@ -87,25 +113,26 @@ class AccountInvoice(models.Model):
             'date': self.date,
             }
 
-    def compute_rc_amount(self):
-        amount_rc_tax = 0.0
+    def compute_rc_amount_tax(self):
+        rc_amount_tax = 0.0
+        round_curr = self.currency_id.round
         rc_lines = self.invoice_line_ids.filtered(lambda l: l.rc)
         for rc_line in rc_lines:
             price_unit = \
                 rc_line.price_unit * (1 - (rc_line.discount or 0.0) / 100.0)
-            res = rc_line.invoice_line_tax_ids.compute_all(
+            taxes = rc_line.invoice_line_tax_ids.compute_all(
                 price_unit,
-                rc_line.currency_id,
+                self.currency_id,
                 rc_line.quantity,
                 product=rc_line.product_id,
-                partner=rc_line.partner_id)
-            amount_rc_tax += res['total_included'] - res['total_excluded']
+                partner=rc_line.partner_id)['taxes']
+            rc_amount_tax += sum([tax['amount'] for tax in taxes])
 
-        return amount_rc_tax
+        return round_curr(rc_amount_tax)
 
     def rc_credit_line_vals(self, journal):
         credit = debit = 0.0
-        amount_rc_tax = self.compute_rc_amount()
+        amount_rc_tax = self.compute_rc_amount_tax()
 
         if self.type == 'in_invoice':
             credit = amount_rc_tax
@@ -122,7 +149,7 @@ class AccountInvoice(models.Model):
 
     def rc_debit_line_vals(self, amount=None):
         credit = debit = 0.0
-        amount_rc_tax = self.compute_rc_amount()
+        amount_rc_tax = self.compute_rc_amount_tax()
 
         if self.type == 'in_invoice':
             if amount:

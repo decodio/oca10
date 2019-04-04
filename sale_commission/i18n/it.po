@@ -10,20 +10,21 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-19 01:44+0000\n"
-"PO-Revision-Date: 2018-05-19 01:44+0000\n"
-"Last-Translator: Lorenzo Battistini <lorenzo.battistini@agilebg.com>, 2018\n"
+"PO-Revision-Date: 2019-01-21 20:41+0000\n"
+"Last-Translator: Apruzzese Francesco <opencode@e-ware.org>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 #. module: sale_commission
 #: code:addons/sale_commission/models/sale_commission_mixin.py:56
-#, fuzzy, python-format
+#, python-format
 msgid "%s commission agents"
-msgstr "Gestione provvigioni"
+msgstr "%s provvigioni"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_make_invoice_form
@@ -138,7 +139,7 @@ msgid "Canceled"
 msgstr "Annullata"
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:45
+#: code:addons/sale_commission/models/settlement.py:46
 #, python-format
 msgid "Cannot cancel an invoiced settlement."
 msgstr "Impossibile annullare una liquidazione fatturata"
@@ -410,6 +411,12 @@ msgid "Journal"
 msgstr "Sezionale"
 
 #. module: sale_commission
+#: code:addons/sale_commission/models/settlement.py:129
+#, python-format
+msgid "Journal %s is not applicable for quantity %s"
+msgstr ""
+
+#. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_account_invoice_line_agent_invoice_date
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_settlement_line_date
 msgid "Keep empty to use the current date"
@@ -454,7 +461,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:60
+#: code:addons/sale_commission/models/settlement.py:61
 #: model:ir.ui.view,arch_db:sale_commission.view_settlement_form
 #, python-format
 msgid "Make invoice"
@@ -500,9 +507,9 @@ msgstr "Importo netto"
 
 #. module: sale_commission
 #: code:addons/sale_commission/models/sale_commission_mixin.py:52
-#, fuzzy, python-format
+#, python-format
 msgid "No commission agents"
-msgstr "Gestione provvigioni"
+msgstr "Nessuna provvigione"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_account_invoice_line_agent_object_id
@@ -528,7 +535,7 @@ msgid "Percent"
 msgstr "Percento"
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:102
+#: code:addons/sale_commission/models/settlement.py:103
 #, python-format
 msgid "Period: from %s to %s"
 msgstr "Periodo: da %s a %s"
@@ -724,7 +731,7 @@ msgid "You can only add one time each agent."
 msgstr "E' possibile aggiungere una sola volta ogni agente."
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:53
+#: code:addons/sale_commission/models/settlement.py:54
 #, python-format
 msgid "You can't delete invoiced settlements."
 msgstr "Non è possibile eliminare liquidazioni fatturate."

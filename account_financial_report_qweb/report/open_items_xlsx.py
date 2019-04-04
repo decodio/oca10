@@ -15,8 +15,9 @@ class OpenItemsXslx(abstract_report_xlsx.AbstractReportXslx):
         super(OpenItemsXslx, self).__init__(
             name, table, rml, parser, header, store)
 
-    def _get_report_name(self):
-        return _('Open Items')
+    def _get_report_name(self, report):
+        report_name = _('Open Items')
+        return self._get_report_complete_name(report, report_name)
 
     def _get_report_columns(self, report):
         res = {

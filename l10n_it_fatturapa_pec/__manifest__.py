@@ -2,12 +2,12 @@
 # Author(s): Andrea Colangelo (andreacolangelo@openforce.it)
 # Copyright 2018 Openforce Srls Unipersonale (www.openforce.it)
 # Copyright 2018 Sergio Corato (https://efatto.it)
-# Copyright 2018 Lorenzo Battistini <https://github.com/eLBati>
+# Copyright 2018-2019 Lorenzo Battistini <https://github.com/eLBati>
 # Copyright 2018 Sergio Zanchetta (Associazione PNLUG - Gruppo Odoo)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 {
     'name': 'Italian Localization - Fattura elettronica - Supporto PEC',
-    'version': '10.0.1.2.1',
+    'version': '10.0.1.5.1',
     'category': 'Localization/Italy',
     'summary': 'Invio fatture elettroniche tramite PEC',
     'author': 'Openforce Srls Unipersonale, Odoo Community Association (OCA)',
@@ -21,11 +21,14 @@
         'l10n_it_sdi_channel',
     ],
     'data': [
+        'security/groups.xml',
         'views/account.xml',
         'views/fatturapa_attachment_out.xml',
         'wizard/send_pec_view.xml',
         'views/fetchmail_view.xml',
-        'security/ir.model.access.csv'
+        'security/ir.model.access.csv',
+        'views/company_view.xml',
+        'data/fetchmail_data.xml',
     ],
     'installable': True
 }

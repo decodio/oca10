@@ -43,20 +43,13 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        product_obj = self.env['product.product']
-        lines = self.mapped('order_line').filtered(lambda x: not x.product_id)
-        for line in lines:
-            product = product_obj._product_find(
-                line.product_tmpl_id, line.product_attribute_ids,
-            )
-            if not product:
-                values = line.product_attribute_ids.mapped('value_id')
-                product = product_obj.create({
-                    'product_tmpl_id': line.product_tmpl_id.id,
-                    'attribute_value_ids': [(6, 0, values.ids)],
-                })
-            line.write({'product_id': product.id})
-        super(SaleOrder, self).action_confirm()
+        """Create possible product variants not yet created."""
+        lines_without_product = self.mapped('order_line').filtered(
+            lambda x: not x.product_id and x.product_tmpl_id
+        )
+        for line in lines_without_product:
+            line.create_variant_if_needed()
+        return super(SaleOrder, self).action_confirm()
 
 
 class SaleOrderLine(models.Model):
@@ -66,11 +59,31 @@ class SaleOrderLine(models.Model):
     product_tmpl_id = fields.Many2one(store=True, readonly=False,
                                       related=False)
     product_id = fields.Many2one(required=False)
+    # this is for getting the proper language for product description
+    partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        related='order_id.partner_id',
+        readonly=True,
+    )
+
+    @api.model
+    def create(self, vals):
+        """Create product if not exist when the sales order is already
+        confirmed and a line is added.
+        """
+        if vals.get('order_id') and not vals.get('product_id'):
+            order = self.env['sale.order'].browse(vals['order_id'])
+            if order.state == 'sale':
+                line = self.new(vals)
+                product = line.create_variant_if_needed()
+                vals['product_id'] = product.id
+        return super(SaleOrderLine, self).create(vals)
 
     @api.onchange('product_tmpl_id')
     def _onchange_product_tmpl_id_configurator(self):
-        obj = super(SaleOrderLine, self)
-        res = obj._onchange_product_tmpl_id_configurator()
+        res = super(
+            SaleOrderLine, self,
+        )._onchange_product_tmpl_id_configurator()
         if self.product_tmpl_id.attribute_line_ids:
             domain = res.setdefault('domain', {})
             domain['product_uom'] = [
@@ -99,7 +112,7 @@ class SaleOrderLine(models.Model):
             pricelist=self.order_id.pricelist_id.id,
             uom=self.product_uom.id,
         )
-        # TODO: Check why this is reset
+        # product_configurator methods don't take into account this description
         if product_tmpl.description_sale:
             self.name = (
                 (self.name or '') + '\n' + product_tmpl.description_sale
@@ -107,6 +120,20 @@ class SaleOrderLine(models.Model):
         if self.order_id.pricelist_id and self.order_id.partner_id:
             self.price_unit = self.env['account.tax']._fix_tax_included_price(
                 product_tmpl.price, product_tmpl.taxes_id, self.tax_id,
+            )
+        return res
+
+    @api.onchange('product_id')
+    def product_id_change(self):
+        """Call again the configurator onchange after this main onchange
+        for making sure the SO line description is correct.
+        """
+        res = super(SaleOrderLine, self).product_id_change()
+        self._onchange_product_id_configurator()
+        # product_configurator methods don't take into account this description
+        if self.product_id.description_sale:
+            self.name = (
+                (self.name or '') + '\n' + self.product_id.description_sale
             )
         return res
 

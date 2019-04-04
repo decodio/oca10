@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import base64
 import logging
 from odoo import models, api, fields
 from odoo.tools import float_is_zero
@@ -117,13 +116,17 @@ class WizardImportFatturapa(models.TransientModel):
                 DatiAnagrafici.IdFiscaleIVA.IdPaese,
                 DatiAnagrafici.IdFiscaleIVA.IdCodice
             )
-        partners = partner_model.search([
-            '|',
-            ('vat', '=', vat or 0),
-            ('fiscalcode', '=', cf or 0),
-        ])
-        commercial_partner = False
+        partners = partner_model
+        if vat:
+            partners = partner_model.search([
+                ('vat', '=', vat),
+            ])
+        if not partners and cf:
+            partners = partner_model.search([
+                ('fiscalcode', '=', cf),
+            ])
         if len(partners) > 1:
+            commercial_partner = False
             for partner in partners:
                 if (
                     commercial_partner and
@@ -135,8 +138,9 @@ class WizardImportFatturapa(models.TransientModel):
                           "present in db." %
                           (vat, cf))
                         )
+                commercial_partner = partner.commercial_partner_id.id
         if partners:
-            commercial_partner_id = partners[0].id
+            commercial_partner_id = partners[0].commercial_partner_id.id
             self.check_partner_base_data(commercial_partner_id, DatiAnagrafici)
             return commercial_partner_id
         else:
@@ -274,17 +278,12 @@ class WizardImportFatturapa(models.TransientModel):
                 [
                     ('type_tax_use', '=', 'purchase'),
                     ('kind_id.code', '=', line.Natura),
-                    ('amount', '=', 0.0),
-                ])
+                    ('amount', '=', 0.0)
+                ], order='sequence', limit=1)
             if not account_taxes:
-                raise UserError(
+                self.log_inconsistency(
                     _('No tax with percentage '
                       '%s and nature %s found. Please configure this tax.')
-                    % (line.AliquotaIVA, line.Natura))
-            if len(account_taxes) > 1:
-                raise UserError(
-                    _('Too many taxes with percentage '
-                      '%s and nature %s found.')
                     % (line.AliquotaIVA, line.Natura))
         else:
             account_taxes = account_tax_model.search(
@@ -294,8 +293,7 @@ class WizardImportFatturapa(models.TransientModel):
                     ('price_include', '=', False),
                     # partially deductible VAT must be set by user
                     ('children_tax_ids', '=', False),
-                ]
-            )
+                ], order='sequence')
             if not account_taxes:
                 self.log_inconsistency(
                     _(
@@ -391,7 +389,8 @@ class WizardImportFatturapa(models.TransientModel):
         if line.Quantita:
             retLine['quantity'] = float(line.Quantita)
         if (
-            line.PrezzoTotale and line.PrezzoUnitario and line.Quantita and
+            float(line.PrezzoTotale) and float(line.PrezzoUnitario) and
+            line.Quantita and float(line.Quantita) and  # Quantita not required
             line.ScontoMaggiorazione
         ):
             retLine['discount'] = self._computeDiscount(line)
@@ -566,35 +565,6 @@ class WizardImportFatturapa(models.TransientModel):
             self.env['account.invoice.line'].create(line_vals)
         return True
 
-    def add_dati_bollo(self, invoice, DatiGeneraliDocumento):
-        # 2.1.1.6
-        Stamps = DatiGeneraliDocumento.DatiBollo
-        if Stamps:
-            invoice.virtual_stamp = Stamps.BolloVirtuale
-            invoice.stamp_amount = float(Stamps.ImportoBollo)
-            if self.e_invoice_detail_level == '2':
-                journal = self.get_purchase_journal(invoice.company_id)
-                credit_account_id = journal.default_credit_account_id.id
-                line_vals = {
-                    'invoice_id': invoice.id,
-                    'name': _(
-                        "Stamp duty payed under the MEF Decree June 17, "
-                        "2014 (art. 6)"
-                    ),
-                    'account_id': credit_account_id,
-                    'price_unit': invoice.stamp_amount,
-                    'quantity': 1,
-                    }
-                if self.env.user.company_id.dati_bollo_product_id:
-                    dati_bollo_product = (
-                        self.env.user.company_id.dati_bollo_product_id)
-                    line_vals['product_id'] = dati_bollo_product.id
-                    line_vals['name'] = dati_bollo_product.name
-                    self.adjust_accounting_data(
-                        dati_bollo_product, line_vals
-                    )
-                self.env['account.invoice.line'].create(line_vals)
-
     def _createPayamentsLine(self, payment_id, line, partner_id):
         PaymentModel = self.env['fatturapa.payment.detail']
         PaymentMethodModel = self.env['fatturapa.payment_method']
@@ -657,7 +627,7 @@ class WizardImportFatturapa(models.TransientModel):
                     dline.CodicePagamento or '',
                     'payment_data_id': payment_id
                 }
-                bankid = False
+                bank = False
                 payment_bank_id = False
                 if dline.BIC:
                     banks = BankModel.search(
@@ -670,14 +640,14 @@ class WizardImportFatturapa(models.TransientModel):
                                   " Can't create bank") % dline.BIC
                             )
                         else:
-                            bankid = BankModel.create(
+                            bank = BankModel.create(
                                 {
                                     'name': dline.IstitutoFinanziario,
                                     'bic': dline.BIC,
                                 }
-                            ).id
+                            )
                     else:
-                        bankid = banks[0].id
+                        bank = banks[0]
                 if dline.IBAN:
                     SearchDom = [
                         (
@@ -688,7 +658,7 @@ class WizardImportFatturapa(models.TransientModel):
                     ]
                     payment_bank_id = False
                     payment_banks = PartnerBankModel.search(SearchDom)
-                    if not payment_banks and not bankid:
+                    if not payment_banks and not bank:
                         self.log_inconsistency(
                             _(
                                 'BIC is required and not exist in Xml\n'
@@ -701,14 +671,15 @@ class WizardImportFatturapa(models.TransientModel):
                                 dline.IstitutoFinanziario or ''
                             )
                         )
-                    elif not payment_banks and bankid:
+                    elif not payment_banks and bank:
                         payment_bank_id = PartnerBankModel.create(
                             {
                                 'acc_number': dline.IBAN.strip(),
                                 'partner_id': partner_id,
-                                'bank_id': bankid,
-                                'bank_name': dline.IstitutoFinanziario,
-                                'bank_bic': dline.BIC
+                                'bank_id': bank.id,
+                                'bank_name': dline.IstitutoFinanziario
+                                or bank.name,
+                                'bank_bic': dline.BIC or bank.bic
                             }
                         ).id
                     if payment_banks:
@@ -875,7 +846,7 @@ class WizardImportFatturapa(models.TransientModel):
             'journal_id': purchase_journal.id,
             # 'origin': xmlData.datiOrdineAcquisto,
             'fiscal_position_id': False,
-            'payment_term_id': False,
+            'payment_term_id': partner.property_supplier_payment_term_id.id,
             'company_id': company.id,
             'fatturapa_attachment_in_id': fatturapa_attachment.id,
             'comment': comment
@@ -938,11 +909,9 @@ class WizardImportFatturapa(models.TransientModel):
         invoice_data['e_invoice_line_ids'] = [(6, 0, e_invoice_line_ids)]
         invoice = invoice_model.create(invoice_data)
         invoice._onchange_invoice_line_wt_ids()
+        invoice._onchange_payment_term_date_invoice()
         invoice.write(invoice._convert_to_write(invoice._cache))
         invoice_id = invoice.id
-
-        self.add_dati_bollo(
-            invoice, FatturaBody.DatiGenerali.DatiGeneraliDocumento)
 
         # 2.1.1.7
         Walfares = FatturaBody.DatiGenerali.\
@@ -952,33 +921,7 @@ class WizardImportFatturapa(models.TransientModel):
                 WalferLineVals = self._prepareWelfareLine(
                     invoice_id, walfareLine)
                 WelfareFundLineModel.create(WalferLineVals)
-                line_vals = self._prepare_generic_line_data(walfareLine)
-                line_vals.update({
-                    'name': _(
-                        "Welfare Fund: %s") % walfareLine.TipoCassa,
-                    'price_unit': float(walfareLine.ImportoContributoCassa),
-                    'invoice_id': invoice.id,
-                    'account_id': credit_account_id,
-                })
-                if walfareLine.Ritenuta:
-                    if not wt_found:
-                        raise UserError(_(
-                            "Welfare Fund data %s has withholding tax but no "
-                            "withholding tax was found in the system."
-                            % walfareLine.TipoCassa))
-                    line_vals['invoice_line_tax_wt_ids'] = [
-                        (6, 0, [wt_found.id])]
-                if self.env.user.company_id.cassa_previdenziale_product_id:
-                    cassa_previdenziale_product = (
-                        self.env.user.company_id.
-                        cassa_previdenziale_product_id
-                    )
-                    line_vals['product_id'] = cassa_previdenziale_product.id
-                    line_vals['name'] = cassa_previdenziale_product.name
-                    self.adjust_accounting_data(
-                        cassa_previdenziale_product, line_vals
-                    )
-                self.env['account.invoice.line'].create(line_vals)
+
         # 2.1.2
         relOrders = FatturaBody.DatiGenerali.DatiOrdineAcquisto
         if relOrders:
@@ -1018,9 +961,9 @@ class WizardImportFatturapa(models.TransientModel):
         # 2.1.6
         RelInvoices = FatturaBody.DatiGenerali.DatiFattureCollegate
         if RelInvoices:
-            for invoice in RelInvoices:
+            for rel_invoice in RelInvoices:
                 doc_datas = self._prepareRelDocsLine(
-                    invoice_id, invoice, 'invoice')
+                    invoice_id, rel_invoice, 'invoice')
                 if doc_datas:
                     for doc_data in doc_datas:
                         rel_docs_model.create(doc_data)
@@ -1157,24 +1100,9 @@ class WizardImportFatturapa(models.TransientModel):
                 self._createPayamentsLine(PayDataId, PaymentLine, partner_id)
         # 2.5
         AttachmentsData = FatturaBody.Allegati
-        if AttachmentsData:
-            AttachModel = self.env['fatturapa.attachments']
-            for attach in AttachmentsData:
-                if not attach.NomeAttachment:
-                    name = _("Attachment without name")
-                else:
-                    name = attach.NomeAttachment
-                content = attach.Attachment
-                _attach_dict = {
-                    'name': name,
-                    'datas': base64.b64encode(str(content)),
-                    'datas_fname': name,
-                    'description': attach.DescrizioneAttachment or '',
-                    'compression': attach.AlgoritmoCompressione or '',
-                    'format': attach.FormatoAttachment or '',
-                    'invoice_id': invoice_id,
-                }
-                AttachModel.create(_attach_dict)
+        if AttachmentsData and invoice_id:
+            self.env['fatturapa.attachment.in'].extract_attachments(
+                AttachmentsData, invoice_id)
 
         self._addGlobalDiscount(
             invoice_id, FatturaBody.DatiGenerali.DatiGeneraliDocumento)

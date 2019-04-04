@@ -16,8 +16,9 @@ class GeneralLedgerXslx(abstract_report_xlsx.AbstractReportXslx):
         super(GeneralLedgerXslx, self).__init__(
             name, table, rml, parser, header, store)
 
-    def _get_report_name(self):
-        return _('General Ledger')
+    def _get_report_name(self, report):
+        report_name = _('General Ledger')
+        return self._get_report_complete_name(report, report_name)
 
     def _get_report_columns(self, report):
         res = {
@@ -36,7 +37,10 @@ class GeneralLedgerXslx(abstract_report_xlsx.AbstractReportXslx):
             8: {'header': _('Tags'),
                 'field': 'tags',
                 'width': 10},
-            9: {'header': _('Rec.'), 'field': 'matching_number', 'width': 5},
+            9: {'header': _('Rec.'),
+                'field': 'matched_ml_id',
+                'type': 'many2one',
+                'width': 5},
             10: {'header': _('Debit'),
                  'field': 'debit',
                  'field_initial_balance': 'initial_debit',

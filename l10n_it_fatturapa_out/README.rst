@@ -57,9 +57,15 @@ Configuration
 
 Consultare il file README di l10n_it_fatturapa.
 
+É possibile esportare le fatture cliente con le righe articolo con un CodiceTipo diverso dallo standard 'ODOO' creando un parametro 'fatturapa.codicetipo.odoo' (in Configurazione > Funzioni tecniche > Parametri > Parametri di sistema) con il codice voluto (tipicamente su richiesta del cliente).
+Non è possibile impostare un diverso CodiceTipo per cliente, al momento.
+
 **English**
 
 See l10n_it_fatturapa README file.
+
+It is possible to export invoices with rows with a different CodiceTipo from the default 'ODOO' by creating a parameter 'fatturapa.codicetipo.odoo' (in Settings > Technical > Parameters > System Parameters) with the desired code (tipically on customer's request).
+It is not possible to set a different CodiceTipo by customer, until now.
 
 Usage
 =====
@@ -68,11 +74,15 @@ Usage
 
  * Compilare la fattura con i dati necessari per l'esportazione: per esempio, nella scheda "Allegati fattura elettronica"
  * Selezionare 1 o N fatture ed eseguire la procedura guidata "Esporta fattura elettronica"
+ * Per le fatture estere, è possibile inviarle a soli fini fiscali inserendo il codice identificativo XXXXXXX (7 volte X) ed avendo cura di indicare il paese del partner.
+   Le fatture vanno comunque spedite al cliente, ma si evita la predisposizione dell'esterometro.
 
 **English**
 
  * Fill invoice data you need to export: For instance, in 'Electronic Invoice Attachments' TAB
  * Select 1 or N invoices and run 'Export Electronic Invoice' wizard
+ * For foreign invoices, it is possible to send them only for tax purposes with code XXXXXXX (7 times X) and assuring to set the country of the partner.
+   Invoices must be sent anyway to the customer, but in this way it is not needed to prepare esterometro.
 
 Bug Tracker
 ===========

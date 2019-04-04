@@ -6,21 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-11-30 18:16+0000\n"
-"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
+"PO-Revision-Date: 2019-04-01 19:14+0000\n"
+"Last-Translator: alvarorib <alvaro.ribeiro@exo.pt>\n"
 "Language-Team: none\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.2.2\n"
+"X-Generator: Weblate 3.5.1\n"
 
 #. module: sale_commission
 #: code:addons/sale_commission/models/sale_commission_mixin.py:56
-#, fuzzy, python-format
+#, python-format
 msgid "%s commission agents"
-msgstr "Gestão de Comissões"
+msgstr "%s agentes de comissões"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_make_invoice_form
@@ -34,9 +34,9 @@ msgstr "(manter vazio para comissionar todos os agentes)"
 
 #. module: sale_commission
 #: code:addons/sale_commission/models/sale_commission_mixin.py:54
-#, fuzzy, python-format
+#, python-format
 msgid "1 commission agent"
-msgstr "Gestão de Comissões"
+msgstr "1 agente de comissões"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_active
@@ -95,7 +95,7 @@ msgstr "Agentes e Comissões"
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_mixin_agents
 #: model:ir.model.fields,help:sale_commission.field_sale_order_line_agents
 msgid "Agents/Commissions related to the invoice line."
-msgstr "Agentes/comissões relacionadas com a linha de fatura."
+msgstr "Agentes/Comissões relacionadas com a linha de fatura."
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_order_line_agent_amount
@@ -116,7 +116,7 @@ msgstr "Anual"
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_amount_base_type
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #. module: sale_commission
 #: selection:sale.commission,commission_type:0
@@ -135,7 +135,7 @@ msgid "Canceled"
 msgstr "Cancelado"
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:45
+#: code:addons/sale_commission/models/settlement.py:46
 #, python-format
 msgid "Cannot cancel an invoiced settlement."
 msgstr "Não pode cancelar um comissionamento faturado."
@@ -356,7 +356,7 @@ msgstr "Agrupar Por"
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_settlement_line_id
 #: model:ir.model.fields,field_description:sale_commission.field_sale_order_line_agent_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_account_invoice
@@ -407,6 +407,12 @@ msgid "Journal"
 msgstr "Diário"
 
 #. module: sale_commission
+#: code:addons/sale_commission/models/settlement.py:129
+#, python-format
+msgid "Journal %s is not applicable for quantity %s"
+msgstr "O Diário %s1 não é aplicável para quantidade %s2"
+
+#. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_account_invoice_line_agent_invoice_date
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_settlement_line_date
 msgid "Keep empty to use the current date"
@@ -451,7 +457,7 @@ msgid "Last Updated on"
 msgstr "Última Atualiz. em"
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:60
+#: code:addons/sale_commission/models/settlement.py:61
 #: model:ir.ui.view,arch_db:sale_commission.view_settlement_form
 #, python-format
 msgid "Make invoice"
@@ -470,7 +476,7 @@ msgstr "Fazer comissionamentos"
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_mixin
 msgid "Mixin model for applying to any object that wants to handle commissions"
-msgstr ""
+msgstr "Modelo mixin para aplicar a qualquer objeto que lide com comissões"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_line_mixin
@@ -478,6 +484,8 @@ msgid ""
 "Mixin model for having commission agent lines in any object inheriting from "
 "this one"
 msgstr ""
+"Modelo mixin para ter linhas de agentes de comissões em qualquer objeto que "
+"dele herde"
 
 #. module: sale_commission
 #: selection:res.partner,settlement:0
@@ -497,9 +505,9 @@ msgstr "Valor Líquido"
 
 #. module: sale_commission
 #: code:addons/sale_commission/models/sale_commission_mixin.py:52
-#, fuzzy, python-format
+#, python-format
 msgid "No commission agents"
-msgstr "Gestão de Comissões"
+msgstr "Sem agentes de comissões"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_account_invoice_line_agent_object_id
@@ -507,7 +515,7 @@ msgstr "Gestão de Comissões"
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_settlement_line_invoice_line
 #: model:ir.model.fields,field_description:sale_commission.field_sale_order_line_agent_object_id
 msgid "Parent"
-msgstr ""
+msgstr "Ascendente"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_res_partner
@@ -525,7 +533,7 @@ msgid "Percent"
 msgstr "Percentagem"
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:102
+#: code:addons/sale_commission/models/settlement.py:103
 #, python-format
 msgid "Period: from %s to %s"
 msgstr "Período: de %s a %s"
@@ -721,7 +729,7 @@ msgid "You can only add one time each agent."
 msgstr "Só pode adicionar cada agente uma vez."
 
 #. module: sale_commission
-#: code:addons/sale_commission/models/settlement.py:53
+#: code:addons/sale_commission/models/settlement.py:54
 #, python-format
 msgid "You can't delete invoiced settlements."
 msgstr "Não pode apagar comissionamentos faturados."
@@ -734,7 +742,7 @@ msgstr "_Cancelar"
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_account_invoice_line_agent
 msgid "account.invoice.line.agent"
-msgstr ""
+msgstr "account.invoice.line.agent"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_make_invoice_form
@@ -745,22 +753,22 @@ msgstr "ou"
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_make_invoice
 msgid "sale.commission.make.invoice"
-msgstr ""
+msgstr "sale.commission.make.invoice"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_make_settle
 msgid "sale.commission.make.settle"
-msgstr ""
+msgstr "sale.commission.make.settle"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_settlement_line
 msgid "sale.commission.settlement.line"
-msgstr ""
+msgstr "sale.commission.settlement.line"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_order_line_agent
 msgid "sale.order.line.agent"
-msgstr ""
+msgstr "sale.order.line.agent"
 
 #. module: sale_commission
 #: model:ir.ui.view,arch_db:sale_commission.sale_commission_form

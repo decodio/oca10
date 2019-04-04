@@ -98,9 +98,23 @@ class WelfareFundType(models.Model):
     # _position = ['2.1.1.7.1']
     _name = "welfare.fund.type"
     _description = 'Welfare Fund Type'
+    _rec_name = 'display_name'
 
     name = fields.Char('Name')
     description = fields.Char('Description')
+    display_name = fields.Char(string='Name',
+                               compute='_compute_clean_display_name')
+
+    @api.multi
+    @api.depends(
+        'description', 'name'
+    )
+    def _compute_clean_display_name(self):
+        for record in self:
+            name = record.name
+            if record.name and record.description:
+                name = u'[%s] %s' % (record.name, record.description)
+            record.display_name = name
 
 
 class WelfareFundDataLine(models.Model):
@@ -302,9 +316,6 @@ class AccountInvoice(models.Model):
     )
     #  2.1.1.5.2 2.1.1.5.3 2.1.1.5.4 mapped to l10n_it_withholding_tax fields
 
-    #  2.1.1.6
-    virtual_stamp = fields.Boolean('Virtual Stamp', default=False, copy=False)
-    stamp_amount = fields.Float('Stamp Amount', copy=False)
     #  2.1.1.7
     welfare_fund_ids = fields.One2many(
         'welfare.fund.data.line', 'invoice_id',

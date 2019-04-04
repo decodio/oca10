@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import lxml.etree as ET
-import os
-import shlex
-import subprocess
+import re
+import base64
+import binascii
 import logging
 from io import BytesIO
 from odoo import models, api, fields
@@ -12,6 +12,15 @@ from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
+
+try:
+    from asn1crypto import cms
+except (ImportError, IOError) as err:
+    _logger.debug(err)
+
+
+re_base64 = re.compile(
+    br'^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$')
 
 
 class Attachment(models.Model):
@@ -24,80 +33,17 @@ class Attachment(models.Model):
     @api.multi
     def _compute_ftpa_preview_link(self):
         for att in self:
-            att.ftpa_preview_link = '/fatturapa/preview/%s' % self.id
-
-    def check_file_is_pem(self, p7m_file):
-        file_is_pem = True
-        strcmd = (
-            'openssl asn1parse  -inform PEM -in %s'
-        ) % (p7m_file)
-        cmd = shlex.split(strcmd)
-        try:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            proc.communicate()
-            if proc.wait() != 0:
-                file_is_pem = False
-        except Exception as e:
-            raise UserError(
-                _(
-                    "An error with command 'openssl asn1parse' occurred: %s."
-                ) % e.args
-            )
-        return file_is_pem
-
-    def parse_pem_2_der(self, pem_file, tmp_der_file):
-        strcmd = (
-            'openssl asn1parse -in %s -out %s'
-        ) % (pem_file, tmp_der_file)
-        cmd = shlex.split(strcmd)
-        try:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            stdoutdata, stderrdata = proc.communicate()
-            if proc.wait() != 0:
-                _logger.warning(stdoutdata)
-                raise Exception(stderrdata)
-        except Exception as e:
-            raise UserError(
-                _(
-                    'Parsing PEM to DER file %s.'
-                ) % e.args
-            )
-        if not os.path.isfile(tmp_der_file):
-            raise UserError(
-                _(
-                    'ASN.1 structure is not parsable in DER.'
-                )
-            )
-        return tmp_der_file
-
-    def decrypt_to_xml(self, signed_file, xml_file):
-        strcmd = (
-            'openssl smime -decrypt -verify -inform'
-            ' DER -in %s -noverify -out %s'
-        ) % (signed_file, xml_file)
-        cmd = shlex.split(strcmd)
-        try:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            stdoutdata, stderrdata = proc.communicate()
-            if proc.wait() != 0:
-                _logger.warning(stdoutdata)
-                raise Exception(stderrdata)
-        except Exception as e:
-            raise UserError(
-                _(
-                    'Signed Xml file %s.'
-                ) % e.args
-            )
-        if not os.path.isfile(xml_file):
-            raise UserError(
-                _(
-                    'Signed Xml file not decryptable.'
-                )
-            )
-        return xml_file
+            att.ftpa_preview_link = '/fatturapa/preview/%s' % att.id
 
     def remove_xades_sign(self, xml):
-        root = ET.XML(xml)
+        # Recovering parser is needed for files where strings like
+        # xmlns:ds="http://www.w3.org/2000/09/xmldsig#&quot;"
+        # are present: even if lxml raises
+        # {XMLSyntaxError}xmlns:ds:
+        # 'http://www.w3.org/2000/09/xmldsig#"' is not a valid URI
+        # such files are accepted by SDI
+        recovering_parser = ET.XMLParser(recover=True)
+        root = ET.XML(xml, parser=recovering_parser)
         for elem in root.iter('*'):
             if elem.tag.find('Signature') > -1:
                 elem.getparent().remove(elem)
@@ -105,45 +51,66 @@ class Attachment(models.Model):
         return ET.tostring(root)
 
     def strip_xml_content(self, xml):
-        root = ET.XML(xml)
+        recovering_parser = ET.XMLParser(recover=True)
+        root = ET.XML(xml, parser=recovering_parser)
         for elem in root.iter('*'):
             if elem.text is not None:
                 elem.text = elem.text.strip()
         return ET.tostring(root)
 
-    def get_xml_string(self):
-        fatturapa_attachment = self
-        # decrypt  p7m file
-        if fatturapa_attachment.datas_fname.lower().endswith('.p7m'):
-            temp_file_name = (
-                '/tmp/%s' % fatturapa_attachment.datas_fname.lower())
-            temp_der_file_name = (
-                '/tmp/%s_tmp' % fatturapa_attachment.datas_fname.lower())
-            with open(temp_file_name, 'w') as p7m_file:
-                p7m_file.write(fatturapa_attachment.datas.decode('base64'))
-            xml_file_name = os.path.splitext(temp_file_name)[0]
+    @staticmethod
+    def extract_cades(data):
+        info = cms.ContentInfo.load(data)
+        return info['content']['encap_content_info']['content'].native
 
-            # check if temp_file_name is a PEM file
-            file_is_pem = self.check_file_is_pem(temp_file_name)
-
-            # if temp_file_name is a PEM file
-            # parse it in a DER file
-            if file_is_pem:
-                temp_file_name = self.parse_pem_2_der(
-                    temp_file_name, temp_der_file_name)
-
-            # decrypt signed DER file in XML readable
-            xml_file_name = self.decrypt_to_xml(
-                temp_file_name, xml_file_name)
-
-            with open(xml_file_name, 'r') as fatt_file:
-                file_content = fatt_file.read()
-            xml_string = file_content
-        elif fatturapa_attachment.datas_fname.lower().endswith('.xml'):
-            xml_string = fatturapa_attachment.datas.decode('base64')
+    def cleanup_xml(self, xml_string):
         xml_string = self.remove_xades_sign(xml_string)
         xml_string = self.strip_xml_content(xml_string)
         return xml_string
+
+    def get_xml_string(self):
+        try:
+            data = base64.b64decode(self.datas)
+        except binascii.Error as e:
+            raise UserError(
+                _(
+                    'Corrupted attachment %s.'
+                ) % e.args
+            )
+
+        if re_base64.match(data) is not None:
+            try:
+                data = base64.b64decode(data)
+            except binascii.Error as e:
+                raise UserError(
+                    _(
+                        'Base64 encoded file %s.'
+                    ) % e.args
+                )
+
+        # Amazon sends xml files without <?xml declaration,
+        # so they cannot be easily detected using a pattern.
+        # We first try to parse as asn1, if it fails we assume xml
+
+        # asn1crypto parser will raise ValueError
+        # if the asn1 cannot be parsed
+        # KeyError is raised if one of the needed key is not
+        # in the asn1 structure (info->content->encap_content_info->content)
+        try:
+            data = self.extract_cades(data)
+        except (ValueError, KeyError):
+            pass
+
+        try:
+            return self.cleanup_xml(data)
+        # cleanup_xml calls root.iter(), but root is None if the parser fails
+        # Invalid xml 'NoneType' object has no attribute 'iter'
+        except AttributeError as e:
+            raise UserError(
+                _(
+                    'Invalid xml %s.'
+                ) % e.args
+            )
 
     def get_fattura_elettronica_preview(self):
         xsl_path = get_module_resource(
@@ -151,7 +118,8 @@ class Attachment(models.Model):
         xslt = ET.parse(xsl_path)
         xml_string = self.get_xml_string()
         xml_file = BytesIO(xml_string)
-        dom = ET.parse(xml_file)
+        recovering_parser = ET.XMLParser(recover=True)
+        dom = ET.parse(xml_file, parser=recovering_parser)
         transform = ET.XSLT(xslt)
         newdom = transform(dom)
         return ET.tostring(newdom, pretty_print=True)
